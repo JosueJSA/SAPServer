@@ -1,0 +1,1484 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SAPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BalanceDiario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPersonal" Type="int" Nullable="false" />
+          <Property Name="TiempoInicio" Type="datetime" Nullable="false" />
+          <Property Name="TiempoFinal" Type="datetime" Nullable="false" />
+          <Property Name="TotalSalidaCalculado" Type="float" Nullable="false" />
+          <Property Name="TotalEntradaClaculado" Type="float" Nullable="false" />
+          <Property Name="SalidaDeCaja" Type="int" Nullable="false" />
+          <Property Name="EntradaDeCaja" Type="int" Nullable="false" />
+          <Property Name="Ganancia" Type="float" Nullable="false" />
+          <Property Name="CantidadEnCaja" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CajaEntrada">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="B_1000" Type="int" Nullable="false" />
+          <Property Name="B_500" Type="int" Nullable="false" />
+          <Property Name="B_200" Type="int" Nullable="false" />
+          <Property Name="B_100" Type="int" Nullable="false" />
+          <Property Name="B_50" Type="int" Nullable="false" />
+          <Property Name="B_20" Type="int" Nullable="false" />
+          <Property Name="M_20" Type="int" Nullable="false" />
+          <Property Name="M_10" Type="int" Nullable="false" />
+          <Property Name="M_5" Type="int" Nullable="false" />
+          <Property Name="M_2" Type="int" Nullable="false" />
+          <Property Name="M_1" Type="int" Nullable="false" />
+          <Property Name="C_50" Type="int" Nullable="false" />
+          <Property Name="C_20" Type="int" Nullable="false" />
+          <Property Name="C_10" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CajaSalida">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="B_1000" Type="int" Nullable="false" />
+          <Property Name="B_500" Type="int" Nullable="false" />
+          <Property Name="B_200" Type="int" Nullable="false" />
+          <Property Name="B_100" Type="int" Nullable="false" />
+          <Property Name="B_50" Type="int" Nullable="false" />
+          <Property Name="B_20" Type="int" Nullable="false" />
+          <Property Name="M_20" Type="int" Nullable="false" />
+          <Property Name="M_10" Type="int" Nullable="false" />
+          <Property Name="M_5" Type="int" Nullable="false" />
+          <Property Name="M_2" Type="int" Nullable="false" />
+          <Property Name="M_1" Type="int" Nullable="false" />
+          <Property Name="C_50" Type="int" Nullable="false" />
+          <Property Name="C_20" Type="int" Nullable="false" />
+          <Property Name="C_10" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="500" />
+          <Property Name="CodigoPostal" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Apellido" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Ciudad" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Nacimiento" Type="datetime" Nullable="false" />
+          <Property Name="Edad" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cliente_Direccion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="Calle" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Numero" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ingrediente">
+          <Key>
+            <PropertyRef Name="ClaveReceta" />
+            <PropertyRef Name="CodigoInsumo" />
+          </Key>
+          <Property Name="ClaveReceta" Type="int" Nullable="false" />
+          <Property Name="CodigoInsumo" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Insumo">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PrecioCompra" Type="float" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Restricciones" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Registro" Type="datetime" Nullable="false" />
+          <Property Name="UnidadMedida" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProveedorDeInsumo" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Orden">
+          <Key>
+            <PropertyRef Name="CodigoPedidoCliente" />
+            <PropertyRef Name="CodigoProductoVenta" />
+          </Key>
+          <Property Name="CodigoPedidoCliente" Type="int" Nullable="false" />
+          <Property Name="CodigoProductoVenta" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="Precio" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrdenAProveedor">
+          <Key>
+            <PropertyRef Name="CodigoPedidoProveedor" />
+            <PropertyRef Name="CodigoInsumo" />
+          </Key>
+          <Property Name="CodigoPedidoProveedor" Type="int" Nullable="false" />
+          <Property Name="CodigoInsumo" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="Precio" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CostoTotal" Type="float" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Solicitud" Type="datetime" Nullable="false" />
+          <Property Name="Entrega" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PedidoCliente">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="int" Nullable="false" />
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="float" Nullable="false" />
+          <Property Name="TipoPedido" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PedidoProveedor">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="int" Nullable="false" />
+          <Property Name="ClaveProveedor" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="float" Nullable="false" />
+          <Property Name="TipoPedido" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Personal">
+          <Key>
+            <PropertyRef Name="Clave" />
+          </Key>
+          <Property Name="Clave" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Apellidos" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="TipoUsuario" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CodigoPostal" Type="int" />
+          <Property Name="Status" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Puesto" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Salario" Type="float" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Ciudad" Type="nvarchar" MaxLength="100" />
+          <Property Name="Registro" Type="datetime" Nullable="false" />
+          <Property Name="Baja" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Personal_Direccion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPersonal" Type="int" Nullable="false" />
+          <Property Name="Calle" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Numero" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductoVenta">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodigoReceta" Type="int" Nullable="false" />
+          <Property Name="PrecioVenta" Type="float" Nullable="false" />
+          <Property Name="PrecioCompra" Type="float" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Foto" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Restricciones" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Registro" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="Clave" />
+          </Key>
+          <Property Name="Clave" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="500" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Rfc" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CategoriaInsumo" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Proveedor_Direccion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdProveedor" Type="int" Nullable="false" />
+          <Property Name="Calle" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Numero" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Receta">
+          <Key>
+            <PropertyRef Name="Clave" />
+          </Key>
+          <Property Name="Clave" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SalidaExtraordinaria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdBalance" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="UsuarioRegistrador" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Importe" Type="float" Nullable="false" />
+          <Property Name="Registro" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="PK_dbo_Balance_CajaEntrada">
+          <End Role="CajaEntrada" Type="Self.CajaEntrada" Multiplicity="1" />
+          <End Role="BalanceDiario" Type="Self.BalanceDiario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CajaEntrada">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BalanceDiario">
+              <PropertyRef Name="EntradaDeCaja" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_Balance_CajaSalida">
+          <End Role="CajaSalida" Type="Self.CajaSalida" Multiplicity="1" />
+          <End Role="BalanceDiario" Type="Self.BalanceDiario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CajaSalida">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BalanceDiario">
+              <PropertyRef Name="SalidaDeCaja" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_Cliente_Direccion_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Cliente_Direccion" Type="Self.Cliente_Direccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cliente_Direccion">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_Ingrediente_Insumo">
+          <End Role="Insumo" Type="Self.Insumo" Multiplicity="1" />
+          <End Role="Ingrediente" Type="Self.Ingrediente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Insumo">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Ingrediente">
+              <PropertyRef Name="CodigoInsumo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_Ingrediente_Receta">
+          <End Role="Receta" Type="Self.Receta" Multiplicity="1" />
+          <End Role="Ingrediente" Type="Self.Ingrediente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receta">
+              <PropertyRef Name="Clave" />
+            </Principal>
+            <Dependent Role="Ingrediente">
+              <PropertyRef Name="ClaveReceta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_Orden_PedidoAProveedor">
+          <End Role="PedidoProveedor" Type="Self.PedidoProveedor" Multiplicity="1" />
+          <End Role="OrdenAProveedor" Type="Self.OrdenAProveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PedidoProveedor">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="OrdenAProveedor">
+              <PropertyRef Name="CodigoPedidoProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_Orden_PedidoCliente">
+          <End Role="PedidoCliente" Type="Self.PedidoCliente" Multiplicity="1" />
+          <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PedidoCliente">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Orden">
+              <PropertyRef Name="CodigoPedidoCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_Orden_ProductoVenta">
+          <End Role="ProductoVenta" Type="Self.ProductoVenta" Multiplicity="1" />
+          <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductoVenta">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Orden">
+              <PropertyRef Name="CodigoProductoVenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_OrdenAProveedor_Insumo">
+          <End Role="Insumo" Type="Self.Insumo" Multiplicity="1" />
+          <End Role="OrdenAProveedor" Type="Self.OrdenAProveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Insumo">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="OrdenAProveedor">
+              <PropertyRef Name="CodigoInsumo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_PedidoAProveedor_Pedido">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1" />
+          <End Role="PedidoProveedor" Type="Self.PedidoProveedor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="PedidoProveedor">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_PedidoAProveedor_Proveedor">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+          <End Role="PedidoProveedor" Type="Self.PedidoProveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="Clave" />
+            </Principal>
+            <Dependent Role="PedidoProveedor">
+              <PropertyRef Name="ClaveProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_PedidoCliente_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="PedidoCliente" Type="Self.PedidoCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PedidoCliente">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_PedidoCliente_Pedido">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1" />
+          <End Role="PedidoCliente" Type="Self.PedidoCliente" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="PedidoCliente">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_Personal_Direccion_Personal">
+          <End Role="Personal" Type="Self.Personal" Multiplicity="1" />
+          <End Role="Personal_Direccion" Type="Self.Personal_Direccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personal">
+              <PropertyRef Name="Clave" />
+            </Principal>
+            <Dependent Role="Personal_Direccion">
+              <PropertyRef Name="IdPersonal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_ProductoVenta_Receta">
+          <End Role="Receta" Type="Self.Receta" Multiplicity="1" />
+          <End Role="ProductoVenta" Type="Self.ProductoVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receta">
+              <PropertyRef Name="Clave" />
+            </Principal>
+            <Dependent Role="ProductoVenta">
+              <PropertyRef Name="CodigoReceta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_Proveedor_Direccion_Proveedor">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+          <End Role="Proveedor_Direccion" Type="Self.Proveedor_Direccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="Clave" />
+            </Principal>
+            <Dependent Role="Proveedor_Direccion">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_Salida_Balance">
+          <End Role="BalanceDiario" Type="Self.BalanceDiario" Multiplicity="1" />
+          <End Role="SalidaExtraordinaria" Type="Self.SalidaExtraordinaria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BalanceDiario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SalidaExtraordinaria">
+              <PropertyRef Name="IdBalance" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="SGI_SAP_Insumo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PrecioCompra" Type="float" Mode="In" />
+          <Parameter Name="Cantidad" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="Descripcion" Type="nvarchar" Mode="In" />
+          <Parameter Name="Restricciones" Type="nvarchar" Mode="In" />
+          <Parameter Name="UnidadMedida" Type="nvarchar" Mode="In" />
+          <Parameter Name="ProveedorDeInsumo" Type="nvarchar" Mode="In" />
+          <Parameter Name="Key" Type="int" Mode="InOut" />
+          <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
+        </Function>
+        <Function Name="SPChangeStatus_SAP_Insumo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo" Type="int" Mode="In" />
+          <Parameter Name="Status" Type="nvarchar" Mode="In" />
+          <Parameter Name="Key" Type="int" Mode="InOut" />
+          <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
+        </Function>
+        <Function Name="SPG_SAP_Insumo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Criterio" Type="nvarchar" Mode="In" />
+          <Parameter Name="Valor" Type="nvarchar" Mode="In" />
+          <Parameter Name="Fecha" Type="datetime" Mode="In" />
+          <Parameter Name="Status" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SPU_SAP_Insumo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo" Type="int" Mode="In" />
+          <Parameter Name="PrecioCompra" Type="float" Mode="In" />
+          <Parameter Name="Cantidad" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="Descripcion" Type="nvarchar" Mode="In" />
+          <Parameter Name="Restricciones" Type="nvarchar" Mode="In" />
+          <Parameter Name="UnidadMedida" Type="nvarchar" Mode="In" />
+          <Parameter Name="ProveedorDeInsumo" Type="nvarchar" Mode="In" />
+          <Parameter Name="Key" Type="int" Mode="InOut" />
+          <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
+        </Function>
+        <EntityContainer Name="SAPModelStoreContainer">
+          <EntitySet Name="BalanceDiario" EntityType="Self.BalanceDiario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CajaEntrada" EntityType="Self.CajaEntrada" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CajaSalida" EntityType="Self.CajaSalida" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente_Direccion" EntityType="Self.Cliente_Direccion" Schema="dbo" Table="Cliente.Direccion" store:Type="Tables" />
+          <EntitySet Name="Ingrediente" EntityType="Self.Ingrediente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Insumo" EntityType="Self.Insumo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orden" EntityType="Self.Orden" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrdenAProveedor" EntityType="Self.OrdenAProveedor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pedido" EntityType="Self.Pedido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PedidoCliente" EntityType="Self.PedidoCliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PedidoProveedor" EntityType="Self.PedidoProveedor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Personal" EntityType="Self.Personal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Personal_Direccion" EntityType="Self.Personal_Direccion" Schema="dbo" Table="Personal.Direccion" store:Type="Tables" />
+          <EntitySet Name="ProductoVenta" EntityType="Self.ProductoVenta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Proveedor_Direccion" EntityType="Self.Proveedor_Direccion" Schema="dbo" Table="Proveedor.Direccion" store:Type="Tables" />
+          <EntitySet Name="Receta" EntityType="Self.Receta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SalidaExtraordinaria" EntityType="Self.SalidaExtraordinaria" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="PK_dbo_Balance_CajaEntrada" Association="Self.PK_dbo_Balance_CajaEntrada">
+            <End Role="CajaEntrada" EntitySet="CajaEntrada" />
+            <End Role="BalanceDiario" EntitySet="BalanceDiario" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_Balance_CajaSalida" Association="Self.PK_dbo_Balance_CajaSalida">
+            <End Role="CajaSalida" EntitySet="CajaSalida" />
+            <End Role="BalanceDiario" EntitySet="BalanceDiario" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_Cliente_Direccion_Cliente" Association="Self.PK_dbo_Cliente_Direccion_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Cliente_Direccion" EntitySet="Cliente_Direccion" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_Ingrediente_Insumo" Association="Self.PK_dbo_Ingrediente_Insumo">
+            <End Role="Insumo" EntitySet="Insumo" />
+            <End Role="Ingrediente" EntitySet="Ingrediente" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_Ingrediente_Receta" Association="Self.PK_dbo_Ingrediente_Receta">
+            <End Role="Receta" EntitySet="Receta" />
+            <End Role="Ingrediente" EntitySet="Ingrediente" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_Orden_PedidoAProveedor" Association="Self.PK_dbo_Orden_PedidoAProveedor">
+            <End Role="PedidoProveedor" EntitySet="PedidoProveedor" />
+            <End Role="OrdenAProveedor" EntitySet="OrdenAProveedor" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_Orden_PedidoCliente" Association="Self.PK_dbo_Orden_PedidoCliente">
+            <End Role="PedidoCliente" EntitySet="PedidoCliente" />
+            <End Role="Orden" EntitySet="Orden" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_Orden_ProductoVenta" Association="Self.PK_dbo_Orden_ProductoVenta">
+            <End Role="ProductoVenta" EntitySet="ProductoVenta" />
+            <End Role="Orden" EntitySet="Orden" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_OrdenAProveedor_Insumo" Association="Self.PK_dbo_OrdenAProveedor_Insumo">
+            <End Role="Insumo" EntitySet="Insumo" />
+            <End Role="OrdenAProveedor" EntitySet="OrdenAProveedor" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_PedidoAProveedor_Pedido" Association="Self.PK_dbo_PedidoAProveedor_Pedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="PedidoProveedor" EntitySet="PedidoProveedor" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_PedidoAProveedor_Proveedor" Association="Self.PK_dbo_PedidoAProveedor_Proveedor">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="PedidoProveedor" EntitySet="PedidoProveedor" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_PedidoCliente_Cliente" Association="Self.PK_dbo_PedidoCliente_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="PedidoCliente" EntitySet="PedidoCliente" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_PedidoCliente_Pedido" Association="Self.PK_dbo_PedidoCliente_Pedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="PedidoCliente" EntitySet="PedidoCliente" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_Personal_Direccion_Personal" Association="Self.PK_dbo_Personal_Direccion_Personal">
+            <End Role="Personal" EntitySet="Personal" />
+            <End Role="Personal_Direccion" EntitySet="Personal_Direccion" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_ProductoVenta_Receta" Association="Self.PK_dbo_ProductoVenta_Receta">
+            <End Role="Receta" EntitySet="Receta" />
+            <End Role="ProductoVenta" EntitySet="ProductoVenta" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_Proveedor_Direccion_Proveedor" Association="Self.PK_dbo_Proveedor_Direccion_Proveedor">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Proveedor_Direccion" EntitySet="Proveedor_Direccion" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_Salida_Balance" Association="Self.PK_dbo_Salida_Balance">
+            <End Role="BalanceDiario" EntitySet="BalanceDiario" />
+            <End Role="SalidaExtraordinaria" EntitySet="SalidaExtraordinaria" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SAPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BalanceDiario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPersonal" Type="Int32" Nullable="false" />
+          <Property Name="TiempoInicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TiempoFinal" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TotalSalidaCalculado" Type="Double" Nullable="false" />
+          <Property Name="TotalEntradaClaculado" Type="Double" Nullable="false" />
+          <Property Name="SalidaDeCaja" Type="Int32" Nullable="false" />
+          <Property Name="EntradaDeCaja" Type="Int32" Nullable="false" />
+          <Property Name="Ganancia" Type="Double" Nullable="false" />
+          <Property Name="CantidadEnCaja" Type="Double" Nullable="false" />
+          <NavigationProperty Name="CajaEntrada" Relationship="Self.PK_dbo_Balance_CajaEntrada" FromRole="BalanceDiario" ToRole="CajaEntrada" />
+          <NavigationProperty Name="CajaSalida" Relationship="Self.PK_dbo_Balance_CajaSalida" FromRole="BalanceDiario" ToRole="CajaSalida" />
+          <NavigationProperty Name="SalidaExtraordinaria" Relationship="Self.PK_dbo_Salida_Balance" FromRole="BalanceDiario" ToRole="SalidaExtraordinaria" />
+        </EntityType>
+        <EntityType Name="CajaEntrada">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="B_1000" Type="Int32" Nullable="false" />
+          <Property Name="B_500" Type="Int32" Nullable="false" />
+          <Property Name="B_200" Type="Int32" Nullable="false" />
+          <Property Name="B_100" Type="Int32" Nullable="false" />
+          <Property Name="B_50" Type="Int32" Nullable="false" />
+          <Property Name="B_20" Type="Int32" Nullable="false" />
+          <Property Name="M_20" Type="Int32" Nullable="false" />
+          <Property Name="M_10" Type="Int32" Nullable="false" />
+          <Property Name="M_5" Type="Int32" Nullable="false" />
+          <Property Name="M_2" Type="Int32" Nullable="false" />
+          <Property Name="M_1" Type="Int32" Nullable="false" />
+          <Property Name="C_50" Type="Int32" Nullable="false" />
+          <Property Name="C_20" Type="Int32" Nullable="false" />
+          <Property Name="C_10" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BalanceDiario" Relationship="Self.PK_dbo_Balance_CajaEntrada" FromRole="CajaEntrada" ToRole="BalanceDiario" />
+        </EntityType>
+        <EntityType Name="CajaSalida">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="B_1000" Type="Int32" Nullable="false" />
+          <Property Name="B_500" Type="Int32" Nullable="false" />
+          <Property Name="B_200" Type="Int32" Nullable="false" />
+          <Property Name="B_100" Type="Int32" Nullable="false" />
+          <Property Name="B_50" Type="Int32" Nullable="false" />
+          <Property Name="B_20" Type="Int32" Nullable="false" />
+          <Property Name="M_20" Type="Int32" Nullable="false" />
+          <Property Name="M_10" Type="Int32" Nullable="false" />
+          <Property Name="M_5" Type="Int32" Nullable="false" />
+          <Property Name="M_2" Type="Int32" Nullable="false" />
+          <Property Name="M_1" Type="Int32" Nullable="false" />
+          <Property Name="C_50" Type="Int32" Nullable="false" />
+          <Property Name="C_20" Type="Int32" Nullable="false" />
+          <Property Name="C_10" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BalanceDiario" Relationship="Self.PK_dbo_Balance_CajaSalida" FromRole="CajaSalida" ToRole="BalanceDiario" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CodigoPostal" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Apellido" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Ciudad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nacimiento" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Edad" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cliente_Direccion" Relationship="Self.PK_dbo_Cliente_Direccion_Cliente" FromRole="Cliente" ToRole="Cliente_Direccion" />
+          <NavigationProperty Name="PedidoCliente" Relationship="Self.PK_dbo_PedidoCliente_Cliente" FromRole="Cliente" ToRole="PedidoCliente" />
+        </EntityType>
+        <EntityType Name="Cliente_Direccion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCliente" Type="Int32" Nullable="false" />
+          <Property Name="Calle" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Numero" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.PK_dbo_Cliente_Direccion_Cliente" FromRole="Cliente_Direccion" ToRole="Cliente" />
+        </EntityType>
+        <EntityType Name="Ingrediente">
+          <Key>
+            <PropertyRef Name="ClaveReceta" />
+            <PropertyRef Name="CodigoInsumo" />
+          </Key>
+          <Property Name="ClaveReceta" Type="Int32" Nullable="false" />
+          <Property Name="CodigoInsumo" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Insumo" Relationship="Self.PK_dbo_Ingrediente_Insumo" FromRole="Ingrediente" ToRole="Insumo" />
+          <NavigationProperty Name="Receta" Relationship="Self.PK_dbo_Ingrediente_Receta" FromRole="Ingrediente" ToRole="Receta" />
+        </EntityType>
+        <EntityType Name="Insumo">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PrecioCompra" Type="Double" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Restricciones" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Registro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UnidadMedida" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProveedorDeInsumo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ingrediente" Relationship="Self.PK_dbo_Ingrediente_Insumo" FromRole="Insumo" ToRole="Ingrediente" />
+          <NavigationProperty Name="OrdenAProveedor" Relationship="Self.PK_dbo_OrdenAProveedor_Insumo" FromRole="Insumo" ToRole="OrdenAProveedor" />
+        </EntityType>
+        <EntityType Name="Orden">
+          <Key>
+            <PropertyRef Name="CodigoPedidoCliente" />
+            <PropertyRef Name="CodigoProductoVenta" />
+          </Key>
+          <Property Name="CodigoPedidoCliente" Type="Int32" Nullable="false" />
+          <Property Name="CodigoProductoVenta" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="Precio" Type="Double" Nullable="false" />
+          <NavigationProperty Name="PedidoCliente" Relationship="Self.PK_dbo_Orden_PedidoCliente" FromRole="Orden" ToRole="PedidoCliente" />
+          <NavigationProperty Name="ProductoVenta" Relationship="Self.PK_dbo_Orden_ProductoVenta" FromRole="Orden" ToRole="ProductoVenta" />
+        </EntityType>
+        <EntityType Name="OrdenAProveedor">
+          <Key>
+            <PropertyRef Name="CodigoPedidoProveedor" />
+            <PropertyRef Name="CodigoInsumo" />
+          </Key>
+          <Property Name="CodigoPedidoProveedor" Type="Int32" Nullable="false" />
+          <Property Name="CodigoInsumo" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="Precio" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Insumo" Relationship="Self.PK_dbo_OrdenAProveedor_Insumo" FromRole="OrdenAProveedor" ToRole="Insumo" />
+          <NavigationProperty Name="PedidoProveedor" Relationship="Self.PK_dbo_Orden_PedidoAProveedor" FromRole="OrdenAProveedor" ToRole="PedidoProveedor" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CostoTotal" Type="Double" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Solicitud" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Entrega" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="PedidoProveedor" Relationship="Self.PK_dbo_PedidoAProveedor_Pedido" FromRole="Pedido" ToRole="PedidoProveedor" />
+          <NavigationProperty Name="PedidoCliente" Relationship="Self.PK_dbo_PedidoCliente_Pedido" FromRole="Pedido" ToRole="PedidoCliente" />
+        </EntityType>
+        <EntityType Name="PedidoCliente">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" />
+          <Property Name="IdCliente" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Double" Nullable="false" />
+          <Property Name="TipoPedido" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.PK_dbo_PedidoCliente_Cliente" FromRole="PedidoCliente" ToRole="Cliente" />
+          <NavigationProperty Name="Orden" Relationship="Self.PK_dbo_Orden_PedidoCliente" FromRole="PedidoCliente" ToRole="Orden" />
+          <NavigationProperty Name="Pedido" Relationship="Self.PK_dbo_PedidoCliente_Pedido" FromRole="PedidoCliente" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="PedidoProveedor">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" />
+          <Property Name="ClaveProveedor" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Double" Nullable="false" />
+          <Property Name="TipoPedido" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="OrdenAProveedor" Relationship="Self.PK_dbo_Orden_PedidoAProveedor" FromRole="PedidoProveedor" ToRole="OrdenAProveedor" />
+          <NavigationProperty Name="Pedido" Relationship="Self.PK_dbo_PedidoAProveedor_Pedido" FromRole="PedidoProveedor" ToRole="Pedido" />
+          <NavigationProperty Name="Proveedor" Relationship="Self.PK_dbo_PedidoAProveedor_Proveedor" FromRole="PedidoProveedor" ToRole="Proveedor" />
+        </EntityType>
+        <EntityType Name="Personal">
+          <Key>
+            <PropertyRef Name="Clave" />
+          </Key>
+          <Property Name="Clave" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TipoUsuario" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CodigoPostal" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Puesto" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Salario" Type="Double" />
+          <Property Name="Telefono" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Ciudad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Registro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Baja" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Personal_Direccion" Relationship="Self.PK_dbo_Personal_Direccion_Personal" FromRole="Personal" ToRole="Personal_Direccion" />
+        </EntityType>
+        <EntityType Name="Personal_Direccion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPersonal" Type="Int32" Nullable="false" />
+          <Property Name="Calle" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Numero" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Personal" Relationship="Self.PK_dbo_Personal_Direccion_Personal" FromRole="Personal_Direccion" ToRole="Personal" />
+        </EntityType>
+        <EntityType Name="ProductoVenta">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodigoReceta" Type="Int32" Nullable="false" />
+          <Property Name="PrecioVenta" Type="Double" Nullable="false" />
+          <Property Name="PrecioCompra" Type="Double" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Foto" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Restricciones" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Registro" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Orden" Relationship="Self.PK_dbo_Orden_ProductoVenta" FromRole="ProductoVenta" ToRole="Orden" />
+          <NavigationProperty Name="Receta" Relationship="Self.PK_dbo_ProductoVenta_Receta" FromRole="ProductoVenta" ToRole="Receta" />
+        </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="Clave" />
+          </Key>
+          <Property Name="Clave" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Rfc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CategoriaInsumo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PedidoProveedor" Relationship="Self.PK_dbo_PedidoAProveedor_Proveedor" FromRole="Proveedor" ToRole="PedidoProveedor" />
+          <NavigationProperty Name="Proveedor_Direccion" Relationship="Self.PK_dbo_Proveedor_Direccion_Proveedor" FromRole="Proveedor" ToRole="Proveedor_Direccion" />
+        </EntityType>
+        <EntityType Name="Proveedor_Direccion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdProveedor" Type="Int32" Nullable="false" />
+          <Property Name="Calle" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Numero" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Proveedor" Relationship="Self.PK_dbo_Proveedor_Direccion_Proveedor" FromRole="Proveedor_Direccion" ToRole="Proveedor" />
+        </EntityType>
+        <EntityType Name="Receta">
+          <Key>
+            <PropertyRef Name="Clave" />
+          </Key>
+          <Property Name="Clave" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Ingrediente" Relationship="Self.PK_dbo_Ingrediente_Receta" FromRole="Receta" ToRole="Ingrediente" />
+          <NavigationProperty Name="ProductoVenta" Relationship="Self.PK_dbo_ProductoVenta_Receta" FromRole="Receta" ToRole="ProductoVenta" />
+        </EntityType>
+        <EntityType Name="SalidaExtraordinaria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdBalance" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UsuarioRegistrador" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Importe" Type="Double" Nullable="false" />
+          <Property Name="Registro" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="BalanceDiario" Relationship="Self.PK_dbo_Salida_Balance" FromRole="SalidaExtraordinaria" ToRole="BalanceDiario" />
+        </EntityType>
+        <Association Name="PK_dbo_Balance_CajaEntrada">
+          <End Role="CajaEntrada" Type="Self.CajaEntrada" Multiplicity="1" />
+          <End Role="BalanceDiario" Type="Self.BalanceDiario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CajaEntrada">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BalanceDiario">
+              <PropertyRef Name="EntradaDeCaja" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_Balance_CajaSalida">
+          <End Role="CajaSalida" Type="Self.CajaSalida" Multiplicity="1" />
+          <End Role="BalanceDiario" Type="Self.BalanceDiario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CajaSalida">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BalanceDiario">
+              <PropertyRef Name="SalidaDeCaja" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_Salida_Balance">
+          <End Role="BalanceDiario" Type="Self.BalanceDiario" Multiplicity="1" />
+          <End Role="SalidaExtraordinaria" Type="Self.SalidaExtraordinaria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BalanceDiario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SalidaExtraordinaria">
+              <PropertyRef Name="IdBalance" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_Cliente_Direccion_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Cliente_Direccion" Type="Self.Cliente_Direccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cliente_Direccion">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_PedidoCliente_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="PedidoCliente" Type="Self.PedidoCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PedidoCliente">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_Ingrediente_Insumo">
+          <End Role="Insumo" Type="Self.Insumo" Multiplicity="1" />
+          <End Role="Ingrediente" Type="Self.Ingrediente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Insumo">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Ingrediente">
+              <PropertyRef Name="CodigoInsumo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_Ingrediente_Receta">
+          <End Role="Receta" Type="Self.Receta" Multiplicity="1" />
+          <End Role="Ingrediente" Type="Self.Ingrediente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receta">
+              <PropertyRef Name="Clave" />
+            </Principal>
+            <Dependent Role="Ingrediente">
+              <PropertyRef Name="ClaveReceta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_OrdenAProveedor_Insumo">
+          <End Role="Insumo" Type="Self.Insumo" Multiplicity="1" />
+          <End Role="OrdenAProveedor" Type="Self.OrdenAProveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Insumo">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="OrdenAProveedor">
+              <PropertyRef Name="CodigoInsumo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_Orden_PedidoCliente">
+          <End Role="PedidoCliente" Type="Self.PedidoCliente" Multiplicity="1" />
+          <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PedidoCliente">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Orden">
+              <PropertyRef Name="CodigoPedidoCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_Orden_ProductoVenta">
+          <End Role="ProductoVenta" Type="Self.ProductoVenta" Multiplicity="1" />
+          <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductoVenta">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Orden">
+              <PropertyRef Name="CodigoProductoVenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_Orden_PedidoAProveedor">
+          <End Role="PedidoProveedor" Type="Self.PedidoProveedor" Multiplicity="1" />
+          <End Role="OrdenAProveedor" Type="Self.OrdenAProveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PedidoProveedor">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="OrdenAProveedor">
+              <PropertyRef Name="CodigoPedidoProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_PedidoAProveedor_Pedido">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1" />
+          <End Role="PedidoProveedor" Type="Self.PedidoProveedor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="PedidoProveedor">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_PedidoCliente_Pedido">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1" />
+          <End Role="PedidoCliente" Type="Self.PedidoCliente" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="PedidoCliente">
+              <PropertyRef Name="Codigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_PedidoAProveedor_Proveedor">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+          <End Role="PedidoProveedor" Type="Self.PedidoProveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="Clave" />
+            </Principal>
+            <Dependent Role="PedidoProveedor">
+              <PropertyRef Name="ClaveProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_Personal_Direccion_Personal">
+          <End Role="Personal" Type="Self.Personal" Multiplicity="1" />
+          <End Role="Personal_Direccion" Type="Self.Personal_Direccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personal">
+              <PropertyRef Name="Clave" />
+            </Principal>
+            <Dependent Role="Personal_Direccion">
+              <PropertyRef Name="IdPersonal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_ProductoVenta_Receta">
+          <End Role="Receta" Type="Self.Receta" Multiplicity="1" />
+          <End Role="ProductoVenta" Type="Self.ProductoVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receta">
+              <PropertyRef Name="Clave" />
+            </Principal>
+            <Dependent Role="ProductoVenta">
+              <PropertyRef Name="CodigoReceta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_dbo_Proveedor_Direccion_Proveedor">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
+          <End Role="Proveedor_Direccion" Type="Self.Proveedor_Direccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="Clave" />
+            </Principal>
+            <Dependent Role="Proveedor_Direccion">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SAPContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BalanceDiario" EntityType="Self.BalanceDiario" />
+          <EntitySet Name="CajaEntrada" EntityType="Self.CajaEntrada" />
+          <EntitySet Name="CajaSalida" EntityType="Self.CajaSalida" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="Cliente_Direccion" EntityType="Self.Cliente_Direccion" />
+          <EntitySet Name="Ingrediente" EntityType="Self.Ingrediente" />
+          <EntitySet Name="Insumo" EntityType="Self.Insumo" />
+          <EntitySet Name="Orden" EntityType="Self.Orden" />
+          <EntitySet Name="OrdenAProveedor" EntityType="Self.OrdenAProveedor" />
+          <EntitySet Name="Pedido" EntityType="Self.Pedido" />
+          <EntitySet Name="PedidoCliente" EntityType="Self.PedidoCliente" />
+          <EntitySet Name="PedidoProveedor" EntityType="Self.PedidoProveedor" />
+          <EntitySet Name="Personal" EntityType="Self.Personal" />
+          <EntitySet Name="Personal_Direccion" EntityType="Self.Personal_Direccion" />
+          <EntitySet Name="ProductoVenta" EntityType="Self.ProductoVenta" />
+          <EntitySet Name="Proveedor" EntityType="Self.Proveedor" />
+          <EntitySet Name="Proveedor_Direccion" EntityType="Self.Proveedor_Direccion" />
+          <EntitySet Name="Receta" EntityType="Self.Receta" />
+          <EntitySet Name="SalidaExtraordinaria" EntityType="Self.SalidaExtraordinaria" />
+          <AssociationSet Name="PK_dbo_Balance_CajaEntrada" Association="Self.PK_dbo_Balance_CajaEntrada">
+            <End Role="CajaEntrada" EntitySet="CajaEntrada" />
+            <End Role="BalanceDiario" EntitySet="BalanceDiario" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_Balance_CajaSalida" Association="Self.PK_dbo_Balance_CajaSalida">
+            <End Role="CajaSalida" EntitySet="CajaSalida" />
+            <End Role="BalanceDiario" EntitySet="BalanceDiario" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_Salida_Balance" Association="Self.PK_dbo_Salida_Balance">
+            <End Role="BalanceDiario" EntitySet="BalanceDiario" />
+            <End Role="SalidaExtraordinaria" EntitySet="SalidaExtraordinaria" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_Cliente_Direccion_Cliente" Association="Self.PK_dbo_Cliente_Direccion_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Cliente_Direccion" EntitySet="Cliente_Direccion" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_PedidoCliente_Cliente" Association="Self.PK_dbo_PedidoCliente_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="PedidoCliente" EntitySet="PedidoCliente" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_Ingrediente_Insumo" Association="Self.PK_dbo_Ingrediente_Insumo">
+            <End Role="Insumo" EntitySet="Insumo" />
+            <End Role="Ingrediente" EntitySet="Ingrediente" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_Ingrediente_Receta" Association="Self.PK_dbo_Ingrediente_Receta">
+            <End Role="Receta" EntitySet="Receta" />
+            <End Role="Ingrediente" EntitySet="Ingrediente" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_OrdenAProveedor_Insumo" Association="Self.PK_dbo_OrdenAProveedor_Insumo">
+            <End Role="Insumo" EntitySet="Insumo" />
+            <End Role="OrdenAProveedor" EntitySet="OrdenAProveedor" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_Orden_PedidoCliente" Association="Self.PK_dbo_Orden_PedidoCliente">
+            <End Role="PedidoCliente" EntitySet="PedidoCliente" />
+            <End Role="Orden" EntitySet="Orden" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_Orden_ProductoVenta" Association="Self.PK_dbo_Orden_ProductoVenta">
+            <End Role="ProductoVenta" EntitySet="ProductoVenta" />
+            <End Role="Orden" EntitySet="Orden" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_Orden_PedidoAProveedor" Association="Self.PK_dbo_Orden_PedidoAProveedor">
+            <End Role="PedidoProveedor" EntitySet="PedidoProveedor" />
+            <End Role="OrdenAProveedor" EntitySet="OrdenAProveedor" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_PedidoAProveedor_Pedido" Association="Self.PK_dbo_PedidoAProveedor_Pedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="PedidoProveedor" EntitySet="PedidoProveedor" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_PedidoCliente_Pedido" Association="Self.PK_dbo_PedidoCliente_Pedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="PedidoCliente" EntitySet="PedidoCliente" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_PedidoAProveedor_Proveedor" Association="Self.PK_dbo_PedidoAProveedor_Proveedor">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="PedidoProveedor" EntitySet="PedidoProveedor" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_Personal_Direccion_Personal" Association="Self.PK_dbo_Personal_Direccion_Personal">
+            <End Role="Personal" EntitySet="Personal" />
+            <End Role="Personal_Direccion" EntitySet="Personal_Direccion" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_ProductoVenta_Receta" Association="Self.PK_dbo_ProductoVenta_Receta">
+            <End Role="Receta" EntitySet="Receta" />
+            <End Role="ProductoVenta" EntitySet="ProductoVenta" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_Proveedor_Direccion_Proveedor" Association="Self.PK_dbo_Proveedor_Direccion_Proveedor">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Proveedor_Direccion" EntitySet="Proveedor_Direccion" />
+          </AssociationSet>
+          <FunctionImport Name="SPIInsumo">
+            <Parameter Name="PrecioCompra" Mode="In" Type="Double" />
+            <Parameter Name="Cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+            <Parameter Name="Restricciones" Mode="In" Type="String" />
+            <Parameter Name="UnidadMedida" Mode="In" Type="String" />
+            <Parameter Name="ProveedorDeInsumo" Mode="In" Type="String" />
+            <Parameter Name="Key" Mode="InOut" Type="Int32" />
+            <Parameter Name="Message" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPGInsumos" ReturnType="Collection(SAPModel.EInsumo)">
+            <Parameter Name="Criterio" Mode="In" Type="String" />
+            <Parameter Name="Valor" Mode="In" Type="String" />
+            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPUInsumo">
+            <Parameter Name="Codigo" Mode="In" Type="Int32" />
+            <Parameter Name="PrecioCompra" Mode="In" Type="Double" />
+            <Parameter Name="Cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+            <Parameter Name="Restricciones" Mode="In" Type="String" />
+            <Parameter Name="UnidadMedida" Mode="In" Type="String" />
+            <Parameter Name="ProveedorDeInsumo" Mode="In" Type="String" />
+            <Parameter Name="Key" Mode="InOut" Type="Int32" />
+            <Parameter Name="Message" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPChangeStatusInsumo">
+            <Parameter Name="Codigo" Mode="In" Type="Int32" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+            <Parameter Name="Key" Mode="InOut" Type="Int32" />
+            <Parameter Name="Message" Mode="InOut" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="EInsumo">
+          <Property Type="Int32" Name="Codigo" Nullable="false" />
+          <Property Type="Double" Name="PrecioCompra" Nullable="false" />
+          <Property Type="Int32" Name="Cantidad" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Restricciones" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="Registro" Nullable="false" Precision="23" />
+          <Property Type="String" Name="UnidadMedida" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ProveedorDeInsumo" Nullable="true" MaxLength="100" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SAPModelStoreContainer" CdmEntityContainer="SAPContext">
+          <EntitySetMapping Name="BalanceDiario">
+            <EntityTypeMapping TypeName="SAPModel.BalanceDiario">
+              <MappingFragment StoreEntitySet="BalanceDiario">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdPersonal" ColumnName="IdPersonal" />
+                <ScalarProperty Name="TiempoInicio" ColumnName="TiempoInicio" />
+                <ScalarProperty Name="TiempoFinal" ColumnName="TiempoFinal" />
+                <ScalarProperty Name="TotalSalidaCalculado" ColumnName="TotalSalidaCalculado" />
+                <ScalarProperty Name="TotalEntradaClaculado" ColumnName="TotalEntradaClaculado" />
+                <ScalarProperty Name="SalidaDeCaja" ColumnName="SalidaDeCaja" />
+                <ScalarProperty Name="EntradaDeCaja" ColumnName="EntradaDeCaja" />
+                <ScalarProperty Name="Ganancia" ColumnName="Ganancia" />
+                <ScalarProperty Name="CantidadEnCaja" ColumnName="CantidadEnCaja" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CajaEntrada">
+            <EntityTypeMapping TypeName="SAPModel.CajaEntrada">
+              <MappingFragment StoreEntitySet="CajaEntrada">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="B_1000" ColumnName="B_1000" />
+                <ScalarProperty Name="B_500" ColumnName="B_500" />
+                <ScalarProperty Name="B_200" ColumnName="B_200" />
+                <ScalarProperty Name="B_100" ColumnName="B_100" />
+                <ScalarProperty Name="B_50" ColumnName="B_50" />
+                <ScalarProperty Name="B_20" ColumnName="B_20" />
+                <ScalarProperty Name="M_20" ColumnName="M_20" />
+                <ScalarProperty Name="M_10" ColumnName="M_10" />
+                <ScalarProperty Name="M_5" ColumnName="M_5" />
+                <ScalarProperty Name="M_2" ColumnName="M_2" />
+                <ScalarProperty Name="M_1" ColumnName="M_1" />
+                <ScalarProperty Name="C_50" ColumnName="C_50" />
+                <ScalarProperty Name="C_20" ColumnName="C_20" />
+                <ScalarProperty Name="C_10" ColumnName="C_10" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CajaSalida">
+            <EntityTypeMapping TypeName="SAPModel.CajaSalida">
+              <MappingFragment StoreEntitySet="CajaSalida">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="B_1000" ColumnName="B_1000" />
+                <ScalarProperty Name="B_500" ColumnName="B_500" />
+                <ScalarProperty Name="B_200" ColumnName="B_200" />
+                <ScalarProperty Name="B_100" ColumnName="B_100" />
+                <ScalarProperty Name="B_50" ColumnName="B_50" />
+                <ScalarProperty Name="B_20" ColumnName="B_20" />
+                <ScalarProperty Name="M_20" ColumnName="M_20" />
+                <ScalarProperty Name="M_10" ColumnName="M_10" />
+                <ScalarProperty Name="M_5" ColumnName="M_5" />
+                <ScalarProperty Name="M_2" ColumnName="M_2" />
+                <ScalarProperty Name="M_1" ColumnName="M_1" />
+                <ScalarProperty Name="C_50" ColumnName="C_50" />
+                <ScalarProperty Name="C_20" ColumnName="C_20" />
+                <ScalarProperty Name="C_10" ColumnName="C_10" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="SAPModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="Nacimiento" ColumnName="Nacimiento" />
+                <ScalarProperty Name="Edad" ColumnName="Edad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente_Direccion">
+            <EntityTypeMapping TypeName="SAPModel.Cliente_Direccion">
+              <MappingFragment StoreEntitySet="Cliente_Direccion">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="Calle" ColumnName="Calle" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ingrediente">
+            <EntityTypeMapping TypeName="SAPModel.Ingrediente">
+              <MappingFragment StoreEntitySet="Ingrediente">
+                <ScalarProperty Name="ClaveReceta" ColumnName="ClaveReceta" />
+                <ScalarProperty Name="CodigoInsumo" ColumnName="CodigoInsumo" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Insumo">
+            <EntityTypeMapping TypeName="SAPModel.Insumo">
+              <MappingFragment StoreEntitySet="Insumo">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="PrecioCompra" ColumnName="PrecioCompra" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Restricciones" ColumnName="Restricciones" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Registro" ColumnName="Registro" />
+                <ScalarProperty Name="UnidadMedida" ColumnName="UnidadMedida" />
+                <ScalarProperty Name="ProveedorDeInsumo" ColumnName="ProveedorDeInsumo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orden">
+            <EntityTypeMapping TypeName="SAPModel.Orden">
+              <MappingFragment StoreEntitySet="Orden">
+                <ScalarProperty Name="CodigoPedidoCliente" ColumnName="CodigoPedidoCliente" />
+                <ScalarProperty Name="CodigoProductoVenta" ColumnName="CodigoProductoVenta" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrdenAProveedor">
+            <EntityTypeMapping TypeName="SAPModel.OrdenAProveedor">
+              <MappingFragment StoreEntitySet="OrdenAProveedor">
+                <ScalarProperty Name="CodigoPedidoProveedor" ColumnName="CodigoPedidoProveedor" />
+                <ScalarProperty Name="CodigoInsumo" ColumnName="CodigoInsumo" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pedido">
+            <EntityTypeMapping TypeName="SAPModel.Pedido">
+              <MappingFragment StoreEntitySet="Pedido">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="CostoTotal" ColumnName="CostoTotal" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Solicitud" ColumnName="Solicitud" />
+                <ScalarProperty Name="Entrega" ColumnName="Entrega" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PedidoCliente">
+            <EntityTypeMapping TypeName="SAPModel.PedidoCliente">
+              <MappingFragment StoreEntitySet="PedidoCliente">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="TipoPedido" ColumnName="TipoPedido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PedidoProveedor">
+            <EntityTypeMapping TypeName="SAPModel.PedidoProveedor">
+              <MappingFragment StoreEntitySet="PedidoProveedor">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="ClaveProveedor" ColumnName="ClaveProveedor" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="TipoPedido" ColumnName="TipoPedido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Personal">
+            <EntityTypeMapping TypeName="SAPModel.Personal">
+              <MappingFragment StoreEntitySet="Personal">
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="TipoUsuario" ColumnName="TipoUsuario" />
+                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Puesto" ColumnName="Puesto" />
+                <ScalarProperty Name="Salario" ColumnName="Salario" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="Registro" ColumnName="Registro" />
+                <ScalarProperty Name="Baja" ColumnName="Baja" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Personal_Direccion">
+            <EntityTypeMapping TypeName="SAPModel.Personal_Direccion">
+              <MappingFragment StoreEntitySet="Personal_Direccion">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdPersonal" ColumnName="IdPersonal" />
+                <ScalarProperty Name="Calle" ColumnName="Calle" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductoVenta">
+            <EntityTypeMapping TypeName="SAPModel.ProductoVenta">
+              <MappingFragment StoreEntitySet="ProductoVenta">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="CodigoReceta" ColumnName="CodigoReceta" />
+                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
+                <ScalarProperty Name="PrecioCompra" ColumnName="PrecioCompra" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Foto" ColumnName="Foto" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Restricciones" ColumnName="Restricciones" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Registro" ColumnName="Registro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proveedor">
+            <EntityTypeMapping TypeName="SAPModel.Proveedor">
+              <MappingFragment StoreEntitySet="Proveedor">
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Rfc" ColumnName="Rfc" />
+                <ScalarProperty Name="CategoriaInsumo" ColumnName="CategoriaInsumo" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proveedor_Direccion">
+            <EntityTypeMapping TypeName="SAPModel.Proveedor_Direccion">
+              <MappingFragment StoreEntitySet="Proveedor_Direccion">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+                <ScalarProperty Name="Calle" ColumnName="Calle" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Receta">
+            <EntityTypeMapping TypeName="SAPModel.Receta">
+              <MappingFragment StoreEntitySet="Receta">
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SalidaExtraordinaria">
+            <EntityTypeMapping TypeName="SAPModel.SalidaExtraordinaria">
+              <MappingFragment StoreEntitySet="SalidaExtraordinaria">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdBalance" ColumnName="IdBalance" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="UsuarioRegistrador" ColumnName="UsuarioRegistrador" />
+                <ScalarProperty Name="Importe" ColumnName="Importe" />
+                <ScalarProperty Name="Registro" ColumnName="Registro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SPIInsumo" FunctionName="SAPModel.Store.SGI_SAP_Insumo" />
+          <FunctionImportMapping FunctionImportName="SPGInsumos" FunctionName="SAPModel.Store.SPG_SAP_Insumo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SAPModel.EInsumo">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="PrecioCompra" ColumnName="PrecioCompra" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Restricciones" ColumnName="Restricciones" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Registro" ColumnName="Registro" />
+                <ScalarProperty Name="UnidadMedida" ColumnName="UnidadMedida" />
+                <ScalarProperty Name="ProveedorDeInsumo" ColumnName="ProveedorDeInsumo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPUInsumo" FunctionName="SAPModel.Store.SPU_SAP_Insumo" />
+          <FunctionImportMapping FunctionImportName="SPChangeStatusInsumo" FunctionName="SAPModel.Store.SPChangeStatus_SAP_Insumo" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

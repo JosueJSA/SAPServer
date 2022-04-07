@@ -31,9 +31,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Primitives, Version=4.9.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ServiceModel.Primitives.4.9.0\lib\net461\System.ServiceModel.Primitives.dll</HintPath>
@@ -46,11 +55,110 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IEjemploService.cs" />
+    <Compile Include="IInsumosService.cs" />
+    <Compile Include="Model\AnswerMessage.cs" />
+    <Compile Include="Model\BalanceDiario.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CajaEntrada.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CajaSalida.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Cliente.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Cliente_Direccion.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EInsumo.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Ingrediente.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Insumo.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Orden.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\OrdenAProveedor.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Pedido.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PedidoCliente.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PedidoProveedor.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Personal.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Personal_Direccion.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ProductoVenta.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Proveedor.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Proveedor_Direccion.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Receta.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SalidaExtraordinaria.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SAPModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SAPModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SAPModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SAPModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SAPModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
+    <EntityDeploy Include="Model\SAPModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SAPModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\SAPModel.edmx.diagram">
+      <DependentUpon>SAPModel.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Model\SAPModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SAPModel.edmx</DependentUpon>
+      <LastGenOutput>SAPModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\SAPModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SAPModel.edmx</DependentUpon>
+      <LastGenOutput>SAPModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
