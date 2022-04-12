@@ -1145,12 +1145,6 @@
             <Parameter Name="Key" Mode="InOut" Type="Int32" />
             <Parameter Name="Message" Mode="InOut" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SPGInsumos" ReturnType="Collection(SAPModel.EInsumo)">
-            <Parameter Name="Criterio" Mode="In" Type="String" />
-            <Parameter Name="Valor" Mode="In" Type="String" />
-            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
-            <Parameter Name="Status" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="SPUInsumo">
             <Parameter Name="Codigo" Mode="In" Type="Int32" />
             <Parameter Name="PrecioCompra" Mode="In" Type="Double" />
@@ -1162,6 +1156,12 @@
             <Parameter Name="ProveedorDeInsumo" Mode="In" Type="String" />
             <Parameter Name="Key" Mode="InOut" Type="Int32" />
             <Parameter Name="Message" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPGInsumos" ReturnType="Collection(SAPModel.EInsumo)">
+            <Parameter Name="Criterio" Mode="In" Type="String" />
+            <Parameter Name="Valor" Mode="In" Type="String" />
+            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+            <Parameter Name="Status" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SPChangeStatusInsumo">
             <Parameter Name="Codigo" Mode="In" Type="Int32" />
@@ -1440,6 +1440,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SPIInsumo" FunctionName="SAPModel.Store.SGI_SAP_Insumo" />
+          <FunctionImportMapping FunctionImportName="SPUInsumo" FunctionName="SAPModel.Store.SPU_SAP_Insumo" />
           <FunctionImportMapping FunctionImportName="SPGInsumos" FunctionName="SAPModel.Store.SPG_SAP_Insumo">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SAPModel.EInsumo">
@@ -1456,7 +1457,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SPUInsumo" FunctionName="SAPModel.Store.SPU_SAP_Insumo" />
           <FunctionImportMapping FunctionImportName="SPChangeStatusInsumo" FunctionName="SAPModel.Store.SPChangeStatus_SAP_Insumo" />
         </EntityContainerMapping>
       </Mapping>

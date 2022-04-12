@@ -80,27 +80,6 @@ namespace Services.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPIInsumo", precioCompraParameter, cantidadParameter, nombreParameter, descripcionParameter, restriccionesParameter, unidadMedidaParameter, proveedorDeInsumoParameter, key, message);
         }
     
-        public virtual ObjectResult<EInsumo> SPGInsumos(string criterio, string valor, Nullable<System.DateTime> fecha, string status)
-        {
-            var criterioParameter = criterio != null ?
-                new ObjectParameter("Criterio", criterio) :
-                new ObjectParameter("Criterio", typeof(string));
-    
-            var valorParameter = valor != null ?
-                new ObjectParameter("Valor", valor) :
-                new ObjectParameter("Valor", typeof(string));
-    
-            var fechaParameter = fecha.HasValue ?
-                new ObjectParameter("Fecha", fecha) :
-                new ObjectParameter("Fecha", typeof(System.DateTime));
-    
-            var statusParameter = status != null ?
-                new ObjectParameter("Status", status) :
-                new ObjectParameter("Status", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EInsumo>("SPGInsumos", criterioParameter, valorParameter, fechaParameter, statusParameter);
-        }
-    
         public virtual int SPUInsumo(Nullable<int> codigo, Nullable<double> precioCompra, Nullable<int> cantidad, string nombre, string descripcion, string restricciones, string unidadMedida, string proveedorDeInsumo, ObjectParameter key, ObjectParameter message)
         {
             var codigoParameter = codigo.HasValue ?
@@ -136,6 +115,27 @@ namespace Services.Model
                 new ObjectParameter("ProveedorDeInsumo", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPUInsumo", codigoParameter, precioCompraParameter, cantidadParameter, nombreParameter, descripcionParameter, restriccionesParameter, unidadMedidaParameter, proveedorDeInsumoParameter, key, message);
+        }
+    
+        public virtual ObjectResult<EInsumo> SPGInsumos(string criterio, string valor, Nullable<System.DateTime> fecha, string status)
+        {
+            var criterioParameter = criterio != null ?
+                new ObjectParameter("Criterio", criterio) :
+                new ObjectParameter("Criterio", typeof(string));
+    
+            var valorParameter = valor != null ?
+                new ObjectParameter("Valor", valor) :
+                new ObjectParameter("Valor", typeof(string));
+    
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("Fecha", fecha) :
+                new ObjectParameter("Fecha", typeof(System.DateTime));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EInsumo>("SPGInsumos", criterioParameter, valorParameter, fechaParameter, statusParameter);
         }
     
         public virtual int SPChangeStatusInsumo(Nullable<int> codigo, string status, ObjectParameter key, ObjectParameter message)
