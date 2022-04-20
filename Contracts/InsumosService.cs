@@ -1,7 +1,4 @@
-﻿using Google.Apis.Auth.OAuth2;
-using Google.Apis.Drive.v2;
-using Google.Apis.Util.Store;
-using Services;
+﻿using Services;
 using Services.Model;
 using System;
 using System.Collections.Generic;
@@ -72,6 +69,18 @@ namespace Contracts
             using (var context = new SAPContext())
             {
                 if (nombreActual.ToLower() != nombreABuscar.ToLower() && context.Insumo.Any(insumo => insumo.Nombre.ToLower() == nombreABuscar.ToLower()))
+                    returnValue = true;
+            }
+            return returnValue;
+        }
+
+        public bool IsUsedInReceta(int codigoInsumo)
+        {
+            bool returnValue = false;
+            using (var context = new SAPContext())
+            {
+                var result = context.Ingredientes.Where(i => i.CodigoInsumo == codigoInsumo);
+                if (result != null && result.ToList().Count > 0)
                     returnValue = true;
             }
             return returnValue;

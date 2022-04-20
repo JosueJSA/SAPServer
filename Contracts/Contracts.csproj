@@ -52,8 +52,8 @@
     <Reference Include="Google.Apis.Core, Version=1.57.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Apis.Core.1.57.0\lib\net45\Google.Apis.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.Drive.v2, Version=1.57.0.2566, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.Drive.v2.1.57.0.2566\lib\net45\Google.Apis.Drive.v2.dll</HintPath>
+    <Reference Include="Google.Apis.Drive.v3, Version=1.57.0.2656, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Drive.v3.1.57.0.2656\lib\net45\Google.Apis.Drive.v3.dll</HintPath>
     </Reference>
     <Reference Include="Google.Apis.PlatformServices, Version=1.57.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Apis.1.57.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InsumosService.cs" />
+    <Compile Include="ProductosService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

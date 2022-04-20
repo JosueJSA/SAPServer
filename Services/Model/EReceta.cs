@@ -11,14 +11,11 @@ namespace Services.Model
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class Ingrediente
+
+    public partial class EReceta
     {
-        public int ClaveReceta { get; set; }
-        public int CodigoInsumo { get; set; }
-        public double Cantidad { get; set; }
-    
-        public virtual Insumo Insumo { get; set; }
-        public virtual Receta Receta { get; set; }
+        public int Clave { get; set; }  
+        public string Descripcion { get; set; } 
+        public List<EIngrediente> Ingredientes { get; set; }    
     }
 }

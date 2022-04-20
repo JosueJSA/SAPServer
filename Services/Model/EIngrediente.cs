@@ -10,15 +10,14 @@
 namespace Services.Model
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Ingrediente
+    public partial class EIngrediente
     {
-        public int ClaveReceta { get; set; }
         public int CodigoInsumo { get; set; }
-        public double Cantidad { get; set; }
-    
-        public virtual Insumo Insumo { get; set; }
-        public virtual Receta Receta { get; set; }
+        public string NombreInsumo { get; set; }
+        public double CantidadIngrediente { get; set; }
+        public double CantidadInsumo { get; set; }
+        public string Unidad { get; set; }
+        public double PrecioInsumo { get; set; }
     }
 }

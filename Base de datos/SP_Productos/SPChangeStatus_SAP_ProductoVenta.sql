@@ -10,31 +10,19 @@ GO
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE SPU_SAP_Insumo
+CREATE PROCEDURE SPChangeStatus_SAP_ProductoVenta
 	-- Add the parameters for the stored procedure here
 	@Codigo INT,
-	@PrecioCompra FLOAT,
-	@Cantidad FLOAT,
-	@Nombre NVARCHAR (100),
-	@Descripcion NVARCHAR(500),
-	@Restricciones NVARCHAR (500),
-	@UnidadMedida NVARCHAR (50),
-	@ProveedorDeInsumo NVARCHAR (100) = NULL,
+	@Status NVARCHAR (100),
 	@Key INT OUT,
 	@Message NVARCHAR (MAX) OUT
 AS
 BEGIN TRY
-	IF EXISTS (SELECT * FROM [Insumo] WHERE Codigo = @Codigo)
+	IF EXISTS (SELECT * FROM [ProductoVenta] WHERE Codigo = @Codigo)
 	BEGIN
 		BEGIN TRANSACTION;
-			UPDATE [Insumo] SET
-				PrecioCompra = @PrecioCompra,
-				Cantidad = @Cantidad,
-				Nombre = @Nombre,
-				Descripcion = @Descripcion,
-				Restricciones = @Restricciones,
-				UnidadMedida = @UnidadMedida,
-				ProveedorDeInsumo = ISNULL(@ProveedorDeInsumo, 'Ninguno')
+			UPDATE [ProductoVenta] SET
+				Status = @Status
 			WHERE Codigo = @Codigo;
 			SET @Key = @Codigo;
 			SET @Message = 'Correcto'
@@ -43,7 +31,7 @@ BEGIN TRY
 	ELSE
 	BEGIN
 		SET @Key = -2;
-		SET @Message = 'Insumo no encontrado en la base de datos'
+		SET @Message = 'Producto no encontrado en la base de datos'
 	END
 END TRY
 BEGIN CATCH

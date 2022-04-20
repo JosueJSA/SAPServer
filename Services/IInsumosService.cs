@@ -20,5 +20,7 @@ namespace Services
         AnswerMessage ActualizarCantidades(List<EInsumo> nuevasCantidades);
         [OperationContract]
         bool IsDuplicated(string nombreActual, string nombreABuscar);
+        [OperationContract]
+        bool IsUsedInReceta(int codigoInsumo);
     }
 }

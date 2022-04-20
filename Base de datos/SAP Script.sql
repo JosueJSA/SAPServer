@@ -57,7 +57,7 @@ CREATE TABLE [Cliente.Direccion] (
 CREATE TABLE [Insumo] (
     [Codigo] INT IDENTITY (1, 1) NOT NULL,
 	[PrecioCompra] FLOAT NOT NULL,
-	[Cantidad] INT NOT NULL,
+	[Cantidad] FLOAT NOT NULL,
     [Nombre] NVARCHAR (100) NOT NULL,
     [Descripcion] NVARCHAR (500) NOT NULL,
     [Restricciones] NVARCHAR (500) NOT NULL,
@@ -90,7 +90,6 @@ CREATE TABLE [Proveedor.Direccion] (
 
 CREATE TABLE [Receta] (
     [Clave] INT IDENTITY (1, 1) NOT NULL,
-	[Nombre] NVARCHAR (100) NOT NULL,
 	[Descripcion] NVARCHAR (500) NOT NULL
     CONSTRAINT [PK_dbo.Receta] PRIMARY KEY CLUSTERED ([Clave] ASC)
 );
@@ -98,7 +97,7 @@ CREATE TABLE [Receta] (
 CREATE TABLE [Ingrediente] (
 	[ClaveReceta] INT NOT NULL,
 	[CodigoInsumo] INT NOT NULL,
-	[Cantidad] INT NOT NULL,
+	[Cantidad] FLOAT NOT NULL,
 	CONSTRAINT [PK_Ingrediente] PRIMARY KEY(ClaveReceta, CodigoInsumo),
 	CONSTRAINT [PK_dbo.Ingrediente.Receta] FOREIGN KEY ([ClaveReceta]) REFERENCES [dbo].[Receta] ([Clave]) ON UPDATE CASCADE,
 	CONSTRAINT [PK_dbo.Ingrediente.Insumo] FOREIGN KEY ([CodigoInsumo]) REFERENCES [dbo].[Insumo] ([Codigo]) ON UPDATE CASCADE

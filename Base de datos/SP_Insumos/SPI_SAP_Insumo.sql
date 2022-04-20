@@ -10,10 +10,10 @@ GO
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-ALTER PROCEDURE SGI_SAP_Insumo
+CREATE PROCEDURE SPI_SAP_Insumo
 	-- Add the parameters for the stored procedure here
 	@PrecioCompra FLOAT,
-	@Cantidad INT,
+	@Cantidad FLOAT,
 	@Nombre NVARCHAR (100),
 	@Descripcion NVARCHAR(500),
 	@Restricciones NVARCHAR (500),

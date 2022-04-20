@@ -11,17 +11,18 @@ namespace Services.Model
 {
     using System;
     
-    public partial class EInsumo
+    public partial class EProducto
     {
         public int Codigo { get; set; }
+        public int CodigoReceta { get; set; }
+        public double PrecioVenta { get; set; }
         public double PrecioCompra { get; set; }
-        public double Cantidad { get; set; }
+        public int Cantidad { get; set; }
         public string Nombre { get; set; }
+        public string Foto { get; set; }
         public string Descripcion { get; set; }
         public string Restricciones { get; set; }
         public string Status { get; set; }
         public System.DateTime Registro { get; set; }
-        public string UnidadMedida { get; set; }
-        public string ProveedorDeInsumo { get; set; }
     }
 }

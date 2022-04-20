@@ -46,8 +46,86 @@ namespace Services.Model
         public virtual DbSet<Proveedor_Direccion> Proveedor_Direccion { get; set; }
         public virtual DbSet<Receta> Receta { get; set; }
         public virtual DbSet<SalidaExtraordinaria> SalidaExtraordinaria { get; set; }
+        public virtual DbSet<Ingredientes> Ingredientes { get; set; }
     
-        public virtual int SPIInsumo(Nullable<double> precioCompra, Nullable<int> cantidad, string nombre, string descripcion, string restricciones, string unidadMedida, string proveedorDeInsumo, ObjectParameter key, ObjectParameter message)
+        public virtual int SPChangeStatusInsumo(Nullable<int> codigo, string status, ObjectParameter key, ObjectParameter message)
+        {
+            var codigoParameter = codigo.HasValue ?
+                new ObjectParameter("Codigo", codigo) :
+                new ObjectParameter("Codigo", typeof(int));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPChangeStatusInsumo", codigoParameter, statusParameter, key, message);
+        }
+    
+        public virtual int SPChangeStatusProducto(Nullable<int> codigo, string status, ObjectParameter key, ObjectParameter message)
+        {
+            var codigoParameter = codigo.HasValue ?
+                new ObjectParameter("Codigo", codigo) :
+                new ObjectParameter("Codigo", typeof(int));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPChangeStatusProducto", codigoParameter, statusParameter, key, message);
+        }
+    
+        public virtual ObjectResult<EIngrediente> SPGIngredientes(Nullable<int> iDReceta)
+        {
+            var iDRecetaParameter = iDReceta.HasValue ?
+                new ObjectParameter("IDReceta", iDReceta) :
+                new ObjectParameter("IDReceta", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EIngrediente>("SPGIngredientes", iDRecetaParameter);
+        }
+    
+        public virtual ObjectResult<EInsumo> SPGInsumos(string criterio, string valor, Nullable<System.DateTime> fecha, string status)
+        {
+            var criterioParameter = criterio != null ?
+                new ObjectParameter("Criterio", criterio) :
+                new ObjectParameter("Criterio", typeof(string));
+    
+            var valorParameter = valor != null ?
+                new ObjectParameter("Valor", valor) :
+                new ObjectParameter("Valor", typeof(string));
+    
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("Fecha", fecha) :
+                new ObjectParameter("Fecha", typeof(System.DateTime));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EInsumo>("SPGInsumos", criterioParameter, valorParameter, fechaParameter, statusParameter);
+        }
+    
+        public virtual ObjectResult<EProducto> SPGProductos(string criterio, string valor, Nullable<System.DateTime> fecha, string status)
+        {
+            var criterioParameter = criterio != null ?
+                new ObjectParameter("Criterio", criterio) :
+                new ObjectParameter("Criterio", typeof(string));
+    
+            var valorParameter = valor != null ?
+                new ObjectParameter("Valor", valor) :
+                new ObjectParameter("Valor", typeof(string));
+    
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("Fecha", fecha) :
+                new ObjectParameter("Fecha", typeof(System.DateTime));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EProducto>("SPGProductos", criterioParameter, valorParameter, fechaParameter, statusParameter);
+        }
+    
+        public virtual int SPIInsumo(Nullable<double> precioCompra, Nullable<double> cantidad, string nombre, string descripcion, string restricciones, string unidadMedida, string proveedorDeInsumo, ObjectParameter key, ObjectParameter message)
         {
             var precioCompraParameter = precioCompra.HasValue ?
                 new ObjectParameter("PrecioCompra", precioCompra) :
@@ -55,7 +133,7 @@ namespace Services.Model
     
             var cantidadParameter = cantidad.HasValue ?
                 new ObjectParameter("Cantidad", cantidad) :
-                new ObjectParameter("Cantidad", typeof(int));
+                new ObjectParameter("Cantidad", typeof(double));
     
             var nombreParameter = nombre != null ?
                 new ObjectParameter("Nombre", nombre) :
@@ -80,7 +158,7 @@ namespace Services.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPIInsumo", precioCompraParameter, cantidadParameter, nombreParameter, descripcionParameter, restriccionesParameter, unidadMedidaParameter, proveedorDeInsumoParameter, key, message);
         }
     
-        public virtual int SPUInsumo(Nullable<int> codigo, Nullable<double> precioCompra, Nullable<int> cantidad, string nombre, string descripcion, string restricciones, string unidadMedida, string proveedorDeInsumo, ObjectParameter key, ObjectParameter message)
+        public virtual int SPUInsumo(Nullable<int> codigo, Nullable<double> precioCompra, Nullable<double> cantidad, string nombre, string descripcion, string restricciones, string unidadMedida, string proveedorDeInsumo, ObjectParameter key, ObjectParameter message)
         {
             var codigoParameter = codigo.HasValue ?
                 new ObjectParameter("Codigo", codigo) :
@@ -92,7 +170,7 @@ namespace Services.Model
     
             var cantidadParameter = cantidad.HasValue ?
                 new ObjectParameter("Cantidad", cantidad) :
-                new ObjectParameter("Cantidad", typeof(int));
+                new ObjectParameter("Cantidad", typeof(double));
     
             var nombreParameter = nombre != null ?
                 new ObjectParameter("Nombre", nombre) :
@@ -115,40 +193,6 @@ namespace Services.Model
                 new ObjectParameter("ProveedorDeInsumo", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPUInsumo", codigoParameter, precioCompraParameter, cantidadParameter, nombreParameter, descripcionParameter, restriccionesParameter, unidadMedidaParameter, proveedorDeInsumoParameter, key, message);
-        }
-    
-        public virtual ObjectResult<EInsumo> SPGInsumos(string criterio, string valor, Nullable<System.DateTime> fecha, string status)
-        {
-            var criterioParameter = criterio != null ?
-                new ObjectParameter("Criterio", criterio) :
-                new ObjectParameter("Criterio", typeof(string));
-    
-            var valorParameter = valor != null ?
-                new ObjectParameter("Valor", valor) :
-                new ObjectParameter("Valor", typeof(string));
-    
-            var fechaParameter = fecha.HasValue ?
-                new ObjectParameter("Fecha", fecha) :
-                new ObjectParameter("Fecha", typeof(System.DateTime));
-    
-            var statusParameter = status != null ?
-                new ObjectParameter("Status", status) :
-                new ObjectParameter("Status", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EInsumo>("SPGInsumos", criterioParameter, valorParameter, fechaParameter, statusParameter);
-        }
-    
-        public virtual int SPChangeStatusInsumo(Nullable<int> codigo, string status, ObjectParameter key, ObjectParameter message)
-        {
-            var codigoParameter = codigo.HasValue ?
-                new ObjectParameter("Codigo", codigo) :
-                new ObjectParameter("Codigo", typeof(int));
-    
-            var statusParameter = status != null ?
-                new ObjectParameter("Status", status) :
-                new ObjectParameter("Status", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPChangeStatusInsumo", codigoParameter, statusParameter, key, message);
         }
     }
 }

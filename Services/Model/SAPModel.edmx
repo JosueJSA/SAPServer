@@ -91,7 +91,7 @@
           </Key>
           <Property Name="ClaveReceta" Type="int" Nullable="false" />
           <Property Name="CodigoInsumo" Type="int" Nullable="false" />
-          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="Insumo">
           <Key>
@@ -99,7 +99,7 @@
           </Key>
           <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PrecioCompra" Type="float" Nullable="false" />
-          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="float" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Descripcion" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="Restricciones" Type="nvarchar" MaxLength="500" Nullable="false" />
@@ -226,7 +226,6 @@
             <PropertyRef Name="Clave" />
           </Key>
           <Property Name="Clave" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Descripcion" Type="nvarchar" MaxLength="500" Nullable="false" />
         </EntityType>
         <EntityType Name="SalidaExtraordinaria">
@@ -239,6 +238,34 @@
           <Property Name="UsuarioRegistrador" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Importe" Type="float" Nullable="false" />
           <Property Name="Registro" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SAP.dbo.Ingredientes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Ingredientes">
+          <Key>
+            <PropertyRef Name="ClaveReceta" />
+            <PropertyRef Name="CodigoProducto" />
+            <PropertyRef Name="CantidadProducto" />
+            <PropertyRef Name="NombreProducto" />
+            <PropertyRef Name="CodigoInsumo" />
+            <PropertyRef Name="CantidadIngrediente" />
+            <PropertyRef Name="NombreInsumo" />
+            <PropertyRef Name="CantidadInsumo" />
+            <PropertyRef Name="StatusInsumo" />
+            <PropertyRef Name="PrecioInsumo" />
+            <PropertyRef Name="Unidad" />
+          </Key>
+          <Property Name="ClaveReceta" Type="int" Nullable="false" />
+          <Property Name="CodigoProducto" Type="int" Nullable="false" />
+          <Property Name="CantidadProducto" Type="int" Nullable="false" />
+          <Property Name="NombreProducto" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CodigoInsumo" Type="int" Nullable="false" />
+          <Property Name="CantidadIngrediente" Type="float" Nullable="false" />
+          <Property Name="NombreInsumo" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CantidadInsumo" Type="float" Nullable="false" />
+          <Property Name="StatusInsumo" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PrecioInsumo" Type="float" Nullable="false" />
+          <Property Name="Unidad" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="PK_dbo_Balance_CajaEntrada">
           <End Role="CajaEntrada" Type="Self.CajaEntrada" Multiplicity="1" />
@@ -444,9 +471,36 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="SGI_SAP_Insumo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="SPChangeStatus_SAP_Insumo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo" Type="int" Mode="In" />
+          <Parameter Name="Status" Type="nvarchar" Mode="In" />
+          <Parameter Name="Key" Type="int" Mode="InOut" />
+          <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
+        </Function>
+        <Function Name="SPChangeStatus_SAP_ProductoVenta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo" Type="int" Mode="In" />
+          <Parameter Name="Status" Type="nvarchar" Mode="In" />
+          <Parameter Name="Key" Type="int" Mode="InOut" />
+          <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
+        </Function>
+        <Function Name="SPG_SAP_Ingredientes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDReceta" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SPG_SAP_Insumo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Criterio" Type="nvarchar" Mode="In" />
+          <Parameter Name="Valor" Type="nvarchar" Mode="In" />
+          <Parameter Name="Fecha" Type="datetime" Mode="In" />
+          <Parameter Name="Status" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SPG_SAP_ProductoVenta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Criterio" Type="nvarchar" Mode="In" />
+          <Parameter Name="Valor" Type="nvarchar" Mode="In" />
+          <Parameter Name="Fecha" Type="datetime" Mode="In" />
+          <Parameter Name="Status" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SPI_SAP_Insumo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PrecioCompra" Type="float" Mode="In" />
-          <Parameter Name="Cantidad" Type="int" Mode="In" />
+          <Parameter Name="Cantidad" Type="float" Mode="In" />
           <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
           <Parameter Name="Descripcion" Type="nvarchar" Mode="In" />
           <Parameter Name="Restricciones" Type="nvarchar" Mode="In" />
@@ -455,22 +509,10 @@
           <Parameter Name="Key" Type="int" Mode="InOut" />
           <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
         </Function>
-        <Function Name="SPChangeStatus_SAP_Insumo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Codigo" Type="int" Mode="In" />
-          <Parameter Name="Status" Type="nvarchar" Mode="In" />
-          <Parameter Name="Key" Type="int" Mode="InOut" />
-          <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
-        </Function>
-        <Function Name="SPG_SAP_Insumo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Criterio" Type="nvarchar" Mode="In" />
-          <Parameter Name="Valor" Type="nvarchar" Mode="In" />
-          <Parameter Name="Fecha" Type="datetime" Mode="In" />
-          <Parameter Name="Status" Type="nvarchar" Mode="In" />
-        </Function>
         <Function Name="SPU_SAP_Insumo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Codigo" Type="int" Mode="In" />
           <Parameter Name="PrecioCompra" Type="float" Mode="In" />
-          <Parameter Name="Cantidad" Type="int" Mode="In" />
+          <Parameter Name="Cantidad" Type="float" Mode="In" />
           <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
           <Parameter Name="Descripcion" Type="nvarchar" Mode="In" />
           <Parameter Name="Restricciones" Type="nvarchar" Mode="In" />
@@ -499,6 +541,21 @@
           <EntitySet Name="Proveedor_Direccion" EntityType="Self.Proveedor_Direccion" Schema="dbo" Table="Proveedor.Direccion" store:Type="Tables" />
           <EntitySet Name="Receta" EntityType="Self.Receta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SalidaExtraordinaria" EntityType="Self.SalidaExtraordinaria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ingredientes" EntityType="Self.Ingredientes" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Ingredientes].[ClaveReceta] AS [ClaveReceta], 
+    [Ingredientes].[CodigoProducto] AS [CodigoProducto], 
+    [Ingredientes].[CantidadProducto] AS [CantidadProducto], 
+    [Ingredientes].[NombreProducto] AS [NombreProducto], 
+    [Ingredientes].[CodigoInsumo] AS [CodigoInsumo], 
+    [Ingredientes].[CantidadIngrediente] AS [CantidadIngrediente], 
+    [Ingredientes].[NombreInsumo] AS [NombreInsumo], 
+    [Ingredientes].[CantidadInsumo] AS [CantidadInsumo], 
+    [Ingredientes].[StatusInsumo] AS [StatusInsumo], 
+    [Ingredientes].[PrecioInsumo] AS [PrecioInsumo], 
+    [Ingredientes].[Unidad] AS [Unidad]
+    FROM [dbo].[Ingredientes] AS [Ingredientes]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="PK_dbo_Balance_CajaEntrada" Association="Self.PK_dbo_Balance_CajaEntrada">
             <End Role="CajaEntrada" EntitySet="CajaEntrada" />
             <End Role="BalanceDiario" EntitySet="BalanceDiario" />
@@ -667,7 +724,7 @@
           </Key>
           <Property Name="ClaveReceta" Type="Int32" Nullable="false" />
           <Property Name="CodigoInsumo" Type="Int32" Nullable="false" />
-          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Double" Nullable="false" />
           <NavigationProperty Name="Insumo" Relationship="Self.PK_dbo_Ingrediente_Insumo" FromRole="Ingrediente" ToRole="Insumo" />
           <NavigationProperty Name="Receta" Relationship="Self.PK_dbo_Ingrediente_Receta" FromRole="Ingrediente" ToRole="Receta" />
         </EntityType>
@@ -677,7 +734,7 @@
           </Key>
           <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PrecioCompra" Type="Double" Nullable="false" />
-          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Double" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Restricciones" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
@@ -825,7 +882,6 @@
             <PropertyRef Name="Clave" />
           </Key>
           <Property Name="Clave" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Ingrediente" Relationship="Self.PK_dbo_Ingrediente_Receta" FromRole="Receta" ToRole="Ingrediente" />
           <NavigationProperty Name="ProductoVenta" Relationship="Self.PK_dbo_ProductoVenta_Receta" FromRole="Receta" ToRole="ProductoVenta" />
@@ -841,6 +897,32 @@
           <Property Name="Importe" Type="Double" Nullable="false" />
           <Property Name="Registro" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="BalanceDiario" Relationship="Self.PK_dbo_Salida_Balance" FromRole="SalidaExtraordinaria" ToRole="BalanceDiario" />
+        </EntityType>
+        <EntityType Name="Ingredientes">
+          <Key>
+            <PropertyRef Name="ClaveReceta" />
+            <PropertyRef Name="CodigoProducto" />
+            <PropertyRef Name="CantidadProducto" />
+            <PropertyRef Name="NombreProducto" />
+            <PropertyRef Name="CodigoInsumo" />
+            <PropertyRef Name="CantidadIngrediente" />
+            <PropertyRef Name="NombreInsumo" />
+            <PropertyRef Name="CantidadInsumo" />
+            <PropertyRef Name="StatusInsumo" />
+            <PropertyRef Name="PrecioInsumo" />
+            <PropertyRef Name="Unidad" />
+          </Key>
+          <Property Name="ClaveReceta" Type="Int32" Nullable="false" />
+          <Property Name="CodigoProducto" Type="Int32" Nullable="false" />
+          <Property Name="CantidadProducto" Type="Int32" Nullable="false" />
+          <Property Name="NombreProducto" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CodigoInsumo" Type="Int32" Nullable="false" />
+          <Property Name="CantidadIngrediente" Type="Double" Nullable="false" />
+          <Property Name="NombreInsumo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CantidadInsumo" Type="Double" Nullable="false" />
+          <Property Name="StatusInsumo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PrecioInsumo" Type="Double" Nullable="false" />
+          <Property Name="Unidad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <Association Name="PK_dbo_Balance_CajaEntrada">
           <End Role="CajaEntrada" Type="Self.CajaEntrada" Multiplicity="1" />
@@ -1066,6 +1148,7 @@
           <EntitySet Name="Proveedor_Direccion" EntityType="Self.Proveedor_Direccion" />
           <EntitySet Name="Receta" EntityType="Self.Receta" />
           <EntitySet Name="SalidaExtraordinaria" EntityType="Self.SalidaExtraordinaria" />
+          <EntitySet Name="Ingredientes" EntityType="Self.Ingredientes" />
           <AssociationSet Name="PK_dbo_Balance_CajaEntrada" Association="Self.PK_dbo_Balance_CajaEntrada">
             <End Role="CajaEntrada" EntitySet="CajaEntrada" />
             <End Role="BalanceDiario" EntitySet="BalanceDiario" />
@@ -1134,9 +1217,36 @@
             <End Role="Proveedor" EntitySet="Proveedor" />
             <End Role="Proveedor_Direccion" EntitySet="Proveedor_Direccion" />
           </AssociationSet>
+          <FunctionImport Name="SPChangeStatusInsumo">
+            <Parameter Name="Codigo" Mode="In" Type="Int32" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+            <Parameter Name="Key" Mode="InOut" Type="Int32" />
+            <Parameter Name="Message" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPChangeStatusProducto">
+            <Parameter Name="Codigo" Mode="In" Type="Int32" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+            <Parameter Name="Key" Mode="InOut" Type="Int32" />
+            <Parameter Name="Message" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPGIngredientes" ReturnType="Collection(SAPModel.EIngrediente)">
+            <Parameter Name="IDReceta" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SPGInsumos" ReturnType="Collection(SAPModel.EInsumo)">
+            <Parameter Name="Criterio" Mode="In" Type="String" />
+            <Parameter Name="Valor" Mode="In" Type="String" />
+            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPGProductos" ReturnType="Collection(SAPModel.EProducto)">
+            <Parameter Name="Criterio" Mode="In" Type="String" />
+            <Parameter Name="Valor" Mode="In" Type="String" />
+            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="SPIInsumo">
             <Parameter Name="PrecioCompra" Mode="In" Type="Double" />
-            <Parameter Name="Cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="Cantidad" Mode="In" Type="Double" />
             <Parameter Name="Nombre" Mode="In" Type="String" />
             <Parameter Name="Descripcion" Mode="In" Type="String" />
             <Parameter Name="Restricciones" Mode="In" Type="String" />
@@ -1148,7 +1258,7 @@
           <FunctionImport Name="SPUInsumo">
             <Parameter Name="Codigo" Mode="In" Type="Int32" />
             <Parameter Name="PrecioCompra" Mode="In" Type="Double" />
-            <Parameter Name="Cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="Cantidad" Mode="In" Type="Double" />
             <Parameter Name="Nombre" Mode="In" Type="String" />
             <Parameter Name="Descripcion" Mode="In" Type="String" />
             <Parameter Name="Restricciones" Mode="In" Type="String" />
@@ -1157,23 +1267,19 @@
             <Parameter Name="Key" Mode="InOut" Type="Int32" />
             <Parameter Name="Message" Mode="InOut" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SPGInsumos" ReturnType="Collection(SAPModel.EInsumo)">
-            <Parameter Name="Criterio" Mode="In" Type="String" />
-            <Parameter Name="Valor" Mode="In" Type="String" />
-            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
-            <Parameter Name="Status" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SPChangeStatusInsumo">
-            <Parameter Name="Codigo" Mode="In" Type="Int32" />
-            <Parameter Name="Status" Mode="In" Type="String" />
-            <Parameter Name="Key" Mode="InOut" Type="Int32" />
-            <Parameter Name="Message" Mode="InOut" Type="String" />
-          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="EIngrediente">
+          <Property Type="Int32" Name="CodigoInsumo" Nullable="false" />
+          <Property Type="String" Name="NombreInsumo" Nullable="false" MaxLength="100" />
+          <Property Type="Double" Name="CantidadIngrediente" Nullable="false" />
+          <Property Type="Double" Name="CantidadInsumo" Nullable="false" />
+          <Property Type="String" Name="Unidad" Nullable="false" MaxLength="50" />
+          <Property Type="Double" Name="PrecioInsumo" Nullable="false" />
+        </ComplexType>
         <ComplexType Name="EInsumo">
           <Property Type="Int32" Name="Codigo" Nullable="false" />
           <Property Type="Double" Name="PrecioCompra" Nullable="false" />
-          <Property Type="Int32" Name="Cantidad" Nullable="false" />
+          <Property Type="Double" Name="Cantidad" Nullable="false" />
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
           <Property Type="String" Name="Restricciones" Nullable="false" MaxLength="500" />
@@ -1182,6 +1288,20 @@
           <Property Type="String" Name="UnidadMedida" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="ProveedorDeInsumo" Nullable="true" MaxLength="100" />
         </ComplexType>
+        <ComplexType Name="EProducto">
+          <Property Type="Int32" Name="Codigo" Nullable="false" />
+          <Property Type="Int32" Name="CodigoReceta" Nullable="false" />
+          <Property Type="Double" Name="PrecioVenta" Nullable="false" />
+          <Property Type="Double" Name="PrecioCompra" Nullable="false" />
+          <Property Type="Int32" Name="Cantidad" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Foto" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Restricciones" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="Registro" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="EReceta" />
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1422,7 +1542,6 @@
             <EntityTypeMapping TypeName="SAPModel.Receta">
               <MappingFragment StoreEntitySet="Receta">
                 <ScalarProperty Name="Clave" ColumnName="Clave" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1439,8 +1558,37 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SPIInsumo" FunctionName="SAPModel.Store.SGI_SAP_Insumo" />
-          <FunctionImportMapping FunctionImportName="SPUInsumo" FunctionName="SAPModel.Store.SPU_SAP_Insumo" />
+          <EntitySetMapping Name="Ingredientes">
+            <EntityTypeMapping TypeName="SAPModel.Ingredientes">
+              <MappingFragment StoreEntitySet="Ingredientes">
+                <ScalarProperty Name="ClaveReceta" ColumnName="ClaveReceta" />
+                <ScalarProperty Name="CodigoProducto" ColumnName="CodigoProducto" />
+                <ScalarProperty Name="CantidadProducto" ColumnName="CantidadProducto" />
+                <ScalarProperty Name="NombreProducto" ColumnName="NombreProducto" />
+                <ScalarProperty Name="CodigoInsumo" ColumnName="CodigoInsumo" />
+                <ScalarProperty Name="CantidadIngrediente" ColumnName="CantidadIngrediente" />
+                <ScalarProperty Name="NombreInsumo" ColumnName="NombreInsumo" />
+                <ScalarProperty Name="CantidadInsumo" ColumnName="CantidadInsumo" />
+                <ScalarProperty Name="StatusInsumo" ColumnName="StatusInsumo" />
+                <ScalarProperty Name="PrecioInsumo" ColumnName="PrecioInsumo" />
+                <ScalarProperty Name="Unidad" ColumnName="Unidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SPChangeStatusInsumo" FunctionName="SAPModel.Store.SPChangeStatus_SAP_Insumo" />
+          <FunctionImportMapping FunctionImportName="SPChangeStatusProducto" FunctionName="SAPModel.Store.SPChangeStatus_SAP_ProductoVenta" />
+          <FunctionImportMapping FunctionImportName="SPGIngredientes" FunctionName="SAPModel.Store.SPG_SAP_Ingredientes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SAPModel.EIngrediente">
+                <ScalarProperty Name="CodigoInsumo" ColumnName="CodigoInsumo" />
+                <ScalarProperty Name="NombreInsumo" ColumnName="NombreInsumo" />
+                <ScalarProperty Name="CantidadIngrediente" ColumnName="CantidadIngrediente" />
+                <ScalarProperty Name="CantidadInsumo" ColumnName="CantidadInsumo" />
+                <ScalarProperty Name="Unidad" ColumnName="Unidad" />
+                <ScalarProperty Name="PrecioInsumo" ColumnName="PrecioInsumo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SPGInsumos" FunctionName="SAPModel.Store.SPG_SAP_Insumo">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SAPModel.EInsumo">
@@ -1457,7 +1605,25 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SPChangeStatusInsumo" FunctionName="SAPModel.Store.SPChangeStatus_SAP_Insumo" />
+          <FunctionImportMapping FunctionImportName="SPGProductos" FunctionName="SAPModel.Store.SPG_SAP_ProductoVenta">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SAPModel.EProducto">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="CodigoReceta" ColumnName="CodigoReceta" />
+                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
+                <ScalarProperty Name="PrecioCompra" ColumnName="PrecioCompra" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Foto" ColumnName="Foto" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Restricciones" ColumnName="Restricciones" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Registro" ColumnName="Registro" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPIInsumo" FunctionName="SAPModel.Store.SPI_SAP_Insumo" />
+          <FunctionImportMapping FunctionImportName="SPUInsumo" FunctionName="SAPModel.Store.SPU_SAP_Insumo" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

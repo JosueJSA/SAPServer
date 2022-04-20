@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IInsumosService.cs" />
+    <Compile Include="IProductosService.cs" />
     <Compile Include="Model\AnswerMessage.cs" />
     <Compile Include="Model\BalanceDiario.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
@@ -72,10 +73,22 @@
     <Compile Include="Model\Cliente_Direccion.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\EIngrediente.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\EInsumo.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\EProducto.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EReceta.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Ingrediente.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Ingredientes.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Insumo.cs">
