@@ -14,7 +14,7 @@ namespace Services.Model
     public partial class EProducto
     {
         public int Codigo { get; set; }
-        public int CodigoReceta { get; set; }
+        public Nullable<int> CodigoReceta { get; set; }
         public double PrecioVenta { get; set; }
         public double PrecioCompra { get; set; }
         public int Cantidad { get; set; }

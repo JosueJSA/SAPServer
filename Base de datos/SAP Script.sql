@@ -105,7 +105,7 @@ CREATE TABLE [Ingrediente] (
 
 CREATE TABLE [ProductoVenta] (
 	[Codigo] INT IDENTITY (1, 1) NOT NULL,
-	[CodigoReceta] INT NOT NULL,
+	[CodigoReceta] INT,
 	[PrecioVenta] FLOAT NOT NULL,
 	[PrecioCompra] FLOAT NOT NULL,
 	[Cantidad] INT NOT NULL,
@@ -115,8 +115,7 @@ CREATE TABLE [ProductoVenta] (
     [Restricciones] NVARCHAR (500) NOT NULL,
     [Status] NVARCHAR (100) NOT NULL, -- Activo | Dado de baja
 	[Registro] DATETIME NOT NULL,
-	CONSTRAINT [PK_dbo.ProductoVenta] PRIMARY KEY CLUSTERED ([Codigo] ASC),
-	CONSTRAINT [PK_dbo.ProductoVenta.Receta] FOREIGN KEY ([CodigoReceta]) REFERENCES [dbo].[Receta] ([Clave]) ON UPDATE CASCADE 
+	CONSTRAINT [PK_dbo.ProductoVenta] PRIMARY KEY CLUSTERED ([Codigo] ASC) 
 );
 
 

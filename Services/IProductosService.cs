@@ -18,11 +18,11 @@ namespace Services
         [OperationContract]
         List<EInsumo> GetIngredientes();
         [OperationContract]
-        AnswerMessage AddProducto(EProducto producto, EReceta receta);
+        AnswerMessage AddProducto(EProducto producto, EReceta receta = null);
         [OperationContract]
         bool IsDuplicated(string nombreActual, string nombreABuscar);
         [OperationContract]
-        AnswerMessage UpdateProducto(EProducto producto, EReceta receta);
+        AnswerMessage UpdateProducto(EProducto producto, EReceta receta = null);
         [OperationContract]
         AnswerMessage ChangeProductoStatus(int productoID, string status);
         [OperationContract]

@@ -18,7 +18,6 @@ namespace Services.Model
         public Receta()
         {
             this.Ingrediente = new HashSet<Ingrediente>();
-            this.ProductoVenta = new HashSet<ProductoVenta>();
         }
     
         public int Clave { get; set; }
@@ -26,7 +25,5 @@ namespace Services.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ingrediente> Ingrediente { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProductoVenta> ProductoVenta { get; set; }
     }
 }

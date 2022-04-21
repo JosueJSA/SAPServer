@@ -158,6 +158,43 @@ namespace Services.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPIInsumo", precioCompraParameter, cantidadParameter, nombreParameter, descripcionParameter, restriccionesParameter, unidadMedidaParameter, proveedorDeInsumoParameter, key, message);
         }
     
+        public virtual int SPIProducto(Nullable<int> codigoReceta, Nullable<double> precioVenta, Nullable<double> precioCompra, Nullable<int> cantidad, string nombre, string foto, string descripcion, string restricciones, ObjectParameter key, ObjectParameter message)
+        {
+            var codigoRecetaParameter = codigoReceta.HasValue ?
+                new ObjectParameter("CodigoReceta", codigoReceta) :
+                new ObjectParameter("CodigoReceta", typeof(int));
+    
+            var precioVentaParameter = precioVenta.HasValue ?
+                new ObjectParameter("PrecioVenta", precioVenta) :
+                new ObjectParameter("PrecioVenta", typeof(double));
+    
+            var precioCompraParameter = precioCompra.HasValue ?
+                new ObjectParameter("PrecioCompra", precioCompra) :
+                new ObjectParameter("PrecioCompra", typeof(double));
+    
+            var cantidadParameter = cantidad.HasValue ?
+                new ObjectParameter("Cantidad", cantidad) :
+                new ObjectParameter("Cantidad", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var fotoParameter = foto != null ?
+                new ObjectParameter("Foto", foto) :
+                new ObjectParameter("Foto", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("Descripcion", descripcion) :
+                new ObjectParameter("Descripcion", typeof(string));
+    
+            var restriccionesParameter = restricciones != null ?
+                new ObjectParameter("Restricciones", restricciones) :
+                new ObjectParameter("Restricciones", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPIProducto", codigoRecetaParameter, precioVentaParameter, precioCompraParameter, cantidadParameter, nombreParameter, fotoParameter, descripcionParameter, restriccionesParameter, key, message);
+        }
+    
         public virtual int SPUInsumo(Nullable<int> codigo, Nullable<double> precioCompra, Nullable<double> cantidad, string nombre, string descripcion, string restricciones, string unidadMedida, string proveedorDeInsumo, ObjectParameter key, ObjectParameter message)
         {
             var codigoParameter = codigo.HasValue ?
@@ -193,6 +230,47 @@ namespace Services.Model
                 new ObjectParameter("ProveedorDeInsumo", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPUInsumo", codigoParameter, precioCompraParameter, cantidadParameter, nombreParameter, descripcionParameter, restriccionesParameter, unidadMedidaParameter, proveedorDeInsumoParameter, key, message);
+        }
+    
+        public virtual int SPUProducto(Nullable<int> codigo, Nullable<int> codigoReceta, Nullable<double> precioVenta, Nullable<double> precioCompra, Nullable<int> cantidad, string nombre, string foto, string descripcion, string restricciones, ObjectParameter key, ObjectParameter message)
+        {
+            var codigoParameter = codigo.HasValue ?
+                new ObjectParameter("Codigo", codigo) :
+                new ObjectParameter("Codigo", typeof(int));
+    
+            var codigoRecetaParameter = codigoReceta.HasValue ?
+                new ObjectParameter("CodigoReceta", codigoReceta) :
+                new ObjectParameter("CodigoReceta", typeof(int));
+    
+            var precioVentaParameter = precioVenta.HasValue ?
+                new ObjectParameter("PrecioVenta", precioVenta) :
+                new ObjectParameter("PrecioVenta", typeof(double));
+    
+            var precioCompraParameter = precioCompra.HasValue ?
+                new ObjectParameter("PrecioCompra", precioCompra) :
+                new ObjectParameter("PrecioCompra", typeof(double));
+    
+            var cantidadParameter = cantidad.HasValue ?
+                new ObjectParameter("Cantidad", cantidad) :
+                new ObjectParameter("Cantidad", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var fotoParameter = foto != null ?
+                new ObjectParameter("Foto", foto) :
+                new ObjectParameter("Foto", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("Descripcion", descripcion) :
+                new ObjectParameter("Descripcion", typeof(string));
+    
+            var restriccionesParameter = restricciones != null ?
+                new ObjectParameter("Restricciones", restricciones) :
+                new ObjectParameter("Restricciones", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPUProducto", codigoParameter, codigoRecetaParameter, precioVentaParameter, precioCompraParameter, cantidadParameter, nombreParameter, fotoParameter, descripcionParameter, restriccionesParameter, key, message);
         }
     }
 }

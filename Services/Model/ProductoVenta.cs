@@ -21,7 +21,7 @@ namespace Services.Model
         }
     
         public int Codigo { get; set; }
-        public int CodigoReceta { get; set; }
+        public Nullable<int> CodigoReceta { get; set; }
         public double PrecioVenta { get; set; }
         public double PrecioCompra { get; set; }
         public int Cantidad { get; set; }
@@ -34,6 +34,5 @@ namespace Services.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Orden> Orden { get; set; }
-        public virtual Receta Receta { get; set; }
     }
 }

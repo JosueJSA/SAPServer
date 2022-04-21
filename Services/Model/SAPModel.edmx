@@ -189,7 +189,7 @@
             <PropertyRef Name="Codigo" />
           </Key>
           <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CodigoReceta" Type="int" Nullable="false" />
+          <Property Name="CodigoReceta" Type="int" />
           <Property Name="PrecioVenta" Type="float" Nullable="false" />
           <Property Name="PrecioCompra" Type="float" Nullable="false" />
           <Property Name="Cantidad" Type="int" Nullable="false" />
@@ -435,18 +435,6 @@ warning 6002: The table/view 'SAP.dbo.Ingredientes' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="PK_dbo_ProductoVenta_Receta">
-          <End Role="Receta" Type="Self.Receta" Multiplicity="1" />
-          <End Role="ProductoVenta" Type="Self.ProductoVenta" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Receta">
-              <PropertyRef Name="Clave" />
-            </Principal>
-            <Dependent Role="ProductoVenta">
-              <PropertyRef Name="CodigoReceta" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="PK_dbo_Proveedor_Direccion_Proveedor">
           <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
           <End Role="Proveedor_Direccion" Type="Self.Proveedor_Direccion" Multiplicity="*" />
@@ -509,6 +497,18 @@ warning 6002: The table/view 'SAP.dbo.Ingredientes' does not have a primary key 
           <Parameter Name="Key" Type="int" Mode="InOut" />
           <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
         </Function>
+        <Function Name="SPI_SAP_ProductoVenta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoReceta" Type="int" Mode="In" />
+          <Parameter Name="PrecioVenta" Type="float" Mode="In" />
+          <Parameter Name="PrecioCompra" Type="float" Mode="In" />
+          <Parameter Name="Cantidad" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="Foto" Type="nvarchar" Mode="In" />
+          <Parameter Name="Descripcion" Type="nvarchar" Mode="In" />
+          <Parameter Name="Restricciones" Type="nvarchar" Mode="In" />
+          <Parameter Name="Key" Type="int" Mode="InOut" />
+          <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
+        </Function>
         <Function Name="SPU_SAP_Insumo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Codigo" Type="int" Mode="In" />
           <Parameter Name="PrecioCompra" Type="float" Mode="In" />
@@ -518,6 +518,19 @@ warning 6002: The table/view 'SAP.dbo.Ingredientes' does not have a primary key 
           <Parameter Name="Restricciones" Type="nvarchar" Mode="In" />
           <Parameter Name="UnidadMedida" Type="nvarchar" Mode="In" />
           <Parameter Name="ProveedorDeInsumo" Type="nvarchar" Mode="In" />
+          <Parameter Name="Key" Type="int" Mode="InOut" />
+          <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
+        </Function>
+        <Function Name="SPU_SAP_Producto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo" Type="int" Mode="In" />
+          <Parameter Name="CodigoReceta" Type="int" Mode="In" />
+          <Parameter Name="PrecioVenta" Type="float" Mode="In" />
+          <Parameter Name="PrecioCompra" Type="float" Mode="In" />
+          <Parameter Name="Cantidad" Type="int" Mode="In" />
+          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="Foto" Type="nvarchar" Mode="In" />
+          <Parameter Name="Descripcion" Type="nvarchar" Mode="In" />
+          <Parameter Name="Restricciones" Type="nvarchar" Mode="In" />
           <Parameter Name="Key" Type="int" Mode="InOut" />
           <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
         </Function>
@@ -611,10 +624,6 @@ warning 6002: The table/view 'SAP.dbo.Ingredientes' does not have a primary key 
           <AssociationSet Name="PK_dbo_Personal_Direccion_Personal" Association="Self.PK_dbo_Personal_Direccion_Personal">
             <End Role="Personal" EntitySet="Personal" />
             <End Role="Personal_Direccion" EntitySet="Personal_Direccion" />
-          </AssociationSet>
-          <AssociationSet Name="PK_dbo_ProductoVenta_Receta" Association="Self.PK_dbo_ProductoVenta_Receta">
-            <End Role="Receta" EntitySet="Receta" />
-            <End Role="ProductoVenta" EntitySet="ProductoVenta" />
           </AssociationSet>
           <AssociationSet Name="PK_dbo_Proveedor_Direccion_Proveedor" Association="Self.PK_dbo_Proveedor_Direccion_Proveedor">
             <End Role="Proveedor" EntitySet="Proveedor" />
@@ -840,7 +849,7 @@ warning 6002: The table/view 'SAP.dbo.Ingredientes' does not have a primary key 
             <PropertyRef Name="Codigo" />
           </Key>
           <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CodigoReceta" Type="Int32" Nullable="false" />
+          <Property Name="CodigoReceta" Type="Int32" />
           <Property Name="PrecioVenta" Type="Double" Nullable="false" />
           <Property Name="PrecioCompra" Type="Double" Nullable="false" />
           <Property Name="Cantidad" Type="Int32" Nullable="false" />
@@ -851,7 +860,6 @@ warning 6002: The table/view 'SAP.dbo.Ingredientes' does not have a primary key 
           <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Registro" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Orden" Relationship="Self.PK_dbo_Orden_ProductoVenta" FromRole="ProductoVenta" ToRole="Orden" />
-          <NavigationProperty Name="Receta" Relationship="Self.PK_dbo_ProductoVenta_Receta" FromRole="ProductoVenta" ToRole="Receta" />
         </EntityType>
         <EntityType Name="Proveedor">
           <Key>
@@ -884,7 +892,6 @@ warning 6002: The table/view 'SAP.dbo.Ingredientes' does not have a primary key 
           <Property Name="Clave" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Ingrediente" Relationship="Self.PK_dbo_Ingrediente_Receta" FromRole="Receta" ToRole="Ingrediente" />
-          <NavigationProperty Name="ProductoVenta" Relationship="Self.PK_dbo_ProductoVenta_Receta" FromRole="Receta" ToRole="ProductoVenta" />
         </EntityType>
         <EntityType Name="SalidaExtraordinaria">
           <Key>
@@ -1104,18 +1111,6 @@ warning 6002: The table/view 'SAP.dbo.Ingredientes' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="PK_dbo_ProductoVenta_Receta">
-          <End Role="Receta" Type="Self.Receta" Multiplicity="1" />
-          <End Role="ProductoVenta" Type="Self.ProductoVenta" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Receta">
-              <PropertyRef Name="Clave" />
-            </Principal>
-            <Dependent Role="ProductoVenta">
-              <PropertyRef Name="CodigoReceta" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="PK_dbo_Proveedor_Direccion_Proveedor">
           <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
           <End Role="Proveedor_Direccion" Type="Self.Proveedor_Direccion" Multiplicity="*" />
@@ -1209,10 +1204,6 @@ warning 6002: The table/view 'SAP.dbo.Ingredientes' does not have a primary key 
             <End Role="Personal" EntitySet="Personal" />
             <End Role="Personal_Direccion" EntitySet="Personal_Direccion" />
           </AssociationSet>
-          <AssociationSet Name="PK_dbo_ProductoVenta_Receta" Association="Self.PK_dbo_ProductoVenta_Receta">
-            <End Role="Receta" EntitySet="Receta" />
-            <End Role="ProductoVenta" EntitySet="ProductoVenta" />
-          </AssociationSet>
           <AssociationSet Name="PK_dbo_Proveedor_Direccion_Proveedor" Association="Self.PK_dbo_Proveedor_Direccion_Proveedor">
             <End Role="Proveedor" EntitySet="Proveedor" />
             <End Role="Proveedor_Direccion" EntitySet="Proveedor_Direccion" />
@@ -1255,6 +1246,18 @@ warning 6002: The table/view 'SAP.dbo.Ingredientes' does not have a primary key 
             <Parameter Name="Key" Mode="InOut" Type="Int32" />
             <Parameter Name="Message" Mode="InOut" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SPIProducto">
+            <Parameter Name="CodigoReceta" Mode="In" Type="Int32" />
+            <Parameter Name="PrecioVenta" Mode="In" Type="Double" />
+            <Parameter Name="PrecioCompra" Mode="In" Type="Double" />
+            <Parameter Name="Cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Foto" Mode="In" Type="String" />
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+            <Parameter Name="Restricciones" Mode="In" Type="String" />
+            <Parameter Name="Key" Mode="InOut" Type="Int32" />
+            <Parameter Name="Message" Mode="InOut" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="SPUInsumo">
             <Parameter Name="Codigo" Mode="In" Type="Int32" />
             <Parameter Name="PrecioCompra" Mode="In" Type="Double" />
@@ -1264,6 +1267,19 @@ warning 6002: The table/view 'SAP.dbo.Ingredientes' does not have a primary key 
             <Parameter Name="Restricciones" Mode="In" Type="String" />
             <Parameter Name="UnidadMedida" Mode="In" Type="String" />
             <Parameter Name="ProveedorDeInsumo" Mode="In" Type="String" />
+            <Parameter Name="Key" Mode="InOut" Type="Int32" />
+            <Parameter Name="Message" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPUProducto">
+            <Parameter Name="Codigo" Mode="In" Type="Int32" />
+            <Parameter Name="CodigoReceta" Mode="In" Type="Int32" />
+            <Parameter Name="PrecioVenta" Mode="In" Type="Double" />
+            <Parameter Name="PrecioCompra" Mode="In" Type="Double" />
+            <Parameter Name="Cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Foto" Mode="In" Type="String" />
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+            <Parameter Name="Restricciones" Mode="In" Type="String" />
             <Parameter Name="Key" Mode="InOut" Type="Int32" />
             <Parameter Name="Message" Mode="InOut" Type="String" />
           </FunctionImport>
@@ -1290,7 +1306,7 @@ warning 6002: The table/view 'SAP.dbo.Ingredientes' does not have a primary key 
         </ComplexType>
         <ComplexType Name="EProducto">
           <Property Type="Int32" Name="Codigo" Nullable="false" />
-          <Property Type="Int32" Name="CodigoReceta" Nullable="false" />
+          <Property Type="Int32" Name="CodigoReceta" Nullable="true" />
           <Property Type="Double" Name="PrecioVenta" Nullable="false" />
           <Property Type="Double" Name="PrecioCompra" Nullable="false" />
           <Property Type="Int32" Name="Cantidad" Nullable="false" />
@@ -1623,7 +1639,9 @@ warning 6002: The table/view 'SAP.dbo.Ingredientes' does not have a primary key 
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SPIInsumo" FunctionName="SAPModel.Store.SPI_SAP_Insumo" />
+          <FunctionImportMapping FunctionImportName="SPIProducto" FunctionName="SAPModel.Store.SPI_SAP_ProductoVenta" />
           <FunctionImportMapping FunctionImportName="SPUInsumo" FunctionName="SAPModel.Store.SPU_SAP_Insumo" />
+          <FunctionImportMapping FunctionImportName="SPUProducto" FunctionName="SAPModel.Store.SPU_SAP_Producto" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

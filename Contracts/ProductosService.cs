@@ -23,7 +23,7 @@ namespace Contracts
         private ObjectParameter message = new ObjectParameter("Message", typeof(string));
         private AnswerMessage answer = new AnswerMessage();
 
-        public AnswerMessage AddProducto(EProducto producto, EReceta receta)
+        public AnswerMessage AddProducto(EProducto producto, EReceta receta = null)
         {  
             using (var context = new SAPContext())
             {
@@ -31,36 +31,30 @@ namespace Contracts
                 {
                     try
                     {
-                        var newReceta = new Receta();  
-                        context.Receta.Add(newReceta = new Receta() { Descripcion = receta.Descripcion });
-                        context.SaveChanges();
-
-                        receta.Ingredientes.ForEach(i =>
+                        int claveReceta = -1;
+                        if (receta != null)
                         {
-                            context.Ingrediente.Add(new Ingrediente() { ClaveReceta = newReceta.Clave, CodigoInsumo = i.CodigoInsumo, Cantidad = i.CantidadIngrediente });
-                        });
-                        context.SaveChanges();
+                            var newReceta = new Receta();
+                            context.Receta.Add(newReceta = new Receta() { Descripcion = receta.Descripcion });
+                            context.SaveChanges();
 
-                        var newProducto = new ProductoVenta();
-                        context.ProductoVenta.Add(newProducto = new ProductoVenta()
-                        {
-                            CodigoReceta = newReceta.Clave,
-                            PrecioVenta = producto.PrecioVenta,
-                            PrecioCompra = producto.PrecioCompra,
-                            Cantidad = 1,
-                            Nombre = producto.Nombre,
-                            Foto = producto.Foto,
-                            Descripcion = producto.Descripcion,
-                            Restricciones = producto.Restricciones,
-                            Status = "Activo",
-                            Registro = DateTime.Now
-                        });
-                        context.SaveChanges();
+                            receta.Ingredientes.ForEach(i =>
+                            {
+                                context.Ingrediente.Add(new Ingrediente() { ClaveReceta = newReceta.Clave, CodigoInsumo = i.CodigoInsumo, Cantidad = i.CantidadIngrediente });
+                            });
+                            context.SaveChanges();
+                            claveReceta = newReceta.Clave;
+                        }
 
-                        answer.Key = 1;
-                        answer.Message = "Operación correcta";
+                        context.SPIProducto(claveReceta, producto.PrecioVenta, producto.PrecioCompra, producto.Cantidad, producto.Nombre, producto.Foto, producto.Descripcion, producto.Restricciones, key, message);
+                        answer.Key = Convert.ToInt32(key.Value);
+                        answer.Message = Convert.ToString(message.Value);
+                        if (answer.Key < 0)
+                            throw new Exception(answer.Message);
+
+                        context.SaveChanges();
                         transaction.Commit();
-                        
+
                     }catch (Exception ex)
                     {
                         answer.Key = -1;
@@ -147,7 +141,7 @@ namespace Contracts
             return returnValue;
         }
 
-        public AnswerMessage UpdateProducto(EProducto producto, EReceta receta)
+        public AnswerMessage UpdateProducto(EProducto producto, EReceta receta = null)
         { 
             using (var context = new SAPContext())
             {
@@ -155,31 +149,50 @@ namespace Contracts
                 {
                     try
                     {
-                        context.Ingrediente.RemoveRange(context.Ingrediente.Where(x => x.ClaveReceta == producto.CodigoReceta));
-                        context.SaveChanges();
-
-                        var oldReceta = context.Receta.Where(r => r.Clave == producto.CodigoReceta).First();
-                        oldReceta.Descripcion = receta.Descripcion;
-                        context.SaveChanges();
-
-                        receta.Ingredientes.ForEach(i =>
+                        if (receta != null)
                         {
-                            context.Ingrediente.Add(new Ingrediente() { ClaveReceta = producto.CodigoReceta, CodigoInsumo = i.CodigoInsumo, Cantidad = i.CantidadIngrediente });
-                        });
-                        context.SaveChanges();
+                            var recetaAux = new Receta();
+                            context.Ingrediente.RemoveRange(context.Ingrediente.Where(x => x.ClaveReceta == producto.CodigoReceta));
+                            context.SaveChanges();
+                            if (context.Receta.Any(r => r.Clave == receta.Clave))
+                            {
+                                recetaAux = context.Receta.Where(r => r.Clave == producto.CodigoReceta).First();
+                                recetaAux.Descripcion = receta.Descripcion;
+                            }
+                            else
+                            {
+                                recetaAux = new Receta();
+                                context.Receta.Add(recetaAux = new Receta() { Descripcion = receta.Descripcion });
+                                context.SaveChanges();
+                                producto.CodigoReceta = recetaAux.Clave;
+                            }
+                            context.SaveChanges();
+                            receta.Ingredientes.ForEach(i =>
+                            {
+                                context.Ingrediente.Add(new Ingrediente() { ClaveReceta = recetaAux.Clave, CodigoInsumo = i.CodigoInsumo, Cantidad = i.CantidadIngrediente });
+                            });
+                            context.SaveChanges();
+                        }
+                        else
+                        {
+                            var productoAux = context.ProductoVenta.Where(p => p.Codigo == producto.Codigo).First();
+                            if(context.Receta.Any(r => r.Clave == productoAux.CodigoReceta))
+                            {
+                                context.Ingrediente.RemoveRange(context.Ingrediente.Where(x => x.ClaveReceta == productoAux.CodigoReceta));
+                                context.SaveChanges();
+                                context.Receta.Remove(context.Receta.Where(r => r.Clave == productoAux.CodigoReceta).First());
+                                context.SaveChanges();
+                            }
+                        }
 
-                        var oldProducto = context.ProductoVenta.Where(p => p.Codigo == producto.Codigo).First();
-                        oldProducto.Nombre = producto.Nombre;
-                        oldProducto.PrecioVenta = producto.PrecioVenta;
-                        oldProducto.Foto = producto.Foto;
-                        oldProducto.PrecioCompra = producto.PrecioCompra;
-                        oldProducto.Descripcion = producto.Descripcion;
-                        oldProducto.Restricciones = producto.Restricciones;
+                        context.SPUProducto(producto.Codigo, producto.CodigoReceta, producto.PrecioVenta, producto.PrecioCompra, producto.Cantidad, producto.Nombre, producto.Foto, producto.Descripcion, producto.Restricciones, key, message);
+                        answer.Key = Convert.ToInt32(key.Value);
+                        answer.Message = Convert.ToString(message.Value);
+                        if (answer.Key < 0)
+                            throw new Exception(answer.Message);
+
                         context.SaveChanges();
                         transaction.Commit();
-
-                        answer.Key = producto.Codigo;
-                        answer.Message = "Operación correcta";
                     }
                     catch (Exception ex)
                     {
