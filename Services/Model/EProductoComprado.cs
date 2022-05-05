@@ -10,16 +10,21 @@
 namespace Services.Model
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Orden
+    public partial class EProductoComprado
     {
         public int CodigoPedido { get; set; }
         public int CodigoProductoVenta { get; set; }
         public int Cantidad { get; set; }
         public double Precio { get; set; }
-    
-        public virtual PedidoCliente PedidoCliente { get; set; }
-        public virtual ProductoVenta ProductoVenta { get; set; }
+        public int Codigo { get; set; }
+        public Nullable<int> CodigoReceta { get; set; }
+        public double PrecioCompra { get; set; }
+        public double PrecioVenta { get; set; }
+        public int stock { get; set; }
+        public string Nombre { get; set; }
+        public string Foto { get; set; }
+        public string Descripcion { get; set; }
+        public string Restricciones { get; set; }
     }
 }

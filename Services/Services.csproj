@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IInsumosService.cs" />
+    <Compile Include="IPedidosClientesService.cs" />
     <Compile Include="IProductosService.cs" />
     <Compile Include="Model\AnswerMessage.cs" />
     <Compile Include="Model\BalanceDiario.cs">
@@ -73,13 +74,25 @@
     <Compile Include="Model\Cliente_Direccion.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\ECliente.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EDireccion.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\EIngrediente.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EInsumo.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\EPedidoCliente.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\EProducto.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EProductoComprado.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EReceta.cs">
@@ -107,6 +120,12 @@
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PedidoProveedor.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Pedidos.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PedidosDomicilio.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Personal.cs">
@@ -144,6 +163,18 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SAPModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SPG_SAP_Cliente_Result.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SPG_SAP_Direcciones_Result.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SPG_SAP_PedidosComunes_Result.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SPG_SAP_ProductosComprados_Result.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

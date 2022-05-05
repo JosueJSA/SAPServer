@@ -10,16 +10,13 @@
 namespace Services.Model
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Orden
+    public partial class EDireccion
     {
-        public int CodigoPedido { get; set; }
-        public int CodigoProductoVenta { get; set; }
-        public int Cantidad { get; set; }
-        public double Precio { get; set; }
-    
-        public virtual PedidoCliente PedidoCliente { get; set; }
-        public virtual ProductoVenta ProductoVenta { get; set; }
+        public int Id { get; set; }
+        public int IdCliente { get; set; }
+        public string Calle { get; set; }
+        public int Numero { get; set; }
+        public string Colonia { get; set; }
     }
 }

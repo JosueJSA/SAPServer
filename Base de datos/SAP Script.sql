@@ -50,6 +50,7 @@ CREATE TABLE [Cliente.Direccion] (
 	[IdCliente] INT NOT NULL,
 	[Calle] NVARCHAR (500) NOT NULL,
 	[Numero] INT NOT NULL,
+	[Colonia] NVARCHAR (500) NOT NULL,
 	CONSTRAINT [PK_dbo.Cliente.Direccion] PRIMARY KEY CLUSTERED ([Id] ASC),
 	CONSTRAINT [PK_dbo.Cliente.Direccion.Cliente] FOREIGN KEY ([IdCliente]) REFERENCES [dbo].[Cliente] ([Id]) ON UPDATE CASCADE,
 );
@@ -125,15 +126,16 @@ CREATE TABLE [Pedido] (
 	[CostoTotal] FLOAT NOT NULL,
 	[Status] NVARCHAR (100) NOT NULL,
 	[Solicitud] DATETIME NOT NULL,
-	[Entrega] DATETIME NOT NULL,
+	[Entrega] DATETIME,
 	CONSTRAINT [PK_dbo.Pedido] PRIMARY KEY CLUSTERED ([Codigo] ASC)
 );
 
 CREATE TABLE [PedidoCliente] (
 	[Codigo] INT NOT NULL,
-	[IdCliente] INT NOT NULL,
+	[IdCliente] INT,
 	[Cantidad] FLOAT NOT NULL,
-	[TipoPedido] NVARCHAR (100) NOT NULL, -- En establecimiento | A domicilio
+	[IdDireccion] INT,
+	[TipoPedido] NVARCHAR (100) NOT NULL,
 	CONSTRAINT [PK_dbo.PedidoCliente] PRIMARY KEY (Codigo),
 	CONSTRAINT [PK_dbo.PedidoCliente.Pedido] FOREIGN KEY ([Codigo]) REFERENCES [dbo].[Pedido] ([Codigo]) ON UPDATE CASCADE,
 	CONSTRAINT [PK_dbo.PedidoCliente.Cliente] FOREIGN KEY ([IdCliente]) REFERENCES [dbo].[Cliente] ([Id]) ON UPDATE CASCADE 
@@ -150,12 +152,12 @@ CREATE TABLE [PedidoProveedor] (
 );
 
 CREATE TABLE [Orden] (
-	[CodigoPedidoCliente] INT NOT NULL,
+	[CodigoPedido] INT NOT NULL,
 	[CodigoProductoVenta] INT NOT NULL,
 	[Cantidad] INT NOT NULL,
 	[Precio] FLOAT NOT NULL,
-	CONSTRAINT [PK_Orden] PRIMARY KEY(CodigoPedidoCliente, CodigoProductoVenta),
-	CONSTRAINT [PK_dbo.Orden.PedidoCliente] FOREIGN KEY ([CodigoPedidoCliente]) REFERENCES [dbo].[PedidoCliente] ([Codigo]) ON UPDATE CASCADE,
+	CONSTRAINT [PK_Orden] PRIMARY KEY(CodigoPedido, CodigoProductoVenta),
+	CONSTRAINT [PK_dbo.Orden.PedidoCliente] FOREIGN KEY ([CodigoPedido]) REFERENCES [dbo].[PedidoCliente] ([Codigo]) ON UPDATE CASCADE,
 	CONSTRAINT [PK_dbo.Orden.ProductoVenta] FOREIGN KEY ([CodigoProductoVenta]) REFERENCES [dbo].[ProductoVenta] ([Codigo]) ON UPDATE CASCADE
 );
 

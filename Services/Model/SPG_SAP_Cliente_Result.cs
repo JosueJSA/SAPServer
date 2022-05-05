@@ -10,16 +10,22 @@
 namespace Services.Model
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Cliente_Direccion
+    public partial class SPG_SAP_Cliente_Result
     {
         public int Id { get; set; }
-        public int IdCliente { get; set; }
+        public string Email { get; set; }
+        public int CodigoPostal { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public string Status { get; set; }
+        public string Telefono { get; set; }
+        public string Ciudad { get; set; }
+        public System.DateTime Nacimiento { get; set; }
+        public int Edad { get; set; }
         public string Calle { get; set; }
-        public int Numero { get; set; }
         public string Colonia { get; set; }
-    
-        public virtual Cliente Cliente { get; set; }
+        public int Numero { get; set; }
+        public int IdDireccion { get; set; }
     }
 }

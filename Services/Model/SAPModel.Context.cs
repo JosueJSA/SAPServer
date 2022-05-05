@@ -47,6 +47,8 @@ namespace Services.Model
         public virtual DbSet<Receta> Receta { get; set; }
         public virtual DbSet<SalidaExtraordinaria> SalidaExtraordinaria { get; set; }
         public virtual DbSet<Ingredientes> Ingredientes { get; set; }
+        public virtual DbSet<Pedidos> Pedidos { get; set; }
+        public virtual DbSet<PedidosDomicilio> PedidosDomicilio { get; set; }
     
         public virtual int SPChangeStatusInsumo(Nullable<int> codigo, string status, ObjectParameter key, ObjectParameter message)
         {
@@ -271,6 +273,51 @@ namespace Services.Model
                 new ObjectParameter("Restricciones", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPUProducto", codigoParameter, codigoRecetaParameter, precioVentaParameter, precioCompraParameter, cantidadParameter, nombreParameter, fotoParameter, descripcionParameter, restriccionesParameter, key, message);
+        }
+    
+        public virtual ObjectResult<EPedidoCliente> SPGPedidosClientes(string criterio, Nullable<System.DateTime> fecha)
+        {
+            var criterioParameter = criterio != null ?
+                new ObjectParameter("Criterio", criterio) :
+                new ObjectParameter("Criterio", typeof(string));
+    
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("Fecha", fecha) :
+                new ObjectParameter("Fecha", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EPedidoCliente>("SPGPedidosClientes", criterioParameter, fechaParameter);
+        }
+    
+        public virtual ObjectResult<EPedidoCliente> SGPPedidosComunes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EPedidoCliente>("SGPPedidosComunes");
+        }
+    
+        public virtual ObjectResult<EProductoComprado> SPGProductosComprados(Nullable<int> iDPedido)
+        {
+            var iDPedidoParameter = iDPedido.HasValue ?
+                new ObjectParameter("IDPedido", iDPedido) :
+                new ObjectParameter("IDPedido", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EProductoComprado>("SPGProductosComprados", iDPedidoParameter);
+        }
+    
+        public virtual ObjectResult<ECliente> SPGCliente(Nullable<int> idCliente)
+        {
+            var idClienteParameter = idCliente.HasValue ?
+                new ObjectParameter("IdCliente", idCliente) :
+                new ObjectParameter("IdCliente", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ECliente>("SPGCliente", idClienteParameter);
+        }
+    
+        public virtual ObjectResult<EDireccion> SPGDirecciones(Nullable<int> idCliente)
+        {
+            var idClienteParameter = idCliente.HasValue ?
+                new ObjectParameter("IdCliente", idCliente) :
+                new ObjectParameter("IdCliente", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EDireccion>("SPGDirecciones", idClienteParameter);
         }
     }
 }

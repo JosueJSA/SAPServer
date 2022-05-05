@@ -12,14 +12,15 @@ namespace Services.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Orden
+    public partial class Pedidos
     {
-        public int CodigoPedido { get; set; }
-        public int CodigoProductoVenta { get; set; }
-        public int Cantidad { get; set; }
-        public double Precio { get; set; }
-    
-        public virtual PedidoCliente PedidoCliente { get; set; }
-        public virtual ProductoVenta ProductoVenta { get; set; }
+        public int Codigo { get; set; }
+        public double CostoTotal { get; set; }
+        public string Status { get; set; }
+        public System.DateTime Solicitud { get; set; }
+        public System.DateTime Entrega { get; set; }
+        public double Cantidad { get; set; }
+        public string TipoPedido { get; set; }
+        public Nullable<int> NumeroProductos { get; set; }
     }
 }
