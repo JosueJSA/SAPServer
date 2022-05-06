@@ -1,8 +1,4 @@
-﻿using Google.Apis.Auth.OAuth2;
-using Google.Apis.Drive.v3;
-using Google.Apis.Services;
-using Google.Apis.Util.Store;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using Services;
 using Services.Model;
 using System;

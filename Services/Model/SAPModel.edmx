@@ -85,6 +85,34 @@
           <Property Name="Numero" Type="int" Nullable="false" />
           <Property Name="Colonia" Type="nvarchar" MaxLength="500" Nullable="false" />
         </EntityType>
+        <EntityType Name="Empleado">
+          <Key>
+            <PropertyRef Name="Clave" />
+          </Key>
+          <Property Name="Clave" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Apellidos" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="TipoUsuario" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CodigoPostal" Type="int" />
+          <Property Name="Status" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Puesto" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Salario" Type="float" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Ciudad" Type="nvarchar" MaxLength="100" />
+          <Property Name="Registro" Type="datetime" Nullable="false" />
+          <Property Name="Baja" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Empleado_Direccion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEmpleado" Type="int" Nullable="false" />
+          <Property Name="Calle" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Numero" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Ingrediente">
           <Key>
             <PropertyRef Name="ClaveReceta" />
@@ -137,7 +165,7 @@
           <Property Name="CostoTotal" Type="float" Nullable="false" />
           <Property Name="Status" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Solicitud" Type="datetime" Nullable="false" />
-          <Property Name="Entrega" Type="datetime" Nullable="false" />
+          <Property Name="Entrega" Type="datetime" />
         </EntityType>
         <EntityType Name="PedidoCliente">
           <Key>
@@ -157,34 +185,6 @@
           <Property Name="ClaveProveedor" Type="int" Nullable="false" />
           <Property Name="Cantidad" Type="float" Nullable="false" />
           <Property Name="TipoPedido" Type="nvarchar" MaxLength="100" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Personal">
-          <Key>
-            <PropertyRef Name="Clave" />
-          </Key>
-          <Property Name="Clave" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Apellidos" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="TipoUsuario" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="CodigoPostal" Type="int" />
-          <Property Name="Status" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Puesto" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Salario" Type="float" />
-          <Property Name="Telefono" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Ciudad" Type="nvarchar" MaxLength="100" />
-          <Property Name="Registro" Type="datetime" Nullable="false" />
-          <Property Name="Baja" Type="datetime" />
-        </EntityType>
-        <EntityType Name="Personal_Direccion">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdPersonal" Type="int" Nullable="false" />
-          <Property Name="Calle" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="Numero" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductoVenta">
           <Key>
@@ -241,8 +241,8 @@
           <Property Name="Importe" Type="float" Nullable="false" />
           <Property Name="Registro" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SAP.dbo.Ingredientes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SAP.dbo.Ingredientes' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Ingredientes">
           <Key>
             <PropertyRef Name="ClaveReceta" />
@@ -269,15 +269,14 @@ warning 6002: The table/view 'SAP.dbo.Ingredientes' does not have a primary key 
           <Property Name="PrecioInsumo" Type="float" Nullable="false" />
           <Property Name="Unidad" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SAP.dbo.Pedidos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SAP.dbo.Pedidos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Pedidos">
           <Key>
             <PropertyRef Name="Codigo" />
             <PropertyRef Name="CostoTotal" />
             <PropertyRef Name="Status" />
             <PropertyRef Name="Solicitud" />
-            <PropertyRef Name="Entrega" />
             <PropertyRef Name="Cantidad" />
             <PropertyRef Name="TipoPedido" />
           </Key>
@@ -285,20 +284,19 @@ warning 6002: The table/view 'SAP.dbo.Pedidos' does not have a primary key defin
           <Property Name="CostoTotal" Type="float" Nullable="false" />
           <Property Name="Status" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Solicitud" Type="datetime" Nullable="false" />
-          <Property Name="Entrega" Type="datetime" Nullable="false" />
+          <Property Name="Entrega" Type="datetime" />
           <Property Name="Cantidad" Type="float" Nullable="false" />
           <Property Name="TipoPedido" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="NumeroProductos" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SAP.dbo.PedidosDomicilio' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="PedidosDomicilio">
           <Key>
             <PropertyRef Name="CodigoPedido" />
             <PropertyRef Name="CostoTotal" />
             <PropertyRef Name="StatusPedido" />
             <PropertyRef Name="Solicitud" />
-            <PropertyRef Name="Entrega" />
             <PropertyRef Name="Id" />
             <PropertyRef Name="CodigoPostal" />
             <PropertyRef Name="Nombre" />
@@ -317,7 +315,7 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
           <Property Name="CostoTotal" Type="float" Nullable="false" />
           <Property Name="StatusPedido" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Solicitud" Type="datetime" Nullable="false" />
-          <Property Name="Entrega" Type="datetime" Nullable="false" />
+          <Property Name="Entrega" Type="datetime" />
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="500" />
           <Property Name="CodigoPostal" Type="int" Nullable="false" />
@@ -493,14 +491,14 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
           </ReferentialConstraint>
         </Association>
         <Association Name="PK_dbo_Personal_Direccion_Personal">
-          <End Role="Personal" Type="Self.Personal" Multiplicity="1" />
-          <End Role="Personal_Direccion" Type="Self.Personal_Direccion" Multiplicity="*" />
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="1" />
+          <End Role="Empleado_Direccion" Type="Self.Empleado_Direccion" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Personal">
+            <Principal Role="Empleado">
               <PropertyRef Name="Clave" />
             </Principal>
-            <Dependent Role="Personal_Direccion">
-              <PropertyRef Name="IdPersonal" />
+            <Dependent Role="Empleado_Direccion">
+              <PropertyRef Name="IdEmpleado" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -623,6 +621,8 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
           <EntitySet Name="CajaSalida" EntityType="Self.CajaSalida" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cliente_Direccion" EntityType="Self.Cliente_Direccion" Schema="dbo" Table="Cliente.Direccion" store:Type="Tables" />
+          <EntitySet Name="Empleado" EntityType="Self.Empleado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Empleado_Direccion" EntityType="Self.Empleado_Direccion" Schema="dbo" Table="Empleado.Direccion" store:Type="Tables" />
           <EntitySet Name="Ingrediente" EntityType="Self.Ingrediente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Insumo" EntityType="Self.Insumo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orden" EntityType="Self.Orden" Schema="dbo" store:Type="Tables" />
@@ -630,8 +630,6 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
           <EntitySet Name="Pedido" EntityType="Self.Pedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PedidoCliente" EntityType="Self.PedidoCliente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PedidoProveedor" EntityType="Self.PedidoProveedor" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Personal" EntityType="Self.Personal" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Personal_Direccion" EntityType="Self.Personal_Direccion" Schema="dbo" Table="Personal.Direccion" store:Type="Tables" />
           <EntitySet Name="ProductoVenta" EntityType="Self.ProductoVenta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Proveedor_Direccion" EntityType="Self.Proveedor_Direccion" Schema="dbo" Table="Proveedor.Direccion" store:Type="Tables" />
@@ -743,8 +741,8 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
             <End Role="PedidoCliente" EntitySet="PedidoCliente" />
           </AssociationSet>
           <AssociationSet Name="PK_dbo_Personal_Direccion_Personal" Association="Self.PK_dbo_Personal_Direccion_Personal">
-            <End Role="Personal" EntitySet="Personal" />
-            <End Role="Personal_Direccion" EntitySet="Personal_Direccion" />
+            <End Role="Empleado" EntitySet="Empleado" />
+            <End Role="Empleado_Direccion" EntitySet="Empleado_Direccion" />
           </AssociationSet>
           <AssociationSet Name="PK_dbo_Proveedor_Direccion_Proveedor" Association="Self.PK_dbo_Proveedor_Direccion_Proveedor">
             <End Role="Proveedor" EntitySet="Proveedor" />
@@ -907,7 +905,7 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
           <Property Name="CostoTotal" Type="Double" Nullable="false" />
           <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Solicitud" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Entrega" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Entrega" Type="DateTime" Precision="3" />
           <NavigationProperty Name="PedidoProveedor" Relationship="Self.PK_dbo_PedidoAProveedor_Pedido" FromRole="Pedido" ToRole="PedidoProveedor" />
           <NavigationProperty Name="PedidoCliente" Relationship="Self.PK_dbo_PedidoCliente_Pedido" FromRole="Pedido" ToRole="PedidoCliente" />
         </EntityType>
@@ -935,36 +933,6 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
           <NavigationProperty Name="OrdenAProveedor" Relationship="Self.PK_dbo_Orden_PedidoAProveedor" FromRole="PedidoProveedor" ToRole="OrdenAProveedor" />
           <NavigationProperty Name="Pedido" Relationship="Self.PK_dbo_PedidoAProveedor_Pedido" FromRole="PedidoProveedor" ToRole="Pedido" />
           <NavigationProperty Name="Proveedor" Relationship="Self.PK_dbo_PedidoAProveedor_Proveedor" FromRole="PedidoProveedor" ToRole="Proveedor" />
-        </EntityType>
-        <EntityType Name="Personal">
-          <Key>
-            <PropertyRef Name="Clave" />
-          </Key>
-          <Property Name="Clave" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Apellidos" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="TipoUsuario" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CodigoPostal" Type="Int32" />
-          <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Puesto" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Salario" Type="Double" />
-          <Property Name="Telefono" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Ciudad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Registro" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Baja" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Personal_Direccion" Relationship="Self.PK_dbo_Personal_Direccion_Personal" FromRole="Personal" ToRole="Personal_Direccion" />
-        </EntityType>
-        <EntityType Name="Personal_Direccion">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdPersonal" Type="Int32" Nullable="false" />
-          <Property Name="Calle" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Numero" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Personal" Relationship="Self.PK_dbo_Personal_Direccion_Personal" FromRole="Personal_Direccion" ToRole="Personal" />
         </EntityType>
         <EntityType Name="ProductoVenta">
           <Key>
@@ -1059,7 +1027,6 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
             <PropertyRef Name="CostoTotal" />
             <PropertyRef Name="Status" />
             <PropertyRef Name="Solicitud" />
-            <PropertyRef Name="Entrega" />
             <PropertyRef Name="Cantidad" />
             <PropertyRef Name="TipoPedido" />
           </Key>
@@ -1067,7 +1034,7 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
           <Property Name="CostoTotal" Type="Double" Nullable="false" />
           <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Solicitud" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Entrega" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Entrega" Type="DateTime" Precision="3" />
           <Property Name="Cantidad" Type="Double" Nullable="false" />
           <Property Name="TipoPedido" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="NumeroProductos" Type="Int32" />
@@ -1078,7 +1045,6 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
             <PropertyRef Name="CostoTotal" />
             <PropertyRef Name="StatusPedido" />
             <PropertyRef Name="Solicitud" />
-            <PropertyRef Name="Entrega" />
             <PropertyRef Name="Id" />
             <PropertyRef Name="CodigoPostal" />
             <PropertyRef Name="Nombre" />
@@ -1097,7 +1063,7 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
           <Property Name="CostoTotal" Type="Double" Nullable="false" />
           <Property Name="StatusPedido" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Solicitud" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Entrega" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Entrega" Type="DateTime" Precision="3" />
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CodigoPostal" Type="Int32" Nullable="false" />
@@ -1284,18 +1250,6 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="PK_dbo_Personal_Direccion_Personal">
-          <End Role="Personal" Type="Self.Personal" Multiplicity="1" />
-          <End Role="Personal_Direccion" Type="Self.Personal_Direccion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Personal">
-              <PropertyRef Name="Clave" />
-            </Principal>
-            <Dependent Role="Personal_Direccion">
-              <PropertyRef Name="IdPersonal" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="PK_dbo_Proveedor_Direccion_Proveedor">
           <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
           <End Role="Proveedor_Direccion" Type="Self.Proveedor_Direccion" Multiplicity="*" />
@@ -1321,8 +1275,6 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
           <EntitySet Name="Pedido" EntityType="Self.Pedido" />
           <EntitySet Name="PedidoCliente" EntityType="Self.PedidoCliente" />
           <EntitySet Name="PedidoProveedor" EntityType="Self.PedidoProveedor" />
-          <EntitySet Name="Personal" EntityType="Self.Personal" />
-          <EntitySet Name="Personal_Direccion" EntityType="Self.Personal_Direccion" />
           <EntitySet Name="ProductoVenta" EntityType="Self.ProductoVenta" />
           <EntitySet Name="Proveedor" EntityType="Self.Proveedor" />
           <EntitySet Name="Proveedor_Direccion" EntityType="Self.Proveedor_Direccion" />
@@ -1387,10 +1339,6 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
             <End Role="Proveedor" EntitySet="Proveedor" />
             <End Role="PedidoProveedor" EntitySet="PedidoProveedor" />
           </AssociationSet>
-          <AssociationSet Name="PK_dbo_Personal_Direccion_Personal" Association="Self.PK_dbo_Personal_Direccion_Personal">
-            <End Role="Personal" EntitySet="Personal" />
-            <End Role="Personal_Direccion" EntitySet="Personal_Direccion" />
-          </AssociationSet>
           <AssociationSet Name="PK_dbo_Proveedor_Direccion_Proveedor" Association="Self.PK_dbo_Proveedor_Direccion_Proveedor">
             <End Role="Proveedor" EntitySet="Proveedor" />
             <End Role="Proveedor_Direccion" EntitySet="Proveedor_Direccion" />
@@ -1407,6 +1355,12 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
             <Parameter Name="Key" Mode="InOut" Type="Int32" />
             <Parameter Name="Message" Mode="InOut" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SPGCliente" ReturnType="Collection(SAPModel.ECliente)">
+          <Parameter Name="IdCliente" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SPGDirecciones" ReturnType="Collection(SAPModel.EDireccion)">
+          <Parameter Name="IdCliente" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="SPGIngredientes" ReturnType="Collection(SAPModel.EIngrediente)">
           <Parameter Name="IDReceta" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -1415,6 +1369,14 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
             <Parameter Name="Valor" Mode="In" Type="String" />
             <Parameter Name="Fecha" Mode="In" Type="DateTime" />
             <Parameter Name="Status" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPGPedidosClientes" ReturnType="Collection(SAPModel.EPedidoCliente)">
+            <Parameter Name="Criterio" Mode="In" Type="String" />
+            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SPGPedidosComunes" ReturnType="Collection(SAPModel.EPedidoCliente)" />
+          <FunctionImport Name="EPGProductosComprados" ReturnType="Collection(SAPModel.EProductoComprado)">
+          <Parameter Name="IDPedido" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SPGProductos" ReturnType="Collection(SAPModel.EProducto)">
             <Parameter Name="Criterio" Mode="In" Type="String" />
@@ -1470,21 +1432,35 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
             <Parameter Name="Key" Mode="InOut" Type="Int32" />
             <Parameter Name="Message" Mode="InOut" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SPGPedidosClientes" ReturnType="Collection(SAPModel.EPedidoCliente)">
-            <Parameter Name="Criterio" Mode="In" Type="String" />
-            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <FunctionImport Name="SGPPedidosComunes" ReturnType="Collection(SAPModel.EPedidoCliente)" />
           <FunctionImport Name="SPGProductosComprados" ReturnType="Collection(SAPModel.EProductoComprado)">
           <Parameter Name="IDPedido" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SPGCliente" ReturnType="Collection(SAPModel.ECliente)">
-            <Parameter Name="IdCliente" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="SPGDirecciones" ReturnType="Collection(SAPModel.EDireccion)">
-            <Parameter Name="IdCliente" Mode="In" Type="Int32" />
-          </FunctionImport>
+          <EntitySet Name="Empleado" EntityType="SAPModel.Empleado" />
+          <EntitySet Name="Empleado_Direccion" EntityType="SAPModel.Empleado_Direccion" />
+          <AssociationSet Name="PK_dbo_Personal_Direccion_Personal1" Association="SAPModel.PK_dbo_Personal_Direccion_Personal1">
+            <End Role="Empleado" EntitySet="Empleado" />
+            <End Role="Empleado_Direccion" EntitySet="Empleado_Direccion" />
+          </AssociationSet>
         </EntityContainer>
+        <ComplexType Name="ECliente">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="CodigoPostal" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Apellido" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Telefono" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Ciudad" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="Nacimiento" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="Edad" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="EDireccion">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="IdCliente" Nullable="false" />
+          <Property Type="String" Name="Calle" Nullable="false" MaxLength="500" />
+          <Property Type="Int32" Name="Numero" Nullable="false" />
+          <Property Type="String" Name="Colonia" Nullable="false" MaxLength="500" />
+        </ComplexType>
         <ComplexType Name="EIngrediente">
           <Property Type="Int32" Name="CodigoInsumo" Nullable="false" />
           <Property Type="String" Name="NombreInsumo" Nullable="false" MaxLength="100" />
@@ -1505,56 +1481,15 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
           <Property Type="String" Name="UnidadMedida" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="ProveedorDeInsumo" Nullable="true" MaxLength="100" />
         </ComplexType>
-        <ComplexType Name="EProducto">
-          <Property Type="Int32" Name="Codigo" Nullable="false" />
-          <Property Type="Int32" Name="CodigoReceta" Nullable="true" />
-          <Property Type="Double" Name="PrecioVenta" Nullable="false" />
-          <Property Type="Double" Name="PrecioCompra" Nullable="false" />
-          <Property Type="Int32" Name="Cantidad" Nullable="false" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Foto" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Restricciones" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
-          <Property Type="DateTime" Name="Registro" Nullable="false" Precision="23" />
-        </ComplexType>
-        <ComplexType Name="EReceta" />
         <ComplexType Name="EPedidoCliente">
           <Property Type="Int32" Name="Codigo" Nullable="false" />
           <Property Type="Double" Name="CostoTotal" Nullable="false" />
           <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
           <Property Type="DateTime" Name="Solicitud" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="Entrega" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="Entrega" Nullable="true" Precision="23" />
           <Property Type="Double" Name="Cantidad" Nullable="false" />
           <Property Type="String" Name="TipoPedido" Nullable="false" MaxLength="100" />
           <Property Type="Int32" Name="NumeroProductos" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="SPG_SAP_PedidosComunes_Result">
-          <Property Type="Int32" Name="Codigo" Nullable="false" />
-          <Property Type="Double" Name="CostoTotal" Nullable="false" />
-          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
-          <Property Type="DateTime" Name="Solicitud" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="Entrega" Nullable="false" Precision="23" />
-          <Property Type="Double" Name="Cantidad" Nullable="false" />
-          <Property Type="String" Name="TipoPedido" Nullable="false" MaxLength="100" />
-          <Property Type="Int32" Name="NumeroProductos" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="SPG_SAP_ProductosComprados_Result">
-          <Property Type="Int32" Name="CodigoPedido" Nullable="false" />
-          <Property Type="Int32" Name="CodigoProductoVenta" Nullable="false" />
-          <Property Type="Int32" Name="Cantidad" Nullable="false" />
-          <Property Type="Double" Name="Precio" Nullable="false" />
-          <Property Type="Int32" Name="Codigo" Nullable="false" />
-          <Property Type="Int32" Name="CodigoReceta" Nullable="true" />
-          <Property Type="Double" Name="PrecioVenta" Nullable="false" />
-          <Property Type="Double" Name="PrecioCompra" Nullable="false" />
-          <Property Type="Int32" Name="Cantidad1" Nullable="false" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Foto" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Restricciones" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
-          <Property Type="DateTime" Name="Registro" Nullable="false" Precision="23" />
         </ComplexType>
         <ComplexType Name="EProductoComprado">
           <Property Type="Int32" Name="CodigoPedido" Nullable="false" />
@@ -1571,48 +1506,62 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
           <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
           <Property Type="String" Name="Restricciones" Nullable="false" MaxLength="500" />
         </ComplexType>
-        <ComplexType Name="SPG_SAP_Cliente_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Email" Nullable="true" MaxLength="500" />
-          <Property Type="Int32" Name="CodigoPostal" Nullable="false" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Apellido" Nullable="false" MaxLength="500" />
+        <ComplexType Name="EProducto">
+          <Property Type="Int32" Name="Codigo" Nullable="false" />
+          <Property Type="Int32" Name="CodigoReceta" Nullable="true" />
+          <Property Type="Double" Name="PrecioVenta" Nullable="false" />
+          <Property Type="Double" Name="PrecioCompra" Nullable="false" />
+          <Property Type="Int32" Name="Cantidad" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Foto" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Restricciones" Nullable="false" MaxLength="500" />
           <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Telefono" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Ciudad" Nullable="false" MaxLength="100" />
-          <Property Type="DateTime" Name="Nacimiento" Nullable="false" Precision="23" />
-          <Property Type="Int32" Name="Edad" Nullable="false" />
-          <Property Type="String" Name="Calle" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Colonia" Nullable="false" MaxLength="500" />
-          <Property Type="Int32" Name="Numero" Nullable="false" />
-          <Property Type="Int32" Name="IdDireccion" Nullable="false" />
+          <Property Type="DateTime" Name="Registro" Nullable="false" Precision="23" />
         </ComplexType>
-        <ComplexType Name="SPG_SAP_Direcciones_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="Int32" Name="IdCliente" Nullable="false" />
-          <Property Type="String" Name="Calle" Nullable="false" MaxLength="500" />
-          <Property Type="Int32" Name="Numero" Nullable="false" />
-          <Property Type="String" Name="Colonia" Nullable="false" MaxLength="500" />
-        </ComplexType>
-        <ComplexType Name="ECliente">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Email" Nullable="true" MaxLength="500" />
-          <Property Type="Int32" Name="CodigoPostal" Nullable="false" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Apellido" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Telefono" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Ciudad" Nullable="false" MaxLength="100" />
-          <Property Type="DateTime" Name="Nacimiento" Nullable="false" Precision="23" />
-          <Property Type="Int32" Name="Edad" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="EDireccion">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="Int32" Name="IdCliente" Nullable="false" />
-          <Property Type="String" Name="Calle" Nullable="false" MaxLength="500" />
-          <Property Type="Int32" Name="Numero" Nullable="false" />
-          <Property Type="String" Name="Colonia" Nullable="false" MaxLength="500" />
-        </ComplexType>
+        <ComplexType Name="EReceta" />
+        <EntityType Name="Empleado">
+          <Key>
+            <PropertyRef Name="Clave" />
+          </Key>
+          <Property Name="Clave" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Apellidos" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TipoUsuario" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CodigoPostal" Type="Int32" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Puesto" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Salario" Type="Double" />
+          <Property Name="Telefono" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Ciudad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Registro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Baja" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Empleado_Direccion" Relationship="SAPModel.PK_dbo_Personal_Direccion_Personal1" FromRole="Empleado" ToRole="Empleado_Direccion" />
+        </EntityType>
+        <EntityType Name="Empleado_Direccion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEmpleado" Type="Int32" Nullable="false" />
+          <Property Name="Calle" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Numero" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Empleado" Relationship="SAPModel.PK_dbo_Personal_Direccion_Personal1" FromRole="Empleado_Direccion" ToRole="Empleado" />
+        </EntityType>
+        <Association Name="PK_dbo_Personal_Direccion_Personal1">
+          <End Type="SAPModel.Empleado" Role="Empleado" Multiplicity="1" />
+          <End Type="SAPModel.Empleado_Direccion" Role="Empleado_Direccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleado">
+              <PropertyRef Name="Clave" />
+            </Principal>
+            <Dependent Role="Empleado_Direccion">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1781,36 +1730,6 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Personal">
-            <EntityTypeMapping TypeName="SAPModel.Personal">
-              <MappingFragment StoreEntitySet="Personal">
-                <ScalarProperty Name="Clave" ColumnName="Clave" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
-                <ScalarProperty Name="TipoUsuario" ColumnName="TipoUsuario" />
-                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Puesto" ColumnName="Puesto" />
-                <ScalarProperty Name="Salario" ColumnName="Salario" />
-                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
-                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
-                <ScalarProperty Name="Registro" ColumnName="Registro" />
-                <ScalarProperty Name="Baja" ColumnName="Baja" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Personal_Direccion">
-            <EntityTypeMapping TypeName="SAPModel.Personal_Direccion">
-              <MappingFragment StoreEntitySet="Personal_Direccion">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="IdPersonal" ColumnName="IdPersonal" />
-                <ScalarProperty Name="Calle" ColumnName="Calle" />
-                <ScalarProperty Name="Numero" ColumnName="Numero" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ProductoVenta">
             <EntityTypeMapping TypeName="SAPModel.ProductoVenta">
               <MappingFragment StoreEntitySet="ProductoVenta">
@@ -1932,6 +1851,33 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SPChangeStatusInsumo" FunctionName="SAPModel.Store.SPChangeStatus_SAP_Insumo" />
           <FunctionImportMapping FunctionImportName="SPChangeStatusProducto" FunctionName="SAPModel.Store.SPChangeStatus_SAP_ProductoVenta" />
+          <FunctionImportMapping FunctionImportName="SPGCliente" FunctionName="SAPModel.Store.SPG_SAP_Cliente">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SAPModel.ECliente">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="Nacimiento" ColumnName="Nacimiento" />
+                <ScalarProperty Name="Edad" ColumnName="Edad" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPGDirecciones" FunctionName="SAPModel.Store.SPG_SAP_Direcciones">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SAPModel.EDireccion">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="Calle" ColumnName="Calle" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Colonia" ColumnName="Colonia" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SPGIngredientes" FunctionName="SAPModel.Store.SPG_SAP_Ingredientes">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SAPModel.EIngrediente">
@@ -1960,6 +1906,53 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPGPedidosClientes" FunctionName="SAPModel.Store.SPG_SAP_PedidosCliente">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SAPModel.EPedidoCliente">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="CostoTotal" ColumnName="CostoTotal" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Solicitud" ColumnName="Solicitud" />
+                <ScalarProperty Name="Entrega" ColumnName="Entrega" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="TipoPedido" ColumnName="TipoPedido" />
+                <ScalarProperty Name="NumeroProductos" ColumnName="NumeroProductos" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPGPedidosComunes" FunctionName="SAPModel.Store.SPG_SAP_PedidosComunes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SAPModel.EPedidoCliente">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="CostoTotal" ColumnName="CostoTotal" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Solicitud" ColumnName="Solicitud" />
+                <ScalarProperty Name="Entrega" ColumnName="Entrega" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="TipoPedido" ColumnName="TipoPedido" />
+                <ScalarProperty Name="NumeroProductos" ColumnName="NumeroProductos" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="EPGProductosComprados" FunctionName="SAPModel.Store.SPG_SAP_ProductosComprados">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SAPModel.EProductoComprado">
+                <ScalarProperty Name="CodigoPedido" ColumnName="CodigoPedido" />
+                <ScalarProperty Name="CodigoProductoVenta" ColumnName="CodigoProductoVenta" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="CodigoReceta" ColumnName="CodigoReceta" />
+                <ScalarProperty Name="PrecioCompra" ColumnName="PrecioCompra" />
+                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Foto" ColumnName="Foto" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Restricciones" ColumnName="Restricciones" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SPGProductos" FunctionName="SAPModel.Store.SPG_SAP_ProductoVenta">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SAPModel.EProducto">
@@ -1981,34 +1974,6 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
           <FunctionImportMapping FunctionImportName="SPIProducto" FunctionName="SAPModel.Store.SPI_SAP_ProductoVenta" />
           <FunctionImportMapping FunctionImportName="SPUInsumo" FunctionName="SAPModel.Store.SPU_SAP_Insumo" />
           <FunctionImportMapping FunctionImportName="SPUProducto" FunctionName="SAPModel.Store.SPU_SAP_Producto" />
-          <FunctionImportMapping FunctionImportName="SPGPedidosClientes" FunctionName="SAPModel.Store.SPG_SAP_PedidosCliente">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="SAPModel.EPedidoCliente">
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="CostoTotal" ColumnName="CostoTotal" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Solicitud" ColumnName="Solicitud" />
-                <ScalarProperty Name="Entrega" ColumnName="Entrega" />
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-                <ScalarProperty Name="TipoPedido" ColumnName="TipoPedido" />
-                <ScalarProperty Name="NumeroProductos" ColumnName="NumeroProductos" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SGPPedidosComunes" FunctionName="SAPModel.Store.SPG_SAP_PedidosComunes">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="SAPModel.EPedidoCliente">
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="CostoTotal" ColumnName="CostoTotal" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Solicitud" ColumnName="Solicitud" />
-                <ScalarProperty Name="Entrega" ColumnName="Entrega" />
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-                <ScalarProperty Name="TipoPedido" ColumnName="TipoPedido" />
-                <ScalarProperty Name="NumeroProductos" ColumnName="NumeroProductos" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SPGProductosComprados" FunctionName="SAPModel.Store.SPG_SAP_ProductosComprados">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SAPModel.EProductoComprado">
@@ -2028,33 +1993,36 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SPGCliente" FunctionName="SAPModel.Store.SPG_SAP_Cliente">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="SAPModel.ECliente">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+          <EntitySetMapping Name="Empleado">
+            <EntityTypeMapping TypeName="SAPModel.Empleado">
+              <MappingFragment StoreEntitySet="Empleado">
+                <ScalarProperty Name="Baja" ColumnName="Baja" />
+                <ScalarProperty Name="Registro" ColumnName="Registro" />
                 <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
-                <ScalarProperty Name="Nacimiento" ColumnName="Nacimiento" />
-                <ScalarProperty Name="Edad" ColumnName="Edad" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SPGDirecciones" FunctionName="SAPModel.Store.SPG_SAP_Direcciones">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="SAPModel.EDireccion">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
-                <ScalarProperty Name="Calle" ColumnName="Calle" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Salario" ColumnName="Salario" />
+                <ScalarProperty Name="Puesto" ColumnName="Puesto" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+                <ScalarProperty Name="TipoUsuario" ColumnName="TipoUsuario" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empleado_Direccion">
+            <EntityTypeMapping TypeName="SAPModel.Empleado_Direccion">
+              <MappingFragment StoreEntitySet="Empleado_Direccion">
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
-                <ScalarProperty Name="Colonia" ColumnName="Colonia" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+                <ScalarProperty Name="Calle" ColumnName="Calle" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2072,7 +2040,7 @@ warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary 
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

@@ -86,6 +86,12 @@
     <Compile Include="Model\EInsumo.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Empleado.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Empleado_Direccion.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\EPedidoCliente.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
@@ -128,12 +134,6 @@
     <Compile Include="Model\PedidosDomicilio.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Personal.cs">
-      <DependentUpon>SAPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Personal_Direccion.cs">
-      <DependentUpon>SAPModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\ProductoVenta.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
@@ -163,18 +163,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SAPModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Model\SPG_SAP_Cliente_Result.cs">
-      <DependentUpon>SAPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\SPG_SAP_Direcciones_Result.cs">
-      <DependentUpon>SAPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\SPG_SAP_PedidosComunes_Result.cs">
-      <DependentUpon>SAPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\SPG_SAP_ProductosComprados_Result.cs">
-      <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

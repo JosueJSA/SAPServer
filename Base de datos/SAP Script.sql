@@ -4,7 +4,7 @@ CREATE DATABASE SAP;
 Go
 USE SAP;
 
-CREATE TABLE [Personal] (
+CREATE TABLE [Empleado] (
     [Clave] INT IDENTITY (1, 1) NOT NULL,
 	[Email] NVARCHAR (500) NOT NULL,
     [Password] NVARCHAR (100) NOT NULL, 
@@ -22,13 +22,13 @@ CREATE TABLE [Personal] (
     CONSTRAINT [PK_dbo.Personal] PRIMARY KEY CLUSTERED ([Clave] ASC)
 );
 
-CREATE TABLE [Personal.Direccion] (
+CREATE TABLE [Empleado.Direccion] (
 	[Id] INT IDENTITY (1, 1) NOT NULL,
-	[IdPersonal] INT NOT NULL,
+	[IdEmpleado] INT NOT NULL,
 	[Calle] NVARCHAR (500) NOT NULL,
 	[Numero] INT NOT NULL,
 	CONSTRAINT [PK_dbo.Personal.Direccion] PRIMARY KEY CLUSTERED ([Id] ASC),
-	CONSTRAINT [PK_dbo.Personal.Direccion.Personal] FOREIGN KEY ([IdPersonal]) REFERENCES [dbo].[Personal] ([Clave]) ON UPDATE CASCADE,
+	CONSTRAINT [PK_dbo.Personal.Direccion.Personal] FOREIGN KEY ([IdEmpleado]) REFERENCES [dbo].[Empleado] ([Clave]) ON UPDATE CASCADE,
 );
 
 CREATE TABLE [Cliente] (

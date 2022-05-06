@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ea577784bb8244d39337cbc3a06f0e1c" Name="Diagram1">
+      <Diagram DiagramId="8fc0354d5d754a0091920d9f74556651" Name="Diagram1">
         <EntityTypeShape EntityType="SAPModel.BalanceDiario" Width="1.5" PointX="11" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SAPModel.CajaEntrada" Width="1.5" PointX="8.75" PointY="7.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SAPModel.CajaSalida" Width="1.5" PointX="8.75" PointY="12.875" IsExpanded="true" />
@@ -17,8 +17,6 @@
         <EntityTypeShape EntityType="SAPModel.Pedido" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SAPModel.PedidoCliente" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SAPModel.PedidoProveedor" Width="1.5" PointX="6" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SAPModel.Personal" Width="1.5" PointX="10.75" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SAPModel.Personal_Direccion" Width="1.5" PointX="13" PointY="13.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SAPModel.ProductoVenta" Width="1.5" PointX="3" PointY="13.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SAPModel.Proveedor" Width="1.5" PointX="3.75" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SAPModel.Proveedor_Direccion" Width="1.5" PointX="6" PointY="12.875" IsExpanded="true" />
@@ -41,8 +39,10 @@
         <AssociationConnector Association="SAPModel.PK_dbo_PedidoAProveedor_Pedido" ManuallyRouted="false" />
         <AssociationConnector Association="SAPModel.PK_dbo_PedidoCliente_Pedido" ManuallyRouted="false" />
         <AssociationConnector Association="SAPModel.PK_dbo_PedidoAProveedor_Proveedor" ManuallyRouted="false" />
-        <AssociationConnector Association="SAPModel.PK_dbo_Personal_Direccion_Personal" ManuallyRouted="false" />
         <AssociationConnector Association="SAPModel.PK_dbo_Proveedor_Direccion_Proveedor" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SAPModel.Empleado" Width="1.5" PointX="15.375" PointY="8" />
+        <EntityTypeShape EntityType="SAPModel.Empleado_Direccion" Width="1.5" PointX="17.625" PointY="9" />
+        <AssociationConnector Association="SAPModel.PK_dbo_Personal_Direccion_Personal1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

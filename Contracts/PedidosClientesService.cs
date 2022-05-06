@@ -46,7 +46,7 @@ namespace Contracts
             List<EPedidoCliente> pedidos = null;
             using (var context = new SAPContext())
             {
-                pedidos = context.SGPPedidosComunes().ToList();
+                pedidos = context.SPGPedidosComunes().ToList();
             }
             return pedidos;
         }
