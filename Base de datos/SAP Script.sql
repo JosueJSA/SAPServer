@@ -238,7 +238,7 @@ CREATE TABLE [SalidaExtraordinaria] (
 
 
 USE SAP;
-CREATE UNIQUE INDEX PK_dbo_Personal_Email ON [Personal] ([Email]);
+CREATE UNIQUE INDEX PK_dbo_Personal_Email ON [Empleado] ([Email]);
 CREATE UNIQUE INDEX PK_dbo_Cliente_Email ON [Cliente] ([Email]);
 CREATE UNIQUE INDEX PK_dbo_Insumo ON [Insumo] ([Nombre]);
 CREATE UNIQUE INDEX PK_dbo_Proveedor ON [Proveedor] ([Nombre]);

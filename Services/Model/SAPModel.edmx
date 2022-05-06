@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SAPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="SAPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BalanceDiario">
           <Key>
             <PropertyRef Name="Id" />
@@ -241,8 +241,8 @@
           <Property Name="Importe" Type="float" Nullable="false" />
           <Property Name="Registro" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SAP.dbo.Ingredientes' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SAP.dbo.Ingredientes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Ingredientes">
           <Key>
             <PropertyRef Name="ClaveReceta" />
@@ -269,8 +269,8 @@ advertencia 6002: La tabla o vista 'SAP.dbo.Ingredientes' no tiene definida ning
           <Property Name="PrecioInsumo" Type="float" Nullable="false" />
           <Property Name="Unidad" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SAP.dbo.Pedidos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SAP.dbo.Pedidos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Pedidos">
           <Key>
             <PropertyRef Name="Codigo" />
@@ -289,8 +289,8 @@ advertencia 6002: La tabla o vista 'SAP.dbo.Pedidos' no tiene definida ninguna c
           <Property Name="TipoPedido" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="NumeroProductos" Type="int" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SAP.dbo.PedidosDomicilio' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SAP.dbo.PedidosDomicilio' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="PedidosDomicilio">
           <Key>
             <PropertyRef Name="CodigoPedido" />
@@ -753,7 +753,8 @@ advertencia 6002: La tabla o vista 'SAP.dbo.PedidosDomicilio' no tiene definida 
             <End Role="SalidaExtraordinaria" EntitySet="SalidaExtraordinaria" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SAPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -844,6 +845,36 @@ advertencia 6002: La tabla o vista 'SAP.dbo.PedidosDomicilio' no tiene definida 
           <Property Name="Numero" Type="Int32" Nullable="false" />
           <Property Name="Colonia" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Cliente" Relationship="Self.PK_dbo_Cliente_Direccion_Cliente" FromRole="Cliente_Direccion" ToRole="Cliente" />
+        </EntityType>
+        <EntityType Name="Empleado">
+          <Key>
+            <PropertyRef Name="Clave" />
+          </Key>
+          <Property Name="Clave" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TipoUsuario" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CodigoPostal" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Puesto" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Salario" Type="Double" />
+          <Property Name="Telefono" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Ciudad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Registro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Baja" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Empleado_Direccion" Relationship="Self.PK_dbo_Personal_Direccion_Personal" FromRole="Empleado" ToRole="Empleado_Direccion" />
+        </EntityType>
+        <EntityType Name="Empleado_Direccion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEmpleado" Type="Int32" Nullable="false" />
+          <Property Name="Calle" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Numero" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Empleado" Relationship="Self.PK_dbo_Personal_Direccion_Personal" FromRole="Empleado_Direccion" ToRole="Empleado" />
         </EntityType>
         <EntityType Name="Ingrediente">
           <Key>
@@ -1142,6 +1173,18 @@ advertencia 6002: La tabla o vista 'SAP.dbo.PedidosDomicilio' no tiene definida 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="PK_dbo_Personal_Direccion_Personal">
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="1" />
+          <End Role="Empleado_Direccion" Type="Self.Empleado_Direccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleado">
+              <PropertyRef Name="Clave" />
+            </Principal>
+            <Dependent Role="Empleado_Direccion">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="PK_dbo_Ingrediente_Insumo">
           <End Role="Insumo" Type="Self.Insumo" Multiplicity="1" />
           <End Role="Ingrediente" Type="Self.Ingrediente" Multiplicity="*" />
@@ -1268,6 +1311,8 @@ advertencia 6002: La tabla o vista 'SAP.dbo.PedidosDomicilio' no tiene definida 
           <EntitySet Name="CajaSalida" EntityType="Self.CajaSalida" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" />
           <EntitySet Name="Cliente_Direccion" EntityType="Self.Cliente_Direccion" />
+          <EntitySet Name="Empleado" EntityType="Self.Empleado" />
+          <EntitySet Name="Empleado_Direccion" EntityType="Self.Empleado_Direccion" />
           <EntitySet Name="Ingrediente" EntityType="Self.Ingrediente" />
           <EntitySet Name="Insumo" EntityType="Self.Insumo" />
           <EntitySet Name="Orden" EntityType="Self.Orden" />
@@ -1302,6 +1347,10 @@ advertencia 6002: La tabla o vista 'SAP.dbo.PedidosDomicilio' no tiene definida 
           <AssociationSet Name="PK_dbo_PedidoCliente_Cliente" Association="Self.PK_dbo_PedidoCliente_Cliente">
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="PedidoCliente" EntitySet="PedidoCliente" />
+          </AssociationSet>
+          <AssociationSet Name="PK_dbo_Personal_Direccion_Personal" Association="Self.PK_dbo_Personal_Direccion_Personal">
+            <End Role="Empleado" EntitySet="Empleado" />
+            <End Role="Empleado_Direccion" EntitySet="Empleado_Direccion" />
           </AssociationSet>
           <AssociationSet Name="PK_dbo_Ingrediente_Insumo" Association="Self.PK_dbo_Ingrediente_Insumo">
             <End Role="Insumo" EntitySet="Insumo" />
@@ -1356,13 +1405,13 @@ advertencia 6002: La tabla o vista 'SAP.dbo.PedidosDomicilio' no tiene definida 
             <Parameter Name="Message" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SPGCliente" ReturnType="Collection(SAPModel.ECliente)">
-          <Parameter Name="IdCliente" Mode="In" Type="Int32" />
+            <Parameter Name="IdCliente" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SPGDirecciones" ReturnType="Collection(SAPModel.EDireccion)">
-          <Parameter Name="IdCliente" Mode="In" Type="Int32" />
+            <Parameter Name="IdCliente" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SPGIngredientes" ReturnType="Collection(SAPModel.EIngrediente)">
-          <Parameter Name="IDReceta" Mode="In" Type="Int32" />
+            <Parameter Name="IDReceta" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SPGInsumos" ReturnType="Collection(SAPModel.EInsumo)">
             <Parameter Name="Criterio" Mode="In" Type="String" />
@@ -1375,8 +1424,8 @@ advertencia 6002: La tabla o vista 'SAP.dbo.PedidosDomicilio' no tiene definida 
             <Parameter Name="Fecha" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="SPGPedidosComunes" ReturnType="Collection(SAPModel.EPedidoCliente)" />
-          <FunctionImport Name="EPGProductosComprados" ReturnType="Collection(SAPModel.EProductoComprado)">
-          <Parameter Name="IDPedido" Mode="In" Type="Int32" />
+          <FunctionImport Name="SPGProductosComprados" ReturnType="Collection(SAPModel.EProductoComprado)">
+            <Parameter Name="IDPedido" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SPGProductos" ReturnType="Collection(SAPModel.EProducto)">
             <Parameter Name="Criterio" Mode="In" Type="String" />
@@ -1432,15 +1481,6 @@ advertencia 6002: La tabla o vista 'SAP.dbo.PedidosDomicilio' no tiene definida 
             <Parameter Name="Key" Mode="InOut" Type="Int32" />
             <Parameter Name="Message" Mode="InOut" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SPGProductosComprados" ReturnType="Collection(SAPModel.EProductoComprado)">
-          <Parameter Name="IDPedido" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="Empleado" EntityType="SAPModel.Empleado" />
-          <EntitySet Name="Empleado_Direccion" EntityType="SAPModel.Empleado_Direccion" />
-          <AssociationSet Name="PK_dbo_Personal_Direccion_Personal1" Association="SAPModel.PK_dbo_Personal_Direccion_Personal1">
-            <End Role="Empleado" EntitySet="Empleado" />
-            <End Role="Empleado_Direccion" EntitySet="Empleado_Direccion" />
-          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="ECliente">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1520,48 +1560,6 @@ advertencia 6002: La tabla o vista 'SAP.dbo.PedidosDomicilio' no tiene definida 
           <Property Type="DateTime" Name="Registro" Nullable="false" Precision="23" />
         </ComplexType>
         <ComplexType Name="EReceta" />
-        <EntityType Name="Empleado">
-          <Key>
-            <PropertyRef Name="Clave" />
-          </Key>
-          <Property Name="Clave" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Apellidos" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="TipoUsuario" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CodigoPostal" Type="Int32" />
-          <Property Name="Status" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Puesto" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Salario" Type="Double" />
-          <Property Name="Telefono" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Ciudad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Registro" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Baja" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Empleado_Direccion" Relationship="SAPModel.PK_dbo_Personal_Direccion_Personal1" FromRole="Empleado" ToRole="Empleado_Direccion" />
-        </EntityType>
-        <EntityType Name="Empleado_Direccion">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdEmpleado" Type="Int32" Nullable="false" />
-          <Property Name="Calle" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Numero" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Empleado" Relationship="SAPModel.PK_dbo_Personal_Direccion_Personal1" FromRole="Empleado_Direccion" ToRole="Empleado" />
-        </EntityType>
-        <Association Name="PK_dbo_Personal_Direccion_Personal1">
-          <End Type="SAPModel.Empleado" Role="Empleado" Multiplicity="1" />
-          <End Type="SAPModel.Empleado_Direccion" Role="Empleado_Direccion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empleado">
-              <PropertyRef Name="Clave" />
-            </Principal>
-            <Dependent Role="Empleado_Direccion">
-              <PropertyRef Name="IdEmpleado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1650,6 +1648,36 @@ advertencia 6002: La tabla o vista 'SAP.dbo.PedidosDomicilio' no tiene definida 
                 <ScalarProperty Name="Calle" ColumnName="Calle" />
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
                 <ScalarProperty Name="Colonia" ColumnName="Colonia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empleado">
+            <EntityTypeMapping TypeName="SAPModel.Empleado">
+              <MappingFragment StoreEntitySet="Empleado">
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="TipoUsuario" ColumnName="TipoUsuario" />
+                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Puesto" ColumnName="Puesto" />
+                <ScalarProperty Name="Salario" ColumnName="Salario" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="Registro" ColumnName="Registro" />
+                <ScalarProperty Name="Baja" ColumnName="Baja" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empleado_Direccion">
+            <EntityTypeMapping TypeName="SAPModel.Empleado_Direccion">
+              <MappingFragment StoreEntitySet="Empleado_Direccion">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="Calle" ColumnName="Calle" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1934,7 +1962,7 @@ advertencia 6002: La tabla o vista 'SAP.dbo.PedidosDomicilio' no tiene definida 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="EPGProductosComprados" FunctionName="SAPModel.Store.SPG_SAP_ProductosComprados">
+          <FunctionImportMapping FunctionImportName="SPGProductosComprados" FunctionName="SAPModel.Store.SPG_SAP_ProductosComprados">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SAPModel.EProductoComprado">
                 <ScalarProperty Name="CodigoPedido" ColumnName="CodigoPedido" />
@@ -1974,55 +2002,6 @@ advertencia 6002: La tabla o vista 'SAP.dbo.PedidosDomicilio' no tiene definida 
           <FunctionImportMapping FunctionImportName="SPIProducto" FunctionName="SAPModel.Store.SPI_SAP_ProductoVenta" />
           <FunctionImportMapping FunctionImportName="SPUInsumo" FunctionName="SAPModel.Store.SPU_SAP_Insumo" />
           <FunctionImportMapping FunctionImportName="SPUProducto" FunctionName="SAPModel.Store.SPU_SAP_Producto" />
-          <FunctionImportMapping FunctionImportName="SPGProductosComprados" FunctionName="SAPModel.Store.SPG_SAP_ProductosComprados">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="SAPModel.EProductoComprado">
-                <ScalarProperty Name="CodigoPedido" ColumnName="CodigoPedido" />
-                <ScalarProperty Name="CodigoProductoVenta" ColumnName="CodigoProductoVenta" />
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-                <ScalarProperty Name="Precio" ColumnName="Precio" />
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="CodigoReceta" ColumnName="CodigoReceta" />
-                <ScalarProperty Name="PrecioCompra" ColumnName="PrecioCompra" />
-                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
-                <ScalarProperty Name="stock" ColumnName="stock" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Foto" ColumnName="Foto" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Restricciones" ColumnName="Restricciones" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <EntitySetMapping Name="Empleado">
-            <EntityTypeMapping TypeName="SAPModel.Empleado">
-              <MappingFragment StoreEntitySet="Empleado">
-                <ScalarProperty Name="Baja" ColumnName="Baja" />
-                <ScalarProperty Name="Registro" ColumnName="Registro" />
-                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
-                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
-                <ScalarProperty Name="Salario" ColumnName="Salario" />
-                <ScalarProperty Name="Puesto" ColumnName="Puesto" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
-                <ScalarProperty Name="TipoUsuario" ColumnName="TipoUsuario" />
-                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Clave" ColumnName="Clave" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Empleado_Direccion">
-            <EntityTypeMapping TypeName="SAPModel.Empleado_Direccion">
-              <MappingFragment StoreEntitySet="Empleado_Direccion">
-                <ScalarProperty Name="Numero" ColumnName="Numero" />
-                <ScalarProperty Name="Calle" ColumnName="Calle" />
-                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2040,7 +2019,7 @@ advertencia 6002: La tabla o vista 'SAP.dbo.PedidosDomicilio' no tiene definida 
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
