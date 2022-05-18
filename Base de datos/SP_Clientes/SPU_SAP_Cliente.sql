@@ -1,4 +1,4 @@
-USE [SAP]
+USE SAPDataBase
 GO
 /****** Object:  StoredProcedure [dbo].[SPG_SAP_Insumo]    Script Date: 5/4/2022 13:09:21 ******/
 SET ANSI_NULLS ON

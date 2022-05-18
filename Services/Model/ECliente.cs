@@ -24,6 +24,6 @@ namespace Services.Model
         public string Ciudad { get; set; }
         public System.DateTime Nacimiento { get; set; }
         public int Edad { get; set; }
-        public List<EDireccion> Direcciones { get; set; }   
+        public List<EDireccion> Direcciones { get; set; }
     }
 }

@@ -10,12 +10,13 @@
 namespace Services.Model
 {
     using System;
-    using System.Collections.Generic;
-
-    public partial class EReceta
+    
+    public partial class SPG_SAP_Direcciones_Result
     {
-        public int Clave { get; set; }  
-        public string Descripcion { get; set; } 
-        public List<EIngrediente> Ingredientes { get; set; }    
+        public int Id { get; set; }
+        public int IdCliente { get; set; }
+        public string Calle { get; set; }
+        public int Numero { get; set; }
+        public string Colonia { get; set; }
     }
 }

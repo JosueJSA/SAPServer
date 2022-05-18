@@ -75,6 +75,9 @@
     <Compile Include="Model\Cliente_Direccion.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\database_firewall_rules.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\ECliente.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
@@ -112,6 +115,9 @@
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Insumo.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ipv6_database_firewall_rules.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Orden.cs">
@@ -165,7 +171,31 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SAPModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Model\SPG_SAP_Cliente_Result.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SPG_SAP_Direcciones_Result.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SPG_SAP_Ingredientes_Result.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SPG_SAP_Insumo_Result.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SPG_SAP_PedidosCliente_Result.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SPG_SAP_PedidosComunes_Result.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SPG_SAP_ProductosComprados_Result.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\SPG_SAP_ProductoVentaUnico_Result.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SPG_SAP_ProductoVenta_Result.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

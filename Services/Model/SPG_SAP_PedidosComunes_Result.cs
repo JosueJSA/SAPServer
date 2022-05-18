@@ -10,12 +10,16 @@
 namespace Services.Model
 {
     using System;
-    using System.Collections.Generic;
-
-    public partial class EReceta
+    
+    public partial class SPG_SAP_PedidosComunes_Result
     {
-        public int Clave { get; set; }  
-        public string Descripcion { get; set; } 
-        public List<EIngrediente> Ingredientes { get; set; }    
+        public int Codigo { get; set; }
+        public double CostoTotal { get; set; }
+        public string Status { get; set; }
+        public System.DateTime Solicitud { get; set; }
+        public Nullable<System.DateTime> Entrega { get; set; }
+        public double Cantidad { get; set; }
+        public string TipoPedido { get; set; }
+        public Nullable<int> NumeroProductos { get; set; }
     }
 }

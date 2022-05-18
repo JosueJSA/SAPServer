@@ -10,15 +10,9 @@
 namespace Services.Model
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class PedidosDomicilio
+    public partial class SPG_SAP_Cliente_Result
     {
-        public int CodigoPedido { get; set; }
-        public double CostoTotal { get; set; }
-        public string StatusPedido { get; set; }
-        public System.DateTime Solicitud { get; set; }
-        public Nullable<System.DateTime> Entrega { get; set; }
         public int Id { get; set; }
         public string Email { get; set; }
         public int CodigoPostal { get; set; }
@@ -29,12 +23,5 @@ namespace Services.Model
         public string Ciudad { get; set; }
         public System.DateTime Nacimiento { get; set; }
         public int Edad { get; set; }
-        public int Codigo { get; set; }
-        public double Cantidad { get; set; }
-        public string TipoPedido { get; set; }
-        public Nullable<int> IdCliente { get; set; }
-        public Nullable<int> IdDireccion { get; set; }
-        public string NombreCompleto { get; set; }
-        public Nullable<int> NumeroProductos { get; set; }
     }
 }

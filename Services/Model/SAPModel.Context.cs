@@ -49,6 +49,8 @@ namespace Services.Model
         public virtual DbSet<Ingredientes> Ingredientes { get; set; }
         public virtual DbSet<Pedidos> Pedidos { get; set; }
         public virtual DbSet<PedidosDomicilio> PedidosDomicilio { get; set; }
+        public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
+        public virtual DbSet<ipv6_database_firewall_rules> ipv6_database_firewall_rules { get; set; }
     
         public virtual int SPChangeStatusInsumo(Nullable<int> codigo, string status, ObjectParameter key, ObjectParameter message)
         {
@@ -74,6 +76,19 @@ namespace Services.Model
                 new ObjectParameter("Status", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPChangeStatusProducto", codigoParameter, statusParameter, key, message);
+        }
+    
+        public virtual int SPChangeStatusPedidoCliente(Nullable<int> idPedidoCliente, string status, ObjectParameter key, ObjectParameter message)
+        {
+            var idPedidoClienteParameter = idPedidoCliente.HasValue ?
+                new ObjectParameter("IdPedidoCliente", idPedidoCliente) :
+                new ObjectParameter("IdPedidoCliente", typeof(int));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPChangeStatusPedidoCliente", idPedidoClienteParameter, statusParameter, key, message);
         }
     
         public virtual ObjectResult<ECliente> SPGCliente(Nullable<int> idCliente)
@@ -172,6 +187,48 @@ namespace Services.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EProducto>("SPGProductos", criterioParameter, valorParameter, fechaParameter, statusParameter);
         }
     
+        public virtual ObjectResult<EProducto> SPGProductoUnico(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EProducto>("SPGProductoUnico", idParameter);
+        }
+    
+        public virtual int SPICliente(string nombre, string apellido, Nullable<int> codigoPostal, string telefono, string ciudad, Nullable<System.DateTime> nacimiento, string email, ObjectParameter key, ObjectParameter message)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("Apellido", apellido) :
+                new ObjectParameter("Apellido", typeof(string));
+    
+            var codigoPostalParameter = codigoPostal.HasValue ?
+                new ObjectParameter("CodigoPostal", codigoPostal) :
+                new ObjectParameter("CodigoPostal", typeof(int));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            var ciudadParameter = ciudad != null ?
+                new ObjectParameter("Ciudad", ciudad) :
+                new ObjectParameter("Ciudad", typeof(string));
+    
+            var nacimientoParameter = nacimiento.HasValue ?
+                new ObjectParameter("Nacimiento", nacimiento) :
+                new ObjectParameter("Nacimiento", typeof(System.DateTime));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPICliente", nombreParameter, apellidoParameter, codigoPostalParameter, telefonoParameter, ciudadParameter, nacimientoParameter, emailParameter, key, message);
+        }
+    
         public virtual int SPIInsumo(Nullable<double> precioCompra, Nullable<double> cantidad, string nombre, string descripcion, string restricciones, string unidadMedida, string proveedorDeInsumo, ObjectParameter key, ObjectParameter message)
         {
             var precioCompraParameter = precioCompra.HasValue ?
@@ -203,6 +260,31 @@ namespace Services.Model
                 new ObjectParameter("ProveedorDeInsumo", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPIInsumo", precioCompraParameter, cantidadParameter, nombreParameter, descripcionParameter, restriccionesParameter, unidadMedidaParameter, proveedorDeInsumoParameter, key, message);
+        }
+    
+        public virtual int SPIPedidoCliente(Nullable<double> costoTotal, Nullable<int> cantidad, string tipoPedido, Nullable<int> idCliente, Nullable<int> idDireccion, ObjectParameter key, ObjectParameter message)
+        {
+            var costoTotalParameter = costoTotal.HasValue ?
+                new ObjectParameter("CostoTotal", costoTotal) :
+                new ObjectParameter("CostoTotal", typeof(double));
+    
+            var cantidadParameter = cantidad.HasValue ?
+                new ObjectParameter("Cantidad", cantidad) :
+                new ObjectParameter("Cantidad", typeof(int));
+    
+            var tipoPedidoParameter = tipoPedido != null ?
+                new ObjectParameter("TipoPedido", tipoPedido) :
+                new ObjectParameter("TipoPedido", typeof(string));
+    
+            var idClienteParameter = idCliente.HasValue ?
+                new ObjectParameter("IdCliente", idCliente) :
+                new ObjectParameter("IdCliente", typeof(int));
+    
+            var idDireccionParameter = idDireccion.HasValue ?
+                new ObjectParameter("IdDireccion", idDireccion) :
+                new ObjectParameter("IdDireccion", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPIPedidoCliente", costoTotalParameter, cantidadParameter, tipoPedidoParameter, idClienteParameter, idDireccionParameter, key, message);
         }
     
         public virtual int SPIProducto(Nullable<int> codigoReceta, Nullable<double> precioVenta, Nullable<double> precioCompra, Nullable<int> cantidad, string nombre, string foto, string descripcion, string restricciones, ObjectParameter key, ObjectParameter message)
@@ -240,6 +322,60 @@ namespace Services.Model
                 new ObjectParameter("Restricciones", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPIProducto", codigoRecetaParameter, precioVentaParameter, precioCompraParameter, cantidadParameter, nombreParameter, fotoParameter, descripcionParameter, restriccionesParameter, key, message);
+        }
+    
+        public virtual int SPUCantidadInsumo(Nullable<int> idInsumo, Nullable<int> cantidadProducto, Nullable<int> idReceta, ObjectParameter key, ObjectParameter message)
+        {
+            var idInsumoParameter = idInsumo.HasValue ?
+                new ObjectParameter("IdInsumo", idInsumo) :
+                new ObjectParameter("IdInsumo", typeof(int));
+    
+            var cantidadProductoParameter = cantidadProducto.HasValue ?
+                new ObjectParameter("CantidadProducto", cantidadProducto) :
+                new ObjectParameter("CantidadProducto", typeof(int));
+    
+            var idRecetaParameter = idReceta.HasValue ?
+                new ObjectParameter("IdReceta", idReceta) :
+                new ObjectParameter("IdReceta", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPUCantidadInsumo", idInsumoParameter, cantidadProductoParameter, idRecetaParameter, key, message);
+        }
+    
+        public virtual int SPUCliente(Nullable<int> id, string nombre, string apellido, Nullable<int> codigoPostal, string telefono, string ciudad, Nullable<System.DateTime> nacimiento, string email, ObjectParameter key, ObjectParameter message)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("Apellido", apellido) :
+                new ObjectParameter("Apellido", typeof(string));
+    
+            var codigoPostalParameter = codigoPostal.HasValue ?
+                new ObjectParameter("CodigoPostal", codigoPostal) :
+                new ObjectParameter("CodigoPostal", typeof(int));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            var ciudadParameter = ciudad != null ?
+                new ObjectParameter("Ciudad", ciudad) :
+                new ObjectParameter("Ciudad", typeof(string));
+    
+            var nacimientoParameter = nacimiento.HasValue ?
+                new ObjectParameter("Nacimiento", nacimiento) :
+                new ObjectParameter("Nacimiento", typeof(System.DateTime));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPUCliente", idParameter, nombreParameter, apellidoParameter, codigoPostalParameter, telefonoParameter, ciudadParameter, nacimientoParameter, emailParameter, key, message);
         }
     
         public virtual int SPUInsumo(Nullable<int> codigo, Nullable<double> precioCompra, Nullable<double> cantidad, string nombre, string descripcion, string restricciones, string unidadMedida, string proveedorDeInsumo, ObjectParameter key, ObjectParameter message)
@@ -318,140 +454,6 @@ namespace Services.Model
                 new ObjectParameter("Restricciones", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPUProducto", codigoParameter, codigoRecetaParameter, precioVentaParameter, precioCompraParameter, cantidadParameter, nombreParameter, fotoParameter, descripcionParameter, restriccionesParameter, key, message);
-        }
-    
-        public virtual int SPIPedidoCliente(Nullable<double> costoTotal, Nullable<int> cantidad, string tipoPedido, Nullable<int> idCliente, Nullable<int> idDireccion, ObjectParameter key, ObjectParameter message)
-        {
-            var costoTotalParameter = costoTotal.HasValue ?
-                new ObjectParameter("CostoTotal", costoTotal) :
-                new ObjectParameter("CostoTotal", typeof(double));
-    
-            var cantidadParameter = cantidad.HasValue ?
-                new ObjectParameter("Cantidad", cantidad) :
-                new ObjectParameter("Cantidad", typeof(int));
-    
-            var tipoPedidoParameter = tipoPedido != null ?
-                new ObjectParameter("TipoPedido", tipoPedido) :
-                new ObjectParameter("TipoPedido", typeof(string));
-    
-            var idClienteParameter = idCliente.HasValue ?
-                new ObjectParameter("IdCliente", idCliente) :
-                new ObjectParameter("IdCliente", typeof(int));
-    
-            var idDireccionParameter = idDireccion.HasValue ?
-                new ObjectParameter("IdDireccion", idDireccion) :
-                new ObjectParameter("IdDireccion", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPIPedidoCliente", costoTotalParameter, cantidadParameter, tipoPedidoParameter, idClienteParameter, idDireccionParameter, key, message);
-        }
-    
-        public virtual int SPUCliente(Nullable<int> id, string nombre, string apellido, Nullable<int> codigoPostal, string telefono, string ciudad, Nullable<System.DateTime> nacimiento, string email, ObjectParameter key, ObjectParameter message)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("Id", id) :
-                new ObjectParameter("Id", typeof(int));
-    
-            var nombreParameter = nombre != null ?
-                new ObjectParameter("Nombre", nombre) :
-                new ObjectParameter("Nombre", typeof(string));
-    
-            var apellidoParameter = apellido != null ?
-                new ObjectParameter("Apellido", apellido) :
-                new ObjectParameter("Apellido", typeof(string));
-    
-            var codigoPostalParameter = codigoPostal.HasValue ?
-                new ObjectParameter("CodigoPostal", codigoPostal) :
-                new ObjectParameter("CodigoPostal", typeof(int));
-    
-            var telefonoParameter = telefono != null ?
-                new ObjectParameter("Telefono", telefono) :
-                new ObjectParameter("Telefono", typeof(string));
-    
-            var ciudadParameter = ciudad != null ?
-                new ObjectParameter("Ciudad", ciudad) :
-                new ObjectParameter("Ciudad", typeof(string));
-    
-            var nacimientoParameter = nacimiento.HasValue ?
-                new ObjectParameter("Nacimiento", nacimiento) :
-                new ObjectParameter("Nacimiento", typeof(System.DateTime));
-    
-            var emailParameter = email != null ?
-                new ObjectParameter("Email", email) :
-                new ObjectParameter("Email", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPUCliente", idParameter, nombreParameter, apellidoParameter, codigoPostalParameter, telefonoParameter, ciudadParameter, nacimientoParameter, emailParameter, key, message);
-        }
-    
-        public virtual int SPICliente(string nombre, string apellido, Nullable<int> codigoPostal, string telefono, string ciudad, Nullable<System.DateTime> nacimiento, string email, ObjectParameter key, ObjectParameter message)
-        {
-            var nombreParameter = nombre != null ?
-                new ObjectParameter("Nombre", nombre) :
-                new ObjectParameter("Nombre", typeof(string));
-    
-            var apellidoParameter = apellido != null ?
-                new ObjectParameter("Apellido", apellido) :
-                new ObjectParameter("Apellido", typeof(string));
-    
-            var codigoPostalParameter = codigoPostal.HasValue ?
-                new ObjectParameter("CodigoPostal", codigoPostal) :
-                new ObjectParameter("CodigoPostal", typeof(int));
-    
-            var telefonoParameter = telefono != null ?
-                new ObjectParameter("Telefono", telefono) :
-                new ObjectParameter("Telefono", typeof(string));
-    
-            var ciudadParameter = ciudad != null ?
-                new ObjectParameter("Ciudad", ciudad) :
-                new ObjectParameter("Ciudad", typeof(string));
-    
-            var nacimientoParameter = nacimiento.HasValue ?
-                new ObjectParameter("Nacimiento", nacimiento) :
-                new ObjectParameter("Nacimiento", typeof(System.DateTime));
-    
-            var emailParameter = email != null ?
-                new ObjectParameter("Email", email) :
-                new ObjectParameter("Email", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPICliente", nombreParameter, apellidoParameter, codigoPostalParameter, telefonoParameter, ciudadParameter, nacimientoParameter, emailParameter, key, message);
-        }
-    
-        public virtual int SPUCantidadInsumo(Nullable<int> idInsumo, Nullable<int> cantidadProducto, Nullable<int> idReceta, ObjectParameter key, ObjectParameter message)
-        {
-            var idInsumoParameter = idInsumo.HasValue ?
-                new ObjectParameter("IdInsumo", idInsumo) :
-                new ObjectParameter("IdInsumo", typeof(int));
-    
-            var cantidadProductoParameter = cantidadProducto.HasValue ?
-                new ObjectParameter("CantidadProducto", cantidadProducto) :
-                new ObjectParameter("CantidadProducto", typeof(int));
-    
-            var idRecetaParameter = idReceta.HasValue ?
-                new ObjectParameter("IdReceta", idReceta) :
-                new ObjectParameter("IdReceta", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPUCantidadInsumo", idInsumoParameter, cantidadProductoParameter, idRecetaParameter, key, message);
-        }
-    
-        public virtual int SPChangeStatusPedidoCliente(Nullable<int> idPedidoCliente, string status, ObjectParameter key, ObjectParameter message)
-        {
-            var idPedidoClienteParameter = idPedidoCliente.HasValue ?
-                new ObjectParameter("IdPedidoCliente", idPedidoCliente) :
-                new ObjectParameter("IdPedidoCliente", typeof(int));
-    
-            var statusParameter = status != null ?
-                new ObjectParameter("Status", status) :
-                new ObjectParameter("Status", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPChangeStatusPedidoCliente", idPedidoClienteParameter, statusParameter, key, message);
-        }
-    
-        public virtual ObjectResult<EProducto> SPGProductoUnico(Nullable<int> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("Id", id) :
-                new ObjectParameter("Id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EProducto>("SPGProductoUnico", idParameter);
         }
     }
 }

@@ -21,10 +21,10 @@ namespace Services.Model
         }
     
         public int Codigo { get; set; }
-        public Nullable<int> IdCliente { get; set; }
         public double Cantidad { get; set; }
-        public Nullable<int> IdDireccion { get; set; }
         public string TipoPedido { get; set; }
+        public Nullable<int> IdCliente { get; set; }
+        public Nullable<int> IdDireccion { get; set; }
     
         public virtual Cliente Cliente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

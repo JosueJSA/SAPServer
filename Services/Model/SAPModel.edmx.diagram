@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="09c6d0825991499f9f19ddd9d02a70d9" Name="Diagram1">
+      <Diagram DiagramId="873ddc62f6814e11b3b61584d959ee5b" Name="Diagram1">
         <EntityTypeShape EntityType="SAPModel.BalanceDiario" Width="1.5" PointX="11" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SAPModel.CajaEntrada" Width="1.5" PointX="8.75" PointY="7.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SAPModel.CajaSalida" Width="1.5" PointX="8.75" PointY="12.875" IsExpanded="true" />
@@ -27,6 +27,8 @@
         <EntityTypeShape EntityType="SAPModel.Ingredientes" Width="1.5" PointX="13.75" PointY="1.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SAPModel.Pedidos" Width="1.5" PointX="5.75" PointY="15.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SAPModel.PedidosDomicilio" Width="1.5" PointX="15.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAPModel.database_firewall_rules" Width="1.5" PointX="15.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SAPModel.ipv6_database_firewall_rules" Width="1.5" PointX="15.75" PointY="10.625" IsExpanded="true" />
         <AssociationConnector Association="SAPModel.PK_dbo_Balance_CajaEntrada" ManuallyRouted="false" />
         <AssociationConnector Association="SAPModel.PK_dbo_Balance_CajaSalida" ManuallyRouted="false" />
         <AssociationConnector Association="SAPModel.PK_dbo_Salida_Balance" ManuallyRouted="false" />

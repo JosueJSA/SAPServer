@@ -11,11 +11,14 @@ namespace Services.Model
 {
     using System;
     using System.Collections.Generic;
-
-    public partial class EReceta
+    
+    public partial class database_firewall_rules
     {
-        public int Clave { get; set; }  
-        public string Descripcion { get; set; } 
-        public List<EIngrediente> Ingredientes { get; set; }    
+        public int id { get; set; }
+        public string name { get; set; }
+        public string start_ip_address { get; set; }
+        public string end_ip_address { get; set; }
+        public System.DateTime create_date { get; set; }
+        public System.DateTime modify_date { get; set; }
     }
 }

@@ -11,20 +11,18 @@ namespace Services.Model
 {
     using System;
     
-    public partial class EProducto
+    public partial class SPG_SAP_ProductoVenta_Result
     {
-        public int CodigoPedido { get; set; }
-        public int CodigoProductoVenta { get; set; }
-        public int Cantidad { get; set; }
-        public double Precio { get; set; }
         public int Codigo { get; set; }
         public Nullable<int> CodigoReceta { get; set; }
-        public double PrecioCompra { get; set; }
         public double PrecioVenta { get; set; }
-        public int stock { get; set; }
+        public double PrecioCompra { get; set; }
+        public int Cantidad { get; set; }
         public string Nombre { get; set; }
         public string Foto { get; set; }
         public string Descripcion { get; set; }
         public string Restricciones { get; set; }
+        public string Status { get; set; }
+        public System.DateTime Registro { get; set; }
     }
 }

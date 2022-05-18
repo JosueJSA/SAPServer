@@ -11,7 +11,7 @@ namespace Services.Model
 {
     using System;
     
-    public partial class EProducto
+    public partial class SPG_SAP_ProductosComprados_Result
     {
         public int CodigoPedido { get; set; }
         public int CodigoProductoVenta { get; set; }

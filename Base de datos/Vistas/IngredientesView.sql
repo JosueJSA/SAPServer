@@ -1,4 +1,4 @@
-USE SAP;   
+USE [SAPDataBase]
 GO  
 CREATE VIEW Ingredientes  
 AS  

@@ -1,4 +1,4 @@
-USE SAP;
+USE [SAPDataBase]
 GO
 -- ================================================
 -- Template generated from Template Explorer using:
