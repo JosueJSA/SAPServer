@@ -98,6 +98,18 @@ namespace Contracts
             return insumosList;
         }
 
+        public EProducto GetProductById(int idProduct)
+        {
+            using (var context = new SAPContext())
+            {
+                var result = context.SPGProductoUnico(idProduct);
+                if (result != null)
+                    return result.ToList().First();
+                else
+                    return null;
+            }
+        }
+
         public List<EProducto> GetProductosList(string criterio, string valor, DateTime fecha, string status)
         {
             List<EProducto> productosList = null;

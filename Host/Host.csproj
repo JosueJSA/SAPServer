@@ -17,7 +17,8 @@
     <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -72,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="PedidosClientesService.svc" />
+    <Content Include="ClientesService.svc" />
     <Content Include="ProductosService.svc" />
     <Content Include="InsumosService.svc" />
     <Content Include="Web.config" />

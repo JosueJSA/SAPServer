@@ -132,10 +132,10 @@ CREATE TABLE [Pedido] (
 
 CREATE TABLE [PedidoCliente] (
 	[Codigo] INT NOT NULL,
-	[IdCliente] INT,
 	[Cantidad] FLOAT NOT NULL,
-	[IdDireccion] INT,
 	[TipoPedido] NVARCHAR (100) NOT NULL,
+	[IdCliente] INT,
+	[IdDireccion] INT,
 	CONSTRAINT [PK_dbo.PedidoCliente] PRIMARY KEY (Codigo),
 	CONSTRAINT [PK_dbo.PedidoCliente.Pedido] FOREIGN KEY ([Codigo]) REFERENCES [dbo].[Pedido] ([Codigo]) ON UPDATE CASCADE,
 	CONSTRAINT [PK_dbo.PedidoCliente.Cliente] FOREIGN KEY ([IdCliente]) REFERENCES [dbo].[Cliente] ([Id]) ON UPDATE CASCADE 

@@ -18,12 +18,12 @@ namespace Services
         [OperationContract]
         List<EProductoComprado> GetProductosComprados(int clavePedido);
         [OperationContract]
-        ECliente GetCliente(int IDCliente);
-        [OperationContract]
         List<EProducto> GetProductosList();
         [OperationContract]
-        List<string> GetClientesList();
-        
-
+        AnswerMessage AddPedidoCliente(EPedidoCliente pedido, List<EProductoComprado> productos, int idCliente, int idDireccion);
+        [OperationContract]
+        string CheckProductosSeleccionados(List<EProductoComprado> productos);
+        [OperationContract]
+        AnswerMessage ChangeStatusPedidoCliente(int IdPedido, string status);
     }
 }

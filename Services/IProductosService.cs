@@ -27,5 +27,7 @@ namespace Services
         AnswerMessage ChangeProductoStatus(int productoID, string status);
         [OperationContract]
         string CheckIngredientesStatus(List<EIngrediente> ingredientes);
+        [OperationContract]
+        EProducto GetProductById(int idProduct);
     }
 }

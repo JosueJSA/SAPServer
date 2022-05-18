@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IClientesService.cs" />
     <Compile Include="IInsumosService.cs" />
     <Compile Include="IPedidosClientesService.cs" />
     <Compile Include="IProductosService.cs" />
@@ -163,6 +164,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SAPModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SPG_SAP_ProductoVentaUnico_Result.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
