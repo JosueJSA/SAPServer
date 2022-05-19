@@ -33,13 +33,31 @@ namespace Contracts
 
         public AnswerMessage AddInsumo(EInsumo insumo)
         {
-            using (var context = new SAPContext())
+            try
             {
-                context.SPIInsumo(insumo.PrecioCompra, insumo.Cantidad, insumo.Nombre, insumo.Descripcion, insumo.Restricciones, insumo.UnidadMedida, insumo.ProveedorDeInsumo, key, message);
-                answer.Key = Convert.ToInt32(key.Value);
-                answer.Message = Convert.ToString(message.Value);
+                CheckInsumo(insumo);    
+                using (var context = new SAPContext())
+                {
+                    context.SPIInsumo(insumo.PrecioCompra, insumo.Cantidad, insumo.Nombre, insumo.Descripcion, insumo.Restricciones, insumo.UnidadMedida, insumo.ProveedorDeInsumo, key, message);
+                    answer.Key = Convert.ToInt32(key.Value);
+                    answer.Message = Convert.ToString(message.Value);
+                }
+                return answer;
             }
-            return answer;
+            catch (Exception ex)
+            {
+                answer.Key = -1;
+                answer.Message = ex.Message;
+                return answer;
+            }
+        }
+
+        private void CheckInsumo(EInsumo insumo)
+        {
+            if (insumo.Cantidad < 0)
+                throw new Exception("No puedes registrar un insumo con una cantidad menor a cero");
+            if (insumo.PrecioCompra < 0)
+                throw new Exception("No puedes registrar un insumo con un costo menor a cero (Pérdida)");
         }
 
         public AnswerMessage ChangeInsumoStatus(int insumoID, string status)
@@ -88,13 +106,23 @@ namespace Contracts
 
         public AnswerMessage UpdateInsumo(int oldInsumoID, EInsumo newInsumo)
         {
-            using (var context = new SAPContext())
+            try
             {
-                context.SPUInsumo(oldInsumoID, newInsumo.PrecioCompra, newInsumo.Cantidad, newInsumo.Nombre, newInsumo.Descripcion, newInsumo.Restricciones, newInsumo.UnidadMedida, newInsumo.ProveedorDeInsumo, key, message);
-                answer.Key = Convert.ToInt32(key.Value);
-                answer.Message = Convert.ToString(message.Value);
+                CheckInsumo(newInsumo);
+                using (var context = new SAPContext())
+                {
+                    context.SPUInsumo(oldInsumoID, newInsumo.PrecioCompra, newInsumo.Cantidad, newInsumo.Nombre, newInsumo.Descripcion, newInsumo.Restricciones, newInsumo.UnidadMedida, newInsumo.ProveedorDeInsumo, key, message);
+                    answer.Key = Convert.ToInt32(key.Value);
+                    answer.Message = Convert.ToString(message.Value);
+                }
+                return answer;
             }
-            return answer;
+            catch (Exception ex)
+            {
+                answer.Key = -1;
+                answer.Message = ex.Message;
+                return answer;
+            }
         }
     }
 }

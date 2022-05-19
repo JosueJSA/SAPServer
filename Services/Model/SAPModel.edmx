@@ -1817,21 +1817,6 @@ warning 6002: The table/view 'SAPDataBase.sys.ipv6_database_firewall_rules' does
           <Property Type="String" Name="TipoPedido" Nullable="false" MaxLength="100" />
           <Property Type="Int32" Name="NumeroProductos" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="EProducto">
-          <Property Type="Int32" Name="CodigoPedido" Nullable="false" />
-          <Property Type="Int32" Name="CodigoProductoVenta" Nullable="false" />
-          <Property Type="Int32" Name="Cantidad" Nullable="false" />
-          <Property Type="Double" Name="Precio" Nullable="false" />
-          <Property Type="Int32" Name="Codigo" Nullable="false" />
-          <Property Type="Int32" Name="CodigoReceta" Nullable="true" />
-          <Property Type="Double" Name="PrecioCompra" Nullable="false" />
-          <Property Type="Double" Name="PrecioVenta" Nullable="false" />
-          <Property Type="Int32" Name="stock" Nullable="false" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Foto" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Restricciones" Nullable="false" MaxLength="500" />
-        </ComplexType>
         <ComplexType Name="EReceta" />
         <ComplexType Name="EProductoComprado">
           <Property Type="Int32" Name="CodigoPedido" Nullable="false" />
@@ -1847,6 +1832,19 @@ warning 6002: The table/view 'SAPDataBase.sys.ipv6_database_firewall_rules' does
           <Property Type="String" Name="Foto" Nullable="false" MaxLength="500" />
           <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
           <Property Type="String" Name="Restricciones" Nullable="false" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="EProducto">
+          <Property Type="Int32" Name="Codigo" Nullable="false" />
+          <Property Type="Int32" Name="CodigoReceta" Nullable="true" />
+          <Property Type="Double" Name="PrecioVenta" Nullable="false" />
+          <Property Type="Double" Name="PrecioCompra" Nullable="false" />
+          <Property Type="Int32" Name="Cantidad" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Foto" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Restricciones" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="Registro" Nullable="false" Precision="23" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2297,38 +2295,34 @@ warning 6002: The table/view 'SAPDataBase.sys.ipv6_database_firewall_rules' does
           <FunctionImportMapping FunctionImportName="SPGProductos" FunctionName="SAPModel.Store.SPG_SAP_ProductoVenta">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SAPModel.EProducto">
-                <ScalarProperty Name="CodigoPedido" ColumnName="CodigoPedido" />
-                <ScalarProperty Name="CodigoProductoVenta" ColumnName="CodigoProductoVenta" />
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-                <ScalarProperty Name="Precio" ColumnName="Precio" />
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="CodigoReceta" ColumnName="CodigoReceta" />
-                <ScalarProperty Name="PrecioCompra" ColumnName="PrecioCompra" />
                 <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
-                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="PrecioCompra" ColumnName="PrecioCompra" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Foto" ColumnName="Foto" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="Restricciones" ColumnName="Restricciones" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Registro" ColumnName="Registro" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SPGProductoUnico" FunctionName="SAPModel.Store.SPG_SAP_ProductoVentaUnico">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SAPModel.EProducto">
-                <ScalarProperty Name="CodigoPedido" ColumnName="CodigoPedido" />
-                <ScalarProperty Name="CodigoProductoVenta" ColumnName="CodigoProductoVenta" />
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-                <ScalarProperty Name="Precio" ColumnName="Precio" />
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="CodigoReceta" ColumnName="CodigoReceta" />
-                <ScalarProperty Name="PrecioCompra" ColumnName="PrecioCompra" />
                 <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
-                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="PrecioCompra" ColumnName="PrecioCompra" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Foto" ColumnName="Foto" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="Restricciones" ColumnName="Restricciones" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Registro" ColumnName="Registro" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
