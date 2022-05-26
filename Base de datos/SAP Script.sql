@@ -1,3 +1,6 @@
+CREATE DATABASE SAPDataBase
+GO
+
 --Created By Josue Alarcón
 USE SAPDataBase
 GO

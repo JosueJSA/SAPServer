@@ -49,8 +49,6 @@ namespace Services.Model
         public virtual DbSet<Ingredientes> Ingredientes { get; set; }
         public virtual DbSet<Pedidos> Pedidos { get; set; }
         public virtual DbSet<PedidosDomicilio> PedidosDomicilio { get; set; }
-        public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
-        public virtual DbSet<ipv6_database_firewall_rules> ipv6_database_firewall_rules { get; set; }
     
         public virtual int SPChangeStatusInsumo(Nullable<int> codigo, string status, ObjectParameter key, ObjectParameter message)
         {

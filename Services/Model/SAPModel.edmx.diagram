@@ -27,8 +27,6 @@
         <EntityTypeShape EntityType="SAPModel.Ingredientes" Width="1.5" PointX="13.75" PointY="1.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SAPModel.Pedidos" Width="1.5" PointX="5.75" PointY="15.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SAPModel.PedidosDomicilio" Width="1.5" PointX="15.75" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SAPModel.database_firewall_rules" Width="1.5" PointX="15.75" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SAPModel.ipv6_database_firewall_rules" Width="1.5" PointX="15.75" PointY="10.625" IsExpanded="true" />
         <AssociationConnector Association="SAPModel.PK_dbo_Balance_CajaEntrada" ManuallyRouted="false" />
         <AssociationConnector Association="SAPModel.PK_dbo_Balance_CajaSalida" ManuallyRouted="false" />
         <AssociationConnector Association="SAPModel.PK_dbo_Salida_Balance" ManuallyRouted="false" />

@@ -73,12 +73,19 @@ namespace Contracts
 
         public List<EInsumo> GetInsumosList(string criterio, string valor, DateTime fecha, string status)
         {
-            List<EInsumo> insumosList = null;
-            using (var context = new SAPContext())
+            try
             {
-                insumosList = context.SPGInsumos(criterio, valor, fecha, status).ToList();
+                List<EInsumo> insumosList = new List<EInsumo>();
+                using (var context = new SAPContext())
+                {
+                    insumosList = context.SPGInsumos(criterio, valor, fecha, status).ToList();
+                }
+                return insumosList;
             }
-            return insumosList;
+            catch(Exception)
+            {
+                return null;
+            }
         }
 
         public bool IsDuplicated(string nombreActual, string nombreABuscar)

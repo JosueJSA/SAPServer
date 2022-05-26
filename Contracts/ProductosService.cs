@@ -27,8 +27,9 @@ namespace Contracts
                 {
                     try
                     {
+                        RevisarProducto(producto, receta);
                         int claveReceta = -1;
-                        if (receta != null)
+                        if (producto.CodigoReceta > 0)
                         {
                             var newReceta = new Receta();
                             context.Receta.Add(newReceta = new Receta() { Descripcion = receta.Descripcion });
@@ -60,6 +61,40 @@ namespace Contracts
                 }
             }
             return answer;
+        }
+
+        private void RevisarProducto(EProducto producto, EReceta receta = null)
+        {
+            if (producto.Cantidad < 0)
+                throw new Exception("Lo sentimos, no puedes subir un producto con una cantidad negativa");
+            if (producto.PrecioCompra < 0)
+                throw new Exception("Lo sentimos, no puedes subir un producto con un precio de compra negativo");
+            if (producto.PrecioVenta < 0)
+                throw new Exception("Lo sentimos, no puedes subir un producto con un precio de venta negativo");
+            if (producto.CodigoReceta > 0)
+            {
+                if(receta.Ingredientes == null || receta.Ingredientes.Count == 0)
+                {
+                    throw new Exception("Un producto no puede tener una receta sin ingredientes");
+                }
+                else
+                {
+                    using (var context = new SAPContext())
+                    {
+                        List<int> idIngredientes = new List<int>();
+                        foreach (var i in receta.Ingredientes)
+                        {
+                            if (i.CantidadIngrediente < 0)
+                                throw new Exception($"Lo sentimos, la cantidad del ingrediente '{i.NombreInsumo}' no puede ser negativa");
+                            if (i.PrecioInsumo < 0)
+                                throw new Exception($"Lo sentimos, el precio del ingrediente '{i.NombreInsumo}' no puede ser negativo");
+                            if (idIngredientes.Contains(i.CodigoInsumo))
+                                throw new Exception($"Lo sentimos, el ingrediente '{i.NombreInsumo}' ya ha sido seleccionado");
+                            idIngredientes.Add(i.CodigoInsumo);
+                        }
+                    }
+                }
+            }
         }
 
         public AnswerMessage ChangeProductoStatus(int productoID, string status)
@@ -157,6 +192,7 @@ namespace Contracts
                 {
                     try
                     {
+                        RevisarProducto(producto, receta);  
                         if (receta != null)
                         {
                             var recetaAux = new Receta();
@@ -204,6 +240,7 @@ namespace Contracts
                     }
                     catch (Exception ex)
                     {
+                        answer.Key = -1;
                         answer.Message = ex.Message;
                         transaction.Rollback(); 
                     }
