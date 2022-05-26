@@ -241,8 +241,8 @@
           <Property Name="Importe" Type="float" Nullable="false" />
           <Property Name="Registro" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SAPDataBase.dbo.Ingredientes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SAPDataBase.dbo.Ingredientes' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Ingredientes">
           <Key>
             <PropertyRef Name="ClaveReceta" />
@@ -269,8 +269,8 @@ warning 6002: The table/view 'SAPDataBase.dbo.Ingredientes' does not have a prim
           <Property Name="PrecioInsumo" Type="float" Nullable="false" />
           <Property Name="Unidad" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SAPDataBase.dbo.Pedidos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Pedidos">
           <Key>
             <PropertyRef Name="Codigo" />
@@ -289,8 +289,8 @@ warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary k
           <Property Name="TipoPedido" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="NumeroProductos" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SAPDataBase.dbo.PedidosDomicilio' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SAPDataBase.dbo.PedidosDomicilio' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="PedidosDomicilio">
           <Key>
             <PropertyRef Name="CodigoPedido" />
