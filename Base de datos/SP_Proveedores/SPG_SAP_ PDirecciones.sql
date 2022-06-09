@@ -20,10 +20,9 @@ GO
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-ALTER PROCEDURE [dbo].[SPG_SAP_PedidosCliente] 
-	@Codigo INT = NULL,
-	@Fecha DATETIME = NULL
+CREATE PROCEDURE [dbo].[SPG_SAP_PDirecciones] 
+	@IdProveedor INT
 AS
 BEGIN
-	SELECT * FROM Pedidos WHERE Codigo = ISNULL(@Codigo, Codigo) AND Solicitud >= ISNULL(@Fecha, Solicitud);
+	SELECT * FROM [Proveedor.Direccion] WHERE IdProveedor = @IdProveedor;
 END

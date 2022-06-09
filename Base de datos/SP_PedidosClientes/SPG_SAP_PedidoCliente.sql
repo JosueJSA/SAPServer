@@ -1,4 +1,4 @@
-USE [SAPDataBase]
+USE SAPDataBase
 GO
 -- ================================================
 -- Template generated from Template Explorer using:
@@ -20,10 +20,14 @@ GO
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-ALTER PROCEDURE [dbo].[SPG_SAP_PedidosCliente] 
-	@Codigo INT = NULL,
-	@Fecha DATETIME = NULL
+CREATE PROCEDURE SPG_SAP_PedidoCliente
+	@CodigoPedido INT
 AS
 BEGIN
-	SELECT * FROM Pedidos WHERE Codigo = ISNULL(@Codigo, Codigo) AND Solicitud >= ISNULL(@Fecha, Solicitud);
+	SELECT P.Codigo, P.CostoTotal, P.Status StatusPedido, P.Solicitud, P.Entrega, PC.Cantidad, PC.TipoPedido, PC.IdCliente IdClientePedido, PC.IdDireccion, PC.MotivoCancelacion, 
+	C.Id IdClientePropio, C.Email, C.CodigoPostal, C.Nombre, C.Apellido, C.Status StatusCliente, C.Telefono, C.Ciudad,
+	C.Nacimiento, C.Edad,  CD.* FROM Pedido P INNER JOIN PedidoCliente PC ON P.Codigo = PC.Codigo
+	LEFT JOIN Cliente C ON PC.IdCliente = C.Id LEFT JOIN [Cliente.Direccion] CD
+	ON PC.IdCliente = CD.Id WHERE P.Codigo = ISNULL(@CodigoPedido, P.Codigo);
 END
+GO

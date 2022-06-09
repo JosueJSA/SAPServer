@@ -10,53 +10,37 @@ GO
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE SPI_SAP_PedidoCliente
+CREATE PROCEDURE SPI_SAP_Proveedor
 	-- Add the parameters for the stored procedure here
-	@CostoTotal FLOAT,
-	@Cantidad INT,
-	@TipoPedido NVARCHAR(100),
-	@IdCliente INT = NULL,
-	@IdDireccion INT = NULL,
+	@Email NVARCHAR (500) = NULL,
+	@Nombre NVARCHAR (100),
+	@RFC NVARCHAR (100),
+	@CategoriaInsumo NVARCHAR (100),
+	@Telefono NVARCHAR (100),
 	@Key INT OUT,
 	@Message NVARCHAR (MAX) OUT
 AS
 BEGIN TRY
-	
-	BEGIN TRANSACTION;
-		INSERT INTO [Pedido] VALUES (
-			@CostoTotal,
-			'Ordenado',
-			GETDATE(),
-			GETDATE()
-		)
-		SET @Key = @@IDENTITY;
-		SET @Message = 'Correcto'
-
-		IF @TipoPedido = 'En establecimiento' 
-		BEGIN
-			INSERT INTO [PedidoCliente] VALUES (
-				@Key,
-				@Cantidad,
-				@TipoPedido,
-				NULL,
-				NULL,
-				NULL
+	IF NOT EXISTS (SELECT * FROM [Proveedor] WHERE Rfc = ISNULL(@RFC, 'null'))
+	BEGIN
+		BEGIN TRANSACTION;
+			INSERT INTO [Proveedor] VALUES (
+				@Email,
+				@Nombre,
+				ISNULL(@RFC,'None'),
+				@CategoriaInsumo,
+				'Activo',
+				@Telefono 
 			)
-		END
-		ELSE
-		BEGIN 
-			INSERT INTO [PedidoCliente] VALUES (
-				@Key,
-				@Cantidad,
-				@TipoPedido,
-				@IdCliente,
-				@IdDireccion,
-				NULL
-			)
-		END
-
-	COMMIT TRANSACTION;
-	
+			SET @Key = @@IDENTITY;
+			SET @Message = 'Correcto'
+		COMMIT TRANSACTION;
+	END
+	ELSE 
+	BEGIN 
+		SET @Key = -1;
+		SET @Message = 'El RFC del Proveedor ya ha sido utilizado'
+	END
 END TRY
 BEGIN CATCH
 	SET @Key = -1;

@@ -1,4 +1,4 @@
-USE [SAPDataBase]
+USE SAPDataBase
 GO
 /****** Object:  StoredProcedure [dbo].[SPG_SAP_Insumo]    Script Date: 5/4/2022 13:09:21 ******/
 SET ANSI_NULLS ON
@@ -10,53 +10,37 @@ GO
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE SPI_SAP_PedidoCliente
+CREATE PROCEDURE SPU_SAP_Proveedor
 	-- Add the parameters for the stored procedure here
-	@CostoTotal FLOAT,
-	@Cantidad INT,
-	@TipoPedido NVARCHAR(100),
-	@IdCliente INT = NULL,
-	@IdDireccion INT = NULL,
+	@Clave INT,
+	@Email NVARCHAR (500) = NULL,
+	@Nombre NVARCHAR (100),
+	@RFC NVARCHAR (100),
+	@CategoriaInsumo NVARCHAR (100),
+	@Telefono NVARCHAR (100),
 	@Key INT OUT,
 	@Message NVARCHAR (MAX) OUT
 AS
 BEGIN TRY
-	
-	BEGIN TRANSACTION;
-		INSERT INTO [Pedido] VALUES (
-			@CostoTotal,
-			'Ordenado',
-			GETDATE(),
-			GETDATE()
-		)
-		SET @Key = @@IDENTITY;
-		SET @Message = 'Correcto'
-
-		IF @TipoPedido = 'En establecimiento' 
-		BEGIN
-			INSERT INTO [PedidoCliente] VALUES (
-				@Key,
-				@Cantidad,
-				@TipoPedido,
-				NULL,
-				NULL,
-				NULL
-			)
-		END
-		ELSE
-		BEGIN 
-			INSERT INTO [PedidoCliente] VALUES (
-				@Key,
-				@Cantidad,
-				@TipoPedido,
-				@IdCliente,
-				@IdDireccion,
-				NULL
-			)
-		END
-
-	COMMIT TRANSACTION;
-	
+	IF EXISTS (SELECT * FROM [Proveedor] WHERE Clave = @Clave)
+	BEGIN
+		BEGIN TRANSACTION;
+			UPDATE [Proveedor] SET 
+				Email = @Email,
+				Nombre = @Nombre,
+				Rfc = ISNULL(@RFC,'None'),
+				CategoriaInsumo = @CategoriaInsumo,
+				Telefono =  @Telefono 
+			WHERE Clave = @Clave;
+			SET @Key = @Clave;
+			SET @Message = 'Correcto'
+		COMMIT TRANSACTION;
+	END
+	ELSE 
+	BEGIN 
+		SET @Key = -1;
+		SET @Message = 'El Proveedor no está registrado en la base de datos'
+	END
 END TRY
 BEGIN CATCH
 	SET @Key = -1;

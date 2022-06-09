@@ -42,6 +42,8 @@ namespace Contracts
                             Precio = p.Precio
                         }));
                         context.SaveChanges();
+                        UpdateInsumos(productos);
+                        context.SaveChanges();
                         transaction.Commit();
                     }
                     catch (Exception)
@@ -55,30 +57,33 @@ namespace Contracts
             return answer;
         }
 
-        private void UpdateInsumos(SAPContext context, List<EProductoComprado> productos)
+        private void UpdateInsumos(List<EProductoComprado> productos)
         {
             string mensaje = "";
             if (string.IsNullOrEmpty(mensaje = CheckProductosSeleccionados(productos)))
             {
-                productos.ForEach(p =>
+                using (var context = new SAPContext())
                 {
-                    if (p.CodigoReceta >= 0)
+                    productos.ForEach(p =>
                     {
-                        context.Ingrediente.Where(i => i.ClaveReceta == p.CodigoReceta).ToList().ForEach(item =>
+                        if (p.CodigoReceta >= 0)
                         {
-                            context.SPUCantidadInsumo(item.CodigoInsumo, p.Cantidad, p.CodigoReceta, key, message);
-                            answer.Key = Convert.ToInt32(key.Value);
-                            answer.Message = Convert.ToString(message.Value);
-                            if (answer.Key < 0)
-                                throw new Exception($"Error en la actualización del almacen en el producto: '{p.Nombre}'");
-                        });
-                    }
-                    else
-                    {
-                        context.ProductoVenta.Find(p.CodigoProductoVenta).Cantidad -= p.Cantidad;
-                        context.SaveChanges();
-                    }
-                });
+                            context.Ingrediente.Where(i => i.ClaveReceta == p.CodigoReceta).ToList().ForEach(item =>
+                            {
+                                context.SPUCantidadInsumo(item.CodigoInsumo, p.Cantidad, p.CodigoReceta, key, message);
+                                answer.Key = Convert.ToInt32(key.Value);
+                                answer.Message = Convert.ToString(message.Value);
+                                if (answer.Key < 0)
+                                    throw new Exception($"Error en la actualización del almacen en el producto: '{p.Nombre}'");
+                            });
+                        }
+                        else
+                        {
+                            context.ProductoVenta.Find(p.CodigoProductoVenta).Cantidad -= p.Cantidad;
+                            context.SaveChanges();
+                        }
+                    });
+                }  
             }
             else
             {
@@ -109,16 +114,6 @@ namespace Contracts
             using (var context = new SAPContext())
             {
                 pedidos = context.SPGPedidosComunes().ToList();
-            }
-            return pedidos;
-        }
-
-        public List<EPedidoCliente> GetPedidosClientesList(string criterio, DateTime fecha)
-        {
-            List<EPedidoCliente> pedidos = null;
-            using (var context = new SAPContext())
-            {
-                pedidos = context.SPGPedidosClientes(criterio, fecha).ToList();
             }
             return pedidos;
         }
@@ -155,14 +150,8 @@ namespace Contracts
                             context.SPChangeStatusPedidoCliente(IdPedido, PedidosStatus[status], key, message);
                             answer.Key = Convert.ToInt32(key.Value);
                             answer.Message = Convert.ToString(message.Value);
-                            if (answer.Key >= 0 && status == "Ordenado")
-                            {
-                                UpdateInsumos(context, GetProductosComprados(IdPedido));
-                                answer.Key = Convert.ToInt32(key.Value);
-                                answer.Message = Convert.ToString(message.Value);
-                            }
+                            context.SaveChanges();
                             transaction.Commit();
-                            answer.Key = IdPedido;
                         }
                         catch (Exception ex)
                         {
@@ -171,11 +160,6 @@ namespace Contracts
                             answer.Message = ex.Message;
                         }
                     }
-                }else if (status == "Cancelado")
-                {
-                    context.SPChangeStatusPedidoCliente(IdPedido, status, key, message);
-                    answer.Key = Convert.ToInt32(key.Value);
-                    answer.Message = Convert.ToString(message.Value);
                 }
                 else
                 {
@@ -184,6 +168,105 @@ namespace Contracts
                 }
             }
             return answer;
+        }
+
+        public AnswerMessage CancelPedidoCliente(int IdPedido, string motivo, List<EProductoComprado> productos = null)
+        {
+            using (var context = new SAPContext())
+            {
+                using (var transaction = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        context.SPChangeStatusPedidoCliente(IdPedido, "Cancelado", key, message);
+                        context.PedidoCliente.Find(IdPedido).MotivoCancelacion = motivo;
+                        context.SaveChanges();
+                        answer.Key = Convert.ToInt32(key.Value);
+                        answer.Message = Convert.ToString(message.Value);
+                        if(productos != null)
+                        {
+                            answer = RestablishChanges(productos);
+                            if (answer.Key < 0)
+                                throw new Exception("Lo sentimos, no fue posible deshacer los cambios en la cantidades de los productos");
+                        }
+                        context.SaveChanges();
+                        transaction.Commit();
+                        return answer;
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        answer.Key = -1;
+                        answer.Message = ex.Message;
+                        return answer;
+                    }
+                }
+            }
+        }
+
+        public EPedidoClienteDetallado GetPedidoCliente(int codigo)
+        {
+            EPedidoClienteDetallado pedido = new EPedidoClienteDetallado();
+            using (var context = new SAPContext())
+            {
+                pedido = context.SPGPedidoClienteDetallado(codigo).First();
+            }
+            return pedido;
+        }
+
+        public AnswerMessage RestablishChanges(List<EProductoComprado> productos)
+        {
+            using (var context = new SAPContext())
+            {
+                using (var transaction = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        foreach (var producto in productos)
+                        {
+                            if (producto.CodigoReceta != -1)
+                            {
+                                var ingredientes = context.Ingrediente.Where(i => i.ClaveReceta == producto.CodigoReceta);
+                                ingredientes.ToList().ForEach(i =>
+                                {
+                                    context.SPUCantidadInsumoCancelacion(i.CodigoInsumo, Convert.ToInt32(i.Cantidad * producto.Cantidad), key, message);
+                                    answer.Key = Convert.ToInt32(key.Value);
+                                    answer.Message = Convert.ToString(message.Value);
+                                    if (answer.Key < 0)
+                                        throw new Exception($"Problema al actualizar la cantidad del insumo #{i.CodigoInsumo}");
+
+                                });
+                                context.SaveChanges();
+                            }
+                            else
+                            {
+                                var p = context.ProductoVenta.Find(producto.CodigoProductoVenta);
+                                p.Cantidad += producto.Cantidad;
+                                context.SaveChanges();
+                            }
+                        }
+                        context.SaveChanges();
+                        transaction.Commit();
+                        return answer;
+                    }
+                    catch (Exception ex)
+                    {
+                        answer.Key = -1;
+                        answer.Message = ex.Message;
+                        return answer;
+                    }
+                }
+            }
+        }
+
+        public List<EPedidoCliente> GetPedidosClientesList(string status, int? codigo = null, DateTime? fecha = null)
+        {
+            List<EPedidoCliente> pedidos = null;
+            using (var context = new SAPContext())
+            {
+                pedidos = context.SPGPedidosClientes(codigo, fecha).ToList();
+            }
+            return pedidos.Where(p => p.Status == status).ToList();
         }
     }
 }

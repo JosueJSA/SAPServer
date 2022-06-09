@@ -1,6 +1,6 @@
 USE [SAPDataBase]
 GO
-/****** Object:  StoredProcedure [dbo].[SPG_SAP_Insumo]    Script Date: 5/4/2022 13:09:21 ******/
+/****** Object:  StoredProcedure [dbo].[SGI_SAP_Insumo]    Script Date: 5/4/2022 22:06:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -10,53 +10,29 @@ GO
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE SPI_SAP_PedidoCliente
+CREATE PROCEDURE SPChangeStatus_SAP_Cliente
 	-- Add the parameters for the stored procedure here
-	@CostoTotal FLOAT,
-	@Cantidad INT,
-	@TipoPedido NVARCHAR(100),
-	@IdCliente INT = NULL,
-	@IdDireccion INT = NULL,
+	@IdCliente INT,
+	@Status NVARCHAR (100),
 	@Key INT OUT,
 	@Message NVARCHAR (MAX) OUT
 AS
 BEGIN TRY
-	
-	BEGIN TRANSACTION;
-		INSERT INTO [Pedido] VALUES (
-			@CostoTotal,
-			'Ordenado',
-			GETDATE(),
-			GETDATE()
-		)
-		SET @Key = @@IDENTITY;
-		SET @Message = 'Correcto'
-
-		IF @TipoPedido = 'En establecimiento' 
-		BEGIN
-			INSERT INTO [PedidoCliente] VALUES (
-				@Key,
-				@Cantidad,
-				@TipoPedido,
-				NULL,
-				NULL,
-				NULL
-			)
-		END
-		ELSE
-		BEGIN 
-			INSERT INTO [PedidoCliente] VALUES (
-				@Key,
-				@Cantidad,
-				@TipoPedido,
-				@IdCliente,
-				@IdDireccion,
-				NULL
-			)
-		END
-
-	COMMIT TRANSACTION;
-	
+	IF EXISTS (SELECT * FROM [Cliente] WHERE Id = @IdCliente)
+	BEGIN
+		BEGIN TRANSACTION;
+			UPDATE [Cliente] SET
+				Status = @Status
+			WHERE Id = @IdCliente;
+			SET @Key = @IdCliente;
+			SET @Message = 'Correcto'
+		COMMIT TRANSACTION;
+	END
+	ELSE
+	BEGIN
+		SET @Key = -2;
+		SET @Message = 'Cliente no encontrado en la base de datos'
+	END
 END TRY
 BEGIN CATCH
 	SET @Key = -1;

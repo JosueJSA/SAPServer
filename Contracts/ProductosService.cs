@@ -29,7 +29,7 @@ namespace Contracts
                     {
                         RevisarProducto(producto, receta);
                         int claveReceta = -1;
-                        if (producto.CodigoReceta > 0)
+                        if (receta != null)
                         {
                             var newReceta = new Receta();
                             context.Receta.Add(newReceta = new Receta() { Descripcion = receta.Descripcion });

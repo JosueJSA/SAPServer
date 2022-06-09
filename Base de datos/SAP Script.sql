@@ -137,6 +137,7 @@ CREATE TABLE [PedidoCliente] (
 	[TipoPedido] NVARCHAR (100) NOT NULL,
 	[IdCliente] INT,
 	[IdDireccion] INT,
+	[MotivoCancelacion] nvarchar(500),
 	CONSTRAINT [PK_dbo.PedidoCliente] PRIMARY KEY (Codigo),
 	CONSTRAINT [PK_dbo.PedidoCliente.Pedido] FOREIGN KEY ([Codigo]) REFERENCES [dbo].[Pedido] ([Codigo]) ON UPDATE CASCADE,
 	CONSTRAINT [PK_dbo.PedidoCliente.Cliente] FOREIGN KEY ([IdCliente]) REFERENCES [dbo].[Cliente] ([Id]) ON UPDATE CASCADE 

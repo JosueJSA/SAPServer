@@ -12,7 +12,7 @@ namespace Services
     public interface IPedidosClientesService
     {
         [OperationContract]
-        List<EPedidoCliente> GetPedidosClientesList(string criterio, DateTime fecha);
+        List<EPedidoCliente> GetPedidosClientesList(string status, int? codigo, DateTime? fecha);
         [OperationContract]
         List<EPedidoCliente> GetCommonPedidosList();
         [OperationContract]
@@ -25,5 +25,11 @@ namespace Services
         string CheckProductosSeleccionados(List<EProductoComprado> productos);
         [OperationContract]
         AnswerMessage ChangeStatusPedidoCliente(int IdPedido, string status);
+        [OperationContract]
+        EPedidoClienteDetallado GetPedidoCliente(int codigo);
+        [OperationContract]
+        AnswerMessage RestablishChanges(List<EProductoComprado> productos);
+        [OperationContract]
+        AnswerMessage CancelPedidoCliente(int IdPedido, string motivo, List<EProductoComprado> productos = null);
     }
 }

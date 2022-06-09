@@ -176,6 +176,7 @@
           <Property Name="TipoPedido" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="IdCliente" Type="int" />
           <Property Name="IdDireccion" Type="int" />
+          <Property Name="MotivoCancelacion" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="PedidoProveedor">
           <Key>
@@ -241,8 +242,8 @@
           <Property Name="Importe" Type="float" Nullable="false" />
           <Property Name="Registro" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SAPDataBase.dbo.Ingredientes' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SAPDataBase.dbo.Ingredientes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Ingredientes">
           <Key>
             <PropertyRef Name="ClaveReceta" />
@@ -269,8 +270,8 @@ advertencia 6002: La tabla o vista 'SAPDataBase.dbo.Ingredientes' no tiene defin
           <Property Name="PrecioInsumo" Type="float" Nullable="false" />
           <Property Name="Unidad" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SAPDataBase.dbo.Pedidos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Pedidos">
           <Key>
             <PropertyRef Name="Codigo" />
@@ -287,51 +288,7 @@ advertencia 6002: La tabla o vista 'SAPDataBase.dbo.Pedidos' no tiene definida n
           <Property Name="Entrega" Type="datetime" />
           <Property Name="Cantidad" Type="float" Nullable="false" />
           <Property Name="TipoPedido" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="NumeroProductos" Type="int" />
-        </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SAPDataBase.dbo.PedidosDomicilio' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
-        <EntityType Name="PedidosDomicilio">
-          <Key>
-            <PropertyRef Name="CodigoPedido" />
-            <PropertyRef Name="CostoTotal" />
-            <PropertyRef Name="StatusPedido" />
-            <PropertyRef Name="Solicitud" />
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="CodigoPostal" />
-            <PropertyRef Name="Nombre" />
-            <PropertyRef Name="Apellido" />
-            <PropertyRef Name="Status" />
-            <PropertyRef Name="Telefono" />
-            <PropertyRef Name="Ciudad" />
-            <PropertyRef Name="Nacimiento" />
-            <PropertyRef Name="Edad" />
-            <PropertyRef Name="Codigo" />
-            <PropertyRef Name="Cantidad" />
-            <PropertyRef Name="TipoPedido" />
-            <PropertyRef Name="NombreCompleto" />
-          </Key>
-          <Property Name="CodigoPedido" Type="int" Nullable="false" />
-          <Property Name="CostoTotal" Type="float" Nullable="false" />
-          <Property Name="StatusPedido" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Solicitud" Type="datetime" Nullable="false" />
-          <Property Name="Entrega" Type="datetime" />
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="500" />
-          <Property Name="CodigoPostal" Type="int" Nullable="false" />
-          <Property Name="Nombre" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="Apellido" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="Status" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Telefono" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Ciudad" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Nacimiento" Type="datetime" Nullable="false" />
-          <Property Name="Edad" Type="int" Nullable="false" />
-          <Property Name="Codigo" Type="int" Nullable="false" />
-          <Property Name="Cantidad" Type="float" Nullable="false" />
-          <Property Name="TipoPedido" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="IdCliente" Type="int" />
-          <Property Name="IdDireccion" Type="int" />
-          <Property Name="NombreCompleto" Type="nvarchar" MaxLength="1001" Nullable="false" />
+          <Property Name="MotivoCancelacion" Type="nvarchar" MaxLength="500" />
           <Property Name="NumeroProductos" Type="int" />
         </EntityType>
         <Association Name="PK_dbo_Balance_CajaEntrada">
@@ -559,8 +516,11 @@ advertencia 6002: La tabla o vista 'SAPDataBase.dbo.PedidosDomicilio' no tiene d
           <Parameter Name="Fecha" Type="datetime" Mode="In" />
           <Parameter Name="Status" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="SPG_SAP_PedidoCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoPedido" Type="int" Mode="In" />
+        </Function>
         <Function Name="SPG_SAP_PedidosCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Criterio" Type="nvarchar" Mode="In" />
+          <Parameter Name="Codigo" Type="int" Mode="In" />
           <Parameter Name="Fecha" Type="datetime" Mode="In" />
         </Function>
         <Function Name="SPG_SAP_PedidosComunes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -623,6 +583,12 @@ advertencia 6002: La tabla o vista 'SAPDataBase.dbo.PedidosDomicilio' no tiene d
           <Parameter Name="IdInsumo" Type="int" Mode="In" />
           <Parameter Name="CantidadProducto" Type="int" Mode="In" />
           <Parameter Name="IdReceta" Type="int" Mode="In" />
+          <Parameter Name="Key" Type="int" Mode="InOut" />
+          <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
+        </Function>
+        <Function Name="SPU_SAP_CantidadInsumoIncremento" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdInsumo" Type="int" Mode="In" />
+          <Parameter Name="Cantidad" Type="int" Mode="In" />
           <Parameter Name="Key" Type="int" Mode="InOut" />
           <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
         </Function>
@@ -707,34 +673,9 @@ advertencia 6002: La tabla o vista 'SAPDataBase.dbo.PedidosDomicilio' no tiene d
     [Pedidos].[Entrega] AS [Entrega], 
     [Pedidos].[Cantidad] AS [Cantidad], 
     [Pedidos].[TipoPedido] AS [TipoPedido], 
+    [Pedidos].[MotivoCancelacion] AS [MotivoCancelacion], 
     [Pedidos].[NumeroProductos] AS [NumeroProductos]
     FROM [dbo].[Pedidos] AS [Pedidos]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="PedidosDomicilio" EntityType="Self.PedidosDomicilio" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [PedidosDomicilio].[CodigoPedido] AS [CodigoPedido], 
-    [PedidosDomicilio].[CostoTotal] AS [CostoTotal], 
-    [PedidosDomicilio].[StatusPedido] AS [StatusPedido], 
-    [PedidosDomicilio].[Solicitud] AS [Solicitud], 
-    [PedidosDomicilio].[Entrega] AS [Entrega], 
-    [PedidosDomicilio].[Id] AS [Id], 
-    [PedidosDomicilio].[Email] AS [Email], 
-    [PedidosDomicilio].[CodigoPostal] AS [CodigoPostal], 
-    [PedidosDomicilio].[Nombre] AS [Nombre], 
-    [PedidosDomicilio].[Apellido] AS [Apellido], 
-    [PedidosDomicilio].[Status] AS [Status], 
-    [PedidosDomicilio].[Telefono] AS [Telefono], 
-    [PedidosDomicilio].[Ciudad] AS [Ciudad], 
-    [PedidosDomicilio].[Nacimiento] AS [Nacimiento], 
-    [PedidosDomicilio].[Edad] AS [Edad], 
-    [PedidosDomicilio].[Codigo] AS [Codigo], 
-    [PedidosDomicilio].[Cantidad] AS [Cantidad], 
-    [PedidosDomicilio].[TipoPedido] AS [TipoPedido], 
-    [PedidosDomicilio].[IdCliente] AS [IdCliente], 
-    [PedidosDomicilio].[IdDireccion] AS [IdDireccion], 
-    [PedidosDomicilio].[NombreCompleto] AS [NombreCompleto], 
-    [PedidosDomicilio].[NumeroProductos] AS [NumeroProductos]
-    FROM [dbo].[PedidosDomicilio] AS [PedidosDomicilio]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="PK_dbo_Balance_CajaEntrada" Association="Self.PK_dbo_Balance_CajaEntrada">
             <End Role="CajaEntrada" EntitySet="CajaEntrada" />
@@ -996,6 +937,7 @@ advertencia 6002: La tabla o vista 'SAPDataBase.dbo.PedidosDomicilio' no tiene d
           <Property Name="TipoPedido" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IdCliente" Type="Int32" />
           <Property Name="IdDireccion" Type="Int32" />
+          <Property Name="MotivoCancelacion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Cliente" Relationship="Self.PK_dbo_PedidoCliente_Cliente" FromRole="PedidoCliente" ToRole="Cliente" />
           <NavigationProperty Name="Orden" Relationship="Self.PK_dbo_Orden_PedidoCliente" FromRole="PedidoCliente" ToRole="Orden" />
           <NavigationProperty Name="Pedido" Relationship="Self.PK_dbo_PedidoCliente_Pedido" FromRole="PedidoCliente" ToRole="Pedido" />
@@ -1115,49 +1057,7 @@ advertencia 6002: La tabla o vista 'SAPDataBase.dbo.PedidosDomicilio' no tiene d
           <Property Name="Entrega" Type="DateTime" Precision="3" />
           <Property Name="Cantidad" Type="Double" Nullable="false" />
           <Property Name="TipoPedido" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="NumeroProductos" Type="Int32" />
-        </EntityType>
-        <EntityType Name="PedidosDomicilio">
-          <Key>
-            <PropertyRef Name="CodigoPedido" />
-            <PropertyRef Name="CostoTotal" />
-            <PropertyRef Name="StatusPedido" />
-            <PropertyRef Name="Solicitud" />
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="CodigoPostal" />
-            <PropertyRef Name="Nombre" />
-            <PropertyRef Name="Apellido" />
-            <PropertyRef Name="Status" />
-            <PropertyRef Name="Telefono" />
-            <PropertyRef Name="Ciudad" />
-            <PropertyRef Name="Nacimiento" />
-            <PropertyRef Name="Edad" />
-            <PropertyRef Name="Codigo" />
-            <PropertyRef Name="Cantidad" />
-            <PropertyRef Name="TipoPedido" />
-            <PropertyRef Name="NombreCompleto" />
-          </Key>
-          <Property Name="CodigoPedido" Type="Int32" Nullable="false" />
-          <Property Name="CostoTotal" Type="Double" Nullable="false" />
-          <Property Name="StatusPedido" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Solicitud" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Entrega" Type="DateTime" Precision="3" />
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="CodigoPostal" Type="Int32" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Apellido" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Telefono" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Ciudad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Nacimiento" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Edad" Type="Int32" Nullable="false" />
-          <Property Name="Codigo" Type="Int32" Nullable="false" />
-          <Property Name="Cantidad" Type="Double" Nullable="false" />
-          <Property Name="TipoPedido" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IdCliente" Type="Int32" />
-          <Property Name="IdDireccion" Type="Int32" />
-          <Property Name="NombreCompleto" Type="String" MaxLength="1001" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MotivoCancelacion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="NumeroProductos" Type="Int32" />
         </EntityType>
         <Association Name="PK_dbo_Balance_CajaEntrada">
@@ -1374,7 +1274,6 @@ advertencia 6002: La tabla o vista 'SAPDataBase.dbo.PedidosDomicilio' no tiene d
           <EntitySet Name="SalidaExtraordinaria" EntityType="Self.SalidaExtraordinaria" />
           <EntitySet Name="Ingredientes" EntityType="Self.Ingredientes" />
           <EntitySet Name="Pedidos" EntityType="Self.Pedidos" />
-          <EntitySet Name="PedidosDomicilio" EntityType="Self.PedidosDomicilio" />
           <AssociationSet Name="PK_dbo_Balance_CajaEntrada" Association="Self.PK_dbo_Balance_CajaEntrada">
             <End Role="CajaEntrada" EntitySet="CajaEntrada" />
             <End Role="BalanceDiario" EntitySet="BalanceDiario" />
@@ -1471,10 +1370,6 @@ advertencia 6002: La tabla o vista 'SAPDataBase.dbo.PedidosDomicilio' no tiene d
             <Parameter Name="Valor" Mode="In" Type="String" />
             <Parameter Name="Fecha" Mode="In" Type="DateTime" />
             <Parameter Name="Status" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SPGPedidosClientes" ReturnType="Collection(SAPModel.EPedidoCliente)">
-            <Parameter Name="Criterio" Mode="In" Type="String" />
-            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="SPGPedidosComunes" ReturnType="Collection(SAPModel.EPedidoCliente)" />
           <FunctionImport Name="SPGProductosComprados" ReturnType="Collection(SAPModel.EProductoComprado)">
@@ -1576,107 +1471,20 @@ advertencia 6002: La tabla o vista 'SAPDataBase.dbo.PedidosDomicilio' no tiene d
             <Parameter Name="Key" Mode="InOut" Type="Int32" />
             <Parameter Name="Message" Mode="InOut" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SPUCantidadInsumoCancelacion">
+            <Parameter Name="IdInsumo" Mode="In" Type="Int32" />
+            <Parameter Name="Cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="Key" Mode="InOut" Type="Int32" />
+            <Parameter Name="Message" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPGPedidoClienteDetallado" ReturnType="Collection(SAPModel.EPedidoClienteDetallado)">
+          <Parameter Name="CodigoPedido" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SPGPedidosClientes" ReturnType="Collection(SAPModel.EPedidoCliente)">
+            <Parameter Name="Codigo" Mode="In" Type="Int32" />
+            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+          </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="SPG_SAP_Cliente_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Email" Nullable="true" MaxLength="500" />
-          <Property Type="Int32" Name="CodigoPostal" Nullable="false" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Apellido" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Telefono" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Ciudad" Nullable="false" MaxLength="100" />
-          <Property Type="DateTime" Name="Nacimiento" Nullable="false" Precision="23" />
-          <Property Type="Int32" Name="Edad" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="SPG_SAP_Direcciones_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="Int32" Name="IdCliente" Nullable="false" />
-          <Property Type="String" Name="Calle" Nullable="false" MaxLength="500" />
-          <Property Type="Int32" Name="Numero" Nullable="false" />
-          <Property Type="String" Name="Colonia" Nullable="false" MaxLength="500" />
-        </ComplexType>
-        <ComplexType Name="SPG_SAP_Ingredientes_Result">
-          <Property Type="Int32" Name="CodigoInsumo" Nullable="false" />
-          <Property Type="String" Name="NombreInsumo" Nullable="false" MaxLength="100" />
-          <Property Type="Double" Name="CantidadIngrediente" Nullable="false" />
-          <Property Type="Double" Name="CantidadInsumo" Nullable="false" />
-          <Property Type="String" Name="Unidad" Nullable="false" MaxLength="50" />
-          <Property Type="Double" Name="PrecioInsumo" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="SPG_SAP_Insumo_Result">
-          <Property Type="Int32" Name="Codigo" Nullable="false" />
-          <Property Type="Double" Name="PrecioCompra" Nullable="false" />
-          <Property Type="Double" Name="Cantidad" Nullable="false" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Restricciones" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
-          <Property Type="DateTime" Name="Registro" Nullable="false" Precision="23" />
-          <Property Type="String" Name="UnidadMedida" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="ProveedorDeInsumo" Nullable="true" MaxLength="100" />
-        </ComplexType>
-        <ComplexType Name="SPG_SAP_PedidosCliente_Result">
-          <Property Type="Int32" Name="Codigo" Nullable="false" />
-          <Property Type="Double" Name="CostoTotal" Nullable="false" />
-          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
-          <Property Type="DateTime" Name="Solicitud" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="Entrega" Nullable="true" Precision="23" />
-          <Property Type="Double" Name="Cantidad" Nullable="false" />
-          <Property Type="String" Name="TipoPedido" Nullable="false" MaxLength="100" />
-          <Property Type="Int32" Name="NumeroProductos" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="SPG_SAP_PedidosComunes_Result">
-          <Property Type="Int32" Name="Codigo" Nullable="false" />
-          <Property Type="Double" Name="CostoTotal" Nullable="false" />
-          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
-          <Property Type="DateTime" Name="Solicitud" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="Entrega" Nullable="true" Precision="23" />
-          <Property Type="Double" Name="Cantidad" Nullable="false" />
-          <Property Type="String" Name="TipoPedido" Nullable="false" MaxLength="100" />
-          <Property Type="Int32" Name="NumeroProductos" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="SPG_SAP_ProductosComprados_Result">
-          <Property Type="Int32" Name="CodigoPedido" Nullable="false" />
-          <Property Type="Int32" Name="CodigoProductoVenta" Nullable="false" />
-          <Property Type="Int32" Name="Cantidad" Nullable="false" />
-          <Property Type="Double" Name="Precio" Nullable="false" />
-          <Property Type="Int32" Name="Codigo" Nullable="false" />
-          <Property Type="Int32" Name="CodigoReceta" Nullable="true" />
-          <Property Type="Double" Name="PrecioCompra" Nullable="false" />
-          <Property Type="Double" Name="PrecioVenta" Nullable="false" />
-          <Property Type="Int32" Name="stock" Nullable="false" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Foto" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Restricciones" Nullable="false" MaxLength="500" />
-        </ComplexType>
-        <ComplexType Name="SPG_SAP_ProductoVenta_Result">
-          <Property Type="Int32" Name="Codigo" Nullable="false" />
-          <Property Type="Int32" Name="CodigoReceta" Nullable="true" />
-          <Property Type="Double" Name="PrecioVenta" Nullable="false" />
-          <Property Type="Double" Name="PrecioCompra" Nullable="false" />
-          <Property Type="Int32" Name="Cantidad" Nullable="false" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Foto" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Restricciones" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
-          <Property Type="DateTime" Name="Registro" Nullable="false" Precision="23" />
-        </ComplexType>
-        <ComplexType Name="SPG_SAP_ProductoVentaUnico_Result">
-          <Property Type="Int32" Name="Codigo" Nullable="false" />
-          <Property Type="Int32" Name="CodigoReceta" Nullable="true" />
-          <Property Type="Double" Name="PrecioVenta" Nullable="false" />
-          <Property Type="Double" Name="PrecioCompra" Nullable="false" />
-          <Property Type="Int32" Name="Cantidad" Nullable="false" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Foto" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Restricciones" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
-          <Property Type="DateTime" Name="Registro" Nullable="false" Precision="23" />
-        </ComplexType>
         <ComplexType Name="ECliente">
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="String" Name="Email" Nullable="true" MaxLength="500" />
@@ -1716,6 +1524,20 @@ advertencia 6002: La tabla o vista 'SAPDataBase.dbo.PedidosDomicilio' no tiene d
           <Property Type="String" Name="UnidadMedida" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="ProveedorDeInsumo" Nullable="true" MaxLength="100" />
         </ComplexType>
+        <ComplexType Name="EProducto">
+          <Property Type="Int32" Name="Codigo" Nullable="false" />
+          <Property Type="Int32" Name="CodigoReceta" Nullable="true" />
+          <Property Type="Double" Name="PrecioVenta" Nullable="false" />
+          <Property Type="Double" Name="PrecioCompra" Nullable="false" />
+          <Property Type="Int32" Name="Cantidad" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Foto" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Restricciones" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="Registro" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="EReceta" />
         <ComplexType Name="EPedidoCliente">
           <Property Type="Int32" Name="Codigo" Nullable="false" />
           <Property Type="Double" Name="CostoTotal" Nullable="false" />
@@ -1724,9 +1546,9 @@ advertencia 6002: La tabla o vista 'SAPDataBase.dbo.PedidosDomicilio' no tiene d
           <Property Type="DateTime" Name="Entrega" Nullable="true" Precision="23" />
           <Property Type="Double" Name="Cantidad" Nullable="false" />
           <Property Type="String" Name="TipoPedido" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="MotivoCancelacion" Nullable="true" MaxLength="500" />
           <Property Type="Int32" Name="NumeroProductos" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="EReceta" />
         <ComplexType Name="EProductoComprado">
           <Property Type="Int32" Name="CodigoPedido" Nullable="false" />
           <Property Type="Int32" Name="CodigoProductoVenta" Nullable="false" />
@@ -1742,18 +1564,32 @@ advertencia 6002: La tabla o vista 'SAPDataBase.dbo.PedidosDomicilio' no tiene d
           <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
           <Property Type="String" Name="Restricciones" Nullable="false" MaxLength="500" />
         </ComplexType>
-        <ComplexType Name="EProducto">
+        <ComplexType Name="EPedidoClienteDetallado">
           <Property Type="Int32" Name="Codigo" Nullable="false" />
-          <Property Type="Int32" Name="CodigoReceta" Nullable="true" />
-          <Property Type="Double" Name="PrecioVenta" Nullable="false" />
-          <Property Type="Double" Name="PrecioCompra" Nullable="false" />
-          <Property Type="Int32" Name="Cantidad" Nullable="false" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Foto" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Restricciones" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
-          <Property Type="DateTime" Name="Registro" Nullable="false" Precision="23" />
+          <Property Type="Double" Name="CostoTotal" Nullable="false" />
+          <Property Type="String" Name="StatusPedido" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="Solicitud" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="Entrega" Nullable="true" Precision="23" />
+          <Property Type="Double" Name="Cantidad" Nullable="false" />
+          <Property Type="String" Name="TipoPedido" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="IdClientePedido" Nullable="true" />
+          <Property Type="Int32" Name="IdDireccion" Nullable="true" />
+          <Property Type="String" Name="MotivoCancelacion" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="IdClientePropio" Nullable="true" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="CodigoPostal" Nullable="true" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Apellido" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="StatusCliente" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Telefono" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Ciudad" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="Nacimiento" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="Edad" Nullable="true" />
+          <Property Type="Int32" Name="Id" Nullable="true" />
+          <Property Type="Int32" Name="IdCliente" Nullable="true" />
+          <Property Type="String" Name="Calle" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="Numero" Nullable="true" />
+          <Property Type="String" Name="Colonia" Nullable="true" MaxLength="500" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1940,6 +1776,7 @@ advertencia 6002: La tabla o vista 'SAPDataBase.dbo.PedidosDomicilio' no tiene d
                 <ScalarProperty Name="TipoPedido" ColumnName="TipoPedido" />
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
                 <ScalarProperty Name="IdDireccion" ColumnName="IdDireccion" />
+                <ScalarProperty Name="MotivoCancelacion" ColumnName="MotivoCancelacion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2040,34 +1877,7 @@ advertencia 6002: La tabla o vista 'SAPDataBase.dbo.PedidosDomicilio' no tiene d
                 <ScalarProperty Name="Entrega" ColumnName="Entrega" />
                 <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
                 <ScalarProperty Name="TipoPedido" ColumnName="TipoPedido" />
-                <ScalarProperty Name="NumeroProductos" ColumnName="NumeroProductos" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PedidosDomicilio">
-            <EntityTypeMapping TypeName="SAPModel.PedidosDomicilio">
-              <MappingFragment StoreEntitySet="PedidosDomicilio">
-                <ScalarProperty Name="CodigoPedido" ColumnName="CodigoPedido" />
-                <ScalarProperty Name="CostoTotal" ColumnName="CostoTotal" />
-                <ScalarProperty Name="StatusPedido" ColumnName="StatusPedido" />
-                <ScalarProperty Name="Solicitud" ColumnName="Solicitud" />
-                <ScalarProperty Name="Entrega" ColumnName="Entrega" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
-                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
-                <ScalarProperty Name="Nacimiento" ColumnName="Nacimiento" />
-                <ScalarProperty Name="Edad" ColumnName="Edad" />
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-                <ScalarProperty Name="TipoPedido" ColumnName="TipoPedido" />
-                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
-                <ScalarProperty Name="IdDireccion" ColumnName="IdDireccion" />
-                <ScalarProperty Name="NombreCompleto" ColumnName="NombreCompleto" />
+                <ScalarProperty Name="MotivoCancelacion" ColumnName="MotivoCancelacion" />
                 <ScalarProperty Name="NumeroProductos" ColumnName="NumeroProductos" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2130,20 +1940,6 @@ advertencia 6002: La tabla o vista 'SAPDataBase.dbo.PedidosDomicilio' no tiene d
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SPGPedidosClientes" FunctionName="SAPModel.Store.SPG_SAP_PedidosCliente">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="SAPModel.EPedidoCliente">
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="CostoTotal" ColumnName="CostoTotal" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Solicitud" ColumnName="Solicitud" />
-                <ScalarProperty Name="Entrega" ColumnName="Entrega" />
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-                <ScalarProperty Name="TipoPedido" ColumnName="TipoPedido" />
-                <ScalarProperty Name="NumeroProductos" ColumnName="NumeroProductos" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SPGPedidosComunes" FunctionName="SAPModel.Store.SPG_SAP_PedidosComunes">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SAPModel.EPedidoCliente">
@@ -2154,12 +1950,13 @@ advertencia 6002: La tabla o vista 'SAPDataBase.dbo.PedidosDomicilio' no tiene d
                 <ScalarProperty Name="Entrega" ColumnName="Entrega" />
                 <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
                 <ScalarProperty Name="TipoPedido" ColumnName="TipoPedido" />
+                <ScalarProperty Name="MotivoCancelacion" ColumnName="MotivoCancelacion" />
                 <ScalarProperty Name="NumeroProductos" ColumnName="NumeroProductos" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SPGProductosComprados" FunctionName="SAPModel.Store.SPG_SAP_ProductosComprados">
-          <ResultMapping>
+            <ResultMapping>
               <ComplexTypeMapping TypeName="SAPModel.EProductoComprado">
                 <ScalarProperty Name="CodigoPedido" ColumnName="CodigoPedido" />
                 <ScalarProperty Name="CodigoProductoVenta" ColumnName="CodigoProductoVenta" />
@@ -2219,6 +2016,53 @@ advertencia 6002: La tabla o vista 'SAPDataBase.dbo.PedidosDomicilio' no tiene d
           <FunctionImportMapping FunctionImportName="SPUCliente" FunctionName="SAPModel.Store.SPU_SAP_Cliente" />
           <FunctionImportMapping FunctionImportName="SPUInsumo" FunctionName="SAPModel.Store.SPU_SAP_Insumo" />
           <FunctionImportMapping FunctionImportName="SPUProducto" FunctionName="SAPModel.Store.SPU_SAP_Producto" />
+          <FunctionImportMapping FunctionImportName="SPUCantidadInsumoCancelacion" FunctionName="SAPModel.Store.SPU_SAP_CantidadInsumoIncremento" />
+          <FunctionImportMapping FunctionImportName="SPGPedidoClienteDetallado" FunctionName="SAPModel.Store.SPG_SAP_PedidoCliente">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SAPModel.EPedidoClienteDetallado">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="CostoTotal" ColumnName="CostoTotal" />
+                <ScalarProperty Name="StatusPedido" ColumnName="StatusPedido" />
+                <ScalarProperty Name="Solicitud" ColumnName="Solicitud" />
+                <ScalarProperty Name="Entrega" ColumnName="Entrega" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="TipoPedido" ColumnName="TipoPedido" />
+                <ScalarProperty Name="IdClientePedido" ColumnName="IdClientePedido" />
+                <ScalarProperty Name="IdDireccion" ColumnName="IdDireccion" />
+                <ScalarProperty Name="MotivoCancelacion" ColumnName="MotivoCancelacion" />
+                <ScalarProperty Name="IdClientePropio" ColumnName="IdClientePropio" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="StatusCliente" ColumnName="StatusCliente" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="Nacimiento" ColumnName="Nacimiento" />
+                <ScalarProperty Name="Edad" ColumnName="Edad" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="Calle" ColumnName="Calle" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Colonia" ColumnName="Colonia" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPGPedidosClientes" FunctionName="SAPModel.Store.SPG_SAP_PedidosCliente">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SAPModel.EPedidoCliente">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="CostoTotal" ColumnName="CostoTotal" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Solicitud" ColumnName="Solicitud" />
+                <ScalarProperty Name="Entrega" ColumnName="Entrega" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="TipoPedido" ColumnName="TipoPedido" />
+                <ScalarProperty Name="MotivoCancelacion" ColumnName="MotivoCancelacion" />
+                <ScalarProperty Name="NumeroProductos" ColumnName="NumeroProductos" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
