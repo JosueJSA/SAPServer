@@ -4,11 +4,11 @@ This web API was developed in SOAP Communication Pattern so that it can be used 
 
 # Pre-requisites
 
-*Add this property in the complex entity [ECliente]
- -- Property: public List<EDireccion> Direcciones { get; set; }
+Add this property in the complex entity [ECliente]
+Property: public List<EDireccion> Direcciones { get; set; }
   
-*Add this property in the complex entity [EReceta]
-  -- Property: public List<EIngrediente> Ingredientes { get; set; }
+Add this property in the complex entity [EReceta]
+Property: public List<EIngrediente> Ingredientes { get; set; }
   
- Database for local deployment
-  SapDatabase.bak -> path: C:..\SAPServer\Base de datos\SAPDataBase.bak
+Database for local deployment
+SapDatabase.bak -> path: C:..\SAPServer\Base de datos\SAPDataBase.bak
