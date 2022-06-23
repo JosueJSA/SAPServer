@@ -12,24 +12,14 @@ CREATE TABLE [Empleado] (
     [Nombre] NVARCHAR (100) NOT NULL,
     [Apellidos] NVARCHAR (100) NOT NULL,
 	[TipoUsuario] NVARCHAR (100) NOT NULL, -- Mesero | Contador	| Administrador | Empleado | Call taker
-	[CodigoPostal] INT,
+	[CodigoPostal] NVARCHAR (100),
 	[Status] NVARCHAR (100) NOT NULL, -- Activo | Dado de baja
-	[Puesto] NVARCHAR (100) NOT NULL, -- Administrador | Contador
 	[Salario] FLOAT,
 	[Telefono] NVARCHAR (100) NOT NULL, 
 	[Ciudad] NVARCHAR (100), 
 	[Registro] DATETIME NOT NULL, 
 	[Baja] DATETIME, 
     CONSTRAINT [PK_dbo.Personal] PRIMARY KEY CLUSTERED ([Clave] ASC)
-);
-
-CREATE TABLE [Empleado.Direccion] (
-	[Id] INT IDENTITY (1, 1) NOT NULL,
-	[IdEmpleado] INT NOT NULL,
-	[Calle] NVARCHAR (500) NOT NULL,
-	[Numero] INT NOT NULL,
-	CONSTRAINT [PK_dbo.Personal.Direccion] PRIMARY KEY CLUSTERED ([Id] ASC),
-	CONSTRAINT [PK_dbo.Personal.Direccion.Personal] FOREIGN KEY ([IdEmpleado]) REFERENCES [dbo].[Empleado] ([Clave]) ON UPDATE CASCADE,
 );
 
 CREATE TABLE [Cliente] (
@@ -78,16 +68,8 @@ CREATE TABLE [Proveedor] (
     [CategoriaInsumo] NVARCHAR (500) NOT NULL,
     [Status] NVARCHAR (100) NOT NULL, -- Activo | Dado de baja
     [Telefono] NVARCHAR (100) NOT NULL,
+	[DireccionEmpresa] NVARCHAR (500) NOT NULL,
     CONSTRAINT [PK_dbo.Proveedor] PRIMARY KEY CLUSTERED ([Clave] ASC)
-);
-
-CREATE TABLE [Proveedor.Direccion] (
-	[Id] INT IDENTITY (1, 1) NOT NULL,
-	[IdProveedor] INT NOT NULL,
-	[Calle] NVARCHAR (500) NOT NULL,
-	[Numero] INT NOT NULL,
-	CONSTRAINT [PK_dbo.Proveedor.Direccion] PRIMARY KEY CLUSTERED ([Id] ASC),
-	CONSTRAINT [PK_dbo.Proveedor.Direccion.Proveedor] FOREIGN KEY ([IdProveedor]) REFERENCES [dbo].[Proveedor] ([Clave]) ON UPDATE CASCADE,
 );
 
 CREATE TABLE [Receta] (

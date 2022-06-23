@@ -74,6 +74,7 @@
   <ItemGroup>
     <Content Include="PedidosClientesService.svc" />
     <Content Include="ClientesService.svc" />
+    <Content Include="UsuariosService.svc" />
     <Content Include="ProveedoresService.svc" />
     <Content Include="ProductosService.svc" />
     <Content Include="InsumosService.svc" />

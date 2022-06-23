@@ -32,8 +32,6 @@ namespace Services.Model
         public virtual DbSet<CajaSalida> CajaSalida { get; set; }
         public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<Cliente_Direccion> Cliente_Direccion { get; set; }
-        public virtual DbSet<Empleado> Empleado { get; set; }
-        public virtual DbSet<Empleado_Direccion> Empleado_Direccion { get; set; }
         public virtual DbSet<Ingrediente> Ingrediente { get; set; }
         public virtual DbSet<Insumo> Insumo { get; set; }
         public virtual DbSet<Orden> Orden { get; set; }
@@ -48,6 +46,7 @@ namespace Services.Model
         public virtual DbSet<SalidaExtraordinaria> SalidaExtraordinaria { get; set; }
         public virtual DbSet<Ingredientes> Ingredientes { get; set; }
         public virtual DbSet<Pedidos> Pedidos { get; set; }
+        public virtual DbSet<Empleado> Empleado { get; set; }
     
         public virtual int SPChangeStatusInsumo(Nullable<int> codigo, string status, ObjectParameter key, ObjectParameter message)
         {
@@ -473,6 +472,232 @@ namespace Services.Model
                 new ObjectParameter("Fecha", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EPedidoCliente>("SPGPedidosClientes", codigoParameter, fechaParameter);
+        }
+    
+        public virtual ObjectResult<ECliente> SPG_SAP_Cliente(Nullable<int> idCliente)
+        {
+            var idClienteParameter = idCliente.HasValue ?
+                new ObjectParameter("IdCliente", idCliente) :
+                new ObjectParameter("IdCliente", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ECliente>("SPG_SAP_Cliente", idClienteParameter);
+        }
+    
+        public virtual ObjectResult<SPG_SAP_Usuario_Result> SPG_SAP_Usuario(string valor, string status)
+        {
+            var valorParameter = valor != null ?
+                new ObjectParameter("Valor", valor) :
+                new ObjectParameter("Valor", typeof(string));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPG_SAP_Usuario_Result>("SPG_SAP_Usuario", valorParameter, statusParameter);
+        }
+    
+        public virtual ObjectResult<EUsuario> SPGUsuario(string valor, string status)
+        {
+            var valorParameter = valor != null ?
+                new ObjectParameter("Valor", valor) :
+                new ObjectParameter("Valor", typeof(string));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EUsuario>("SPGUsuario", valorParameter, statusParameter);
+        }
+    
+        public virtual int SPUsuario(string email, string password, string nombre, string apellido, string tipoUsuario, string codigoPostal, string status, Nullable<double> salario, string telefono, string ciudad, ObjectParameter key, ObjectParameter message)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("Apellido", apellido) :
+                new ObjectParameter("Apellido", typeof(string));
+    
+            var tipoUsuarioParameter = tipoUsuario != null ?
+                new ObjectParameter("TipoUsuario", tipoUsuario) :
+                new ObjectParameter("TipoUsuario", typeof(string));
+    
+            var codigoPostalParameter = codigoPostal != null ?
+                new ObjectParameter("CodigoPostal", codigoPostal) :
+                new ObjectParameter("CodigoPostal", typeof(string));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            var salarioParameter = salario.HasValue ?
+                new ObjectParameter("Salario", salario) :
+                new ObjectParameter("Salario", typeof(double));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            var ciudadParameter = ciudad != null ?
+                new ObjectParameter("Ciudad", ciudad) :
+                new ObjectParameter("Ciudad", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPUsuario", emailParameter, passwordParameter, nombreParameter, apellidoParameter, tipoUsuarioParameter, codigoPostalParameter, statusParameter, salarioParameter, telefonoParameter, ciudadParameter, key, message);
+        }
+    
+        public virtual int SPUUsuario(Nullable<int> clave, string email, string password, string nombre, string apellido, string tipoUsuario, string codigoPostal, string status, Nullable<double> salario, string telefono, string ciudad, ObjectParameter key, ObjectParameter message)
+        {
+            var claveParameter = clave.HasValue ?
+                new ObjectParameter("Clave", clave) :
+                new ObjectParameter("Clave", typeof(int));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("Apellido", apellido) :
+                new ObjectParameter("Apellido", typeof(string));
+    
+            var tipoUsuarioParameter = tipoUsuario != null ?
+                new ObjectParameter("TipoUsuario", tipoUsuario) :
+                new ObjectParameter("TipoUsuario", typeof(string));
+    
+            var codigoPostalParameter = codigoPostal != null ?
+                new ObjectParameter("CodigoPostal", codigoPostal) :
+                new ObjectParameter("CodigoPostal", typeof(string));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            var salarioParameter = salario.HasValue ?
+                new ObjectParameter("Salario", salario) :
+                new ObjectParameter("Salario", typeof(double));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            var ciudadParameter = ciudad != null ?
+                new ObjectParameter("Ciudad", ciudad) :
+                new ObjectParameter("Ciudad", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPUUsuario", claveParameter, emailParameter, passwordParameter, nombreParameter, apellidoParameter, tipoUsuarioParameter, codigoPostalParameter, statusParameter, salarioParameter, telefonoParameter, ciudadParameter, key, message);
+        }
+    
+        public virtual int SPIUsuario(string email, string password, string nombre, string apellido, string tipoUsuario, string codigoPostal, string status, Nullable<double> salario, string telefono, string ciudad, ObjectParameter key, ObjectParameter message)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("Apellido", apellido) :
+                new ObjectParameter("Apellido", typeof(string));
+    
+            var tipoUsuarioParameter = tipoUsuario != null ?
+                new ObjectParameter("TipoUsuario", tipoUsuario) :
+                new ObjectParameter("TipoUsuario", typeof(string));
+    
+            var codigoPostalParameter = codigoPostal != null ?
+                new ObjectParameter("CodigoPostal", codigoPostal) :
+                new ObjectParameter("CodigoPostal", typeof(string));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            var salarioParameter = salario.HasValue ?
+                new ObjectParameter("Salario", salario) :
+                new ObjectParameter("Salario", typeof(double));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            var ciudadParameter = ciudad != null ?
+                new ObjectParameter("Ciudad", ciudad) :
+                new ObjectParameter("Ciudad", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPIUsuario", emailParameter, passwordParameter, nombreParameter, apellidoParameter, tipoUsuarioParameter, codigoPostalParameter, statusParameter, salarioParameter, telefonoParameter, ciudadParameter, key, message);
+        }
+    
+        public virtual int SPChangeStatus_SAP_Usuario(Nullable<int> codigo, string status, ObjectParameter key, ObjectParameter message)
+        {
+            var codigoParameter = codigo.HasValue ?
+                new ObjectParameter("Codigo", codigo) :
+                new ObjectParameter("Codigo", typeof(int));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPChangeStatus_SAP_Usuario", codigoParameter, statusParameter, key, message);
+        }
+    
+        public virtual ObjectResult<SPG_SAP_UsuarioEmail_Result> SPG_SAP_UsuarioEmail(string email, string password)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPG_SAP_UsuarioEmail_Result>("SPG_SAP_UsuarioEmail", emailParameter, passwordParameter);
+        }
+    
+        public virtual int SPChangeStatusUsuario(Nullable<int> codigo, string status, ObjectParameter key, ObjectParameter message)
+        {
+            var codigoParameter = codigo.HasValue ?
+                new ObjectParameter("Codigo", codigo) :
+                new ObjectParameter("Codigo", typeof(int));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPChangeStatusUsuario", codigoParameter, statusParameter, key, message);
+        }
+    
+        public virtual ObjectResult<EUsuario> SPGUsuarioEmail(string email, string password)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EUsuario>("SPGUsuarioEmail", emailParameter, passwordParameter);
         }
     }
 }

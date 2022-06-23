@@ -20,7 +20,7 @@ GO
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-ALTER PROCEDURE [dbo].[SPG_SAP_PedidosCliente] 
+CREATE PROCEDURE [dbo].[SPG_SAP_PedidosCliente] 
 	@Codigo INT = NULL,
 	@Fecha DATETIME = NULL
 AS

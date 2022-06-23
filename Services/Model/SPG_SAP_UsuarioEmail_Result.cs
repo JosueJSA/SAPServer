@@ -10,9 +10,8 @@
 namespace Services.Model
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Empleado
+    public partial class SPG_SAP_UsuarioEmail_Result
     {
         public int Clave { get; set; }
         public string Email { get; set; }

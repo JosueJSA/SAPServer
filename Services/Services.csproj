@@ -60,6 +60,8 @@
     <Compile Include="IPedidosClientesService.cs" />
     <Compile Include="IProductosService.cs" />
     <Compile Include="IProveedoresService.cs" />
+    <Compile Include="IUsuariosService.cs" />
+    <Compile Include="List.cs" />
     <Compile Include="Model\AnswerMessage.cs" />
     <Compile Include="Model\BalanceDiario.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
@@ -91,9 +93,6 @@
     <Compile Include="Model\Empleado.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Empleado_Direccion.cs">
-      <DependentUpon>SAPModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\EPedidoCliente.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
@@ -107,6 +106,9 @@
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EReceta.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EUsuario.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Ingrediente.cs">
@@ -165,6 +167,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SAPModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SPG_SAP_UsuarioEmail_Result.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SPG_SAP_Usuario_Result.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -16,6 +16,6 @@ namespace Services.Model
     {
         public int Clave { get; set; }
         public string Descripcion { get; set; }
-        public List<EIngrediente> Ingredientes { get; set; }
+        public List<EIngrediente> Ingredientes { get; set; }    
     }
 }

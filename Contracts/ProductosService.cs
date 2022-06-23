@@ -137,11 +137,14 @@ namespace Contracts
         {
             using (var context = new SAPContext())
             {
-                var result = context.SPGProductoUnico(idProduct);
-                if (result != null)
-                    return result.ToList().First();
-                else
+                try
+                {
+                    return context.SPGProductoUnico(idProduct).ToList().First();
+                }
+                catch(Exception)
+                {
                     return null;
+                }
             }
         }
 

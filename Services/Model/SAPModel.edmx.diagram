@@ -10,8 +10,6 @@
         <EntityTypeShape EntityType="SAPModel.CajaSalida" Width="1.5" PointX="8.75" PointY="14.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SAPModel.Cliente" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SAPModel.Cliente_Direccion" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SAPModel.Empleado" Width="1.5" PointX="10.75" PointY="14.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SAPModel.Empleado_Direccion" Width="1.5" PointX="13" PointY="15.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SAPModel.Ingrediente" Width="1.5" PointX="11.25" PointY="6.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SAPModel.Insumo" Width="1.5" PointX="6" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SAPModel.Orden" Width="1.5" PointX="5.25" PointY="2.375" IsExpanded="true" />
@@ -31,7 +29,6 @@
         <AssociationConnector Association="SAPModel.PK_dbo_Salida_Balance" ManuallyRouted="false" />
         <AssociationConnector Association="SAPModel.PK_dbo_Cliente_Direccion_Cliente" ManuallyRouted="false" />
         <AssociationConnector Association="SAPModel.PK_dbo_PedidoCliente_Cliente" ManuallyRouted="false" />
-        <AssociationConnector Association="SAPModel.PK_dbo_Personal_Direccion_Personal" ManuallyRouted="false" />
         <AssociationConnector Association="SAPModel.PK_dbo_Ingrediente_Insumo" ManuallyRouted="false" />
         <AssociationConnector Association="SAPModel.PK_dbo_Ingrediente_Receta" ManuallyRouted="false" />
         <AssociationConnector Association="SAPModel.PK_dbo_OrdenAProveedor_Insumo" ManuallyRouted="false" />
@@ -42,6 +39,7 @@
         <AssociationConnector Association="SAPModel.PK_dbo_PedidoCliente_Pedido" ManuallyRouted="false" />
         <AssociationConnector Association="SAPModel.PK_dbo_PedidoAProveedor_Proveedor" ManuallyRouted="false" />
         <AssociationConnector Association="SAPModel.PK_dbo_Proveedor_Direccion_Proveedor" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SAPModel.Empleado" Width="1.5" PointX="13.375" PointY="13.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
