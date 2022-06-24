@@ -21,5 +21,11 @@ namespace Services
         AnswerMessage UpdateCliente(ECliente cliente);
         [OperationContract]
         ECliente GetClienteByPedido(int IdPedido);
+        [OperationContract]
+        List<ECliente> GetClientes(string status, string nombre);
+        [OperationContract]
+        AnswerMessage ChangeStatusCliente(int idCliente, string status);
+        [OperationContract]
+        AnswerMessage UpdateBasicClient(ECliente cliente);
     }
 }

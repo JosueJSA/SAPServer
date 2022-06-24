@@ -10,16 +10,9 @@
 namespace Services.Model
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Proveedor
+    public partial class EProveedor
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Proveedor()
-        {
-            this.PedidoProveedor = new HashSet<PedidoProveedor>();
-        }
-    
         public int Clave { get; set; }
         public string Email { get; set; }
         public string Nombre { get; set; }
@@ -28,8 +21,5 @@ namespace Services.Model
         public string Status { get; set; }
         public string Telefono { get; set; }
         public string DireccionEmpresa { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PedidoProveedor> PedidoProveedor { get; set; }
     }
 }

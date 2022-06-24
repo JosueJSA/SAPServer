@@ -10,15 +10,16 @@
 namespace Services.Model
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Proveedor_Direccion
+    public partial class SPG_SAP_Proveedor_Result
     {
-        public int Id { get; set; }
-        public int IdProveedor { get; set; }
-        public string Calle { get; set; }
-        public int Numero { get; set; }
-    
-        public virtual Proveedor Proveedor { get; set; }
+        public int Clave { get; set; }
+        public string Email { get; set; }
+        public string Nombre { get; set; }
+        public string Rfc { get; set; }
+        public string CategoriaInsumo { get; set; }
+        public string Status { get; set; }
+        public string Telefono { get; set; }
+        public string DireccionEmpresa { get; set; }
     }
 }

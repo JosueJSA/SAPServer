@@ -11,24 +11,14 @@ namespace Services.Model
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class PedidoProveedor
+
+    public partial class EPedidoProveedor
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PedidoProveedor()
-        {
-            this.OrdenAProveedor = new HashSet<OrdenAProveedor>();
-        }
-    
         public int Codigo { get; set; }
         public int ClaveProveedor { get; set; }
         public double Cantidad { get; set; }
         public string TipoPedido { get; set; }
         public string Status { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrdenAProveedor> OrdenAProveedor { get; set; }
-        public virtual Pedido Pedido { get; set; }
-        public virtual Proveedor Proveedor { get; set; }
+        public List<EInsumoPedido> Insumos { get; set; }    
     }
 }

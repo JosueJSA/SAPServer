@@ -11,13 +11,15 @@ namespace Services
     [ServiceContract]
     public interface IProveedoresService
     {
-        //[OperationContract]
-        //EProveedor GetProveedor(int IDProveedor);
-        //[OperationContract]
-        //List<string> GetProveedoresList();
-        //[OperationContract]
-        //AnswerMessage AddProveedor(EProveedor proveedor);
-        //[OperationContract]
-        //AnswerMessage UpdateProveedor(EProveedor proveedor);
+        [OperationContract]
+        EProveedor GetProveedor(int IDProveedor);
+        [OperationContract]
+        List<EProveedor> GetProveedoresList(string criterio, string valor, string status);
+        [OperationContract]
+        AnswerMessage AddProveedor(EProveedor proveedor);
+        [OperationContract]
+        AnswerMessage UpdateProveedor(int oldClave, EProveedor proveedor);
+        [OperationContract]
+        AnswerMessage ChangeProveedorStatus(int idProveedor, string status);
     }
 }

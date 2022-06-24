@@ -58,10 +58,10 @@
     <Compile Include="IClientesService.cs" />
     <Compile Include="IInsumosService.cs" />
     <Compile Include="IPedidosClientesService.cs" />
+    <Compile Include="IPedidosProveedoresService.cs" />
     <Compile Include="IProductosService.cs" />
     <Compile Include="IProveedoresService.cs" />
     <Compile Include="IUsuariosService.cs" />
-    <Compile Include="List.cs" />
     <Compile Include="Model\AnswerMessage.cs" />
     <Compile Include="Model\BalanceDiario.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
@@ -90,6 +90,9 @@
     <Compile Include="Model\EInsumo.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\EInsumoPedido.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Empleado.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
@@ -99,10 +102,16 @@
     <Compile Include="Model\EPedidoClienteDetallado.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\EPedidoProveedor.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\EProducto.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EProductoComprado.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EProveedor.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EReceta.cs">
@@ -144,9 +153,6 @@
     <Compile Include="Model\Proveedor.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Proveedor_Direccion.cs">
-      <DependentUpon>SAPModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Receta.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
@@ -167,6 +173,18 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SAPModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SPG_SAP_Clientes_Result.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SPG_SAP_InsumosPedidos_Result.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SPG_SAP_PedidoProveedor_Result.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SPG_SAP_Proveedor_Result.cs">
+      <DependentUpon>SAPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SPG_SAP_UsuarioEmail_Result.cs">
       <DependentUpon>SAPModel.tt</DependentUpon>

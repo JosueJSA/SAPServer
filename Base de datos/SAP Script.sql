@@ -130,6 +130,7 @@ CREATE TABLE [PedidoProveedor] (
 	[ClaveProveedor] INT NOT NULL,
 	[Cantidad] FLOAT NOT NULL,
 	[TipoPedido] NVARCHAR (100) NOT NULL, -- En establecimiento | A domicilio
+	[Status] NVARCHAR(100),
 	CONSTRAINT [PK_dbo.PedidoAProveedor] PRIMARY KEY (Codigo),
 	CONSTRAINT [PK_dbo.PedidoAProveedor.Pedido] FOREIGN KEY ([Codigo]) REFERENCES [dbo].[Pedido] ([Codigo]) ON UPDATE CASCADE,
 	CONSTRAINT [PK_dbo.PedidoAProveedor.Proveedor] FOREIGN KEY ([ClaveProveedor]) REFERENCES [dbo].[Proveedor] ([Clave]) ON UPDATE CASCADE

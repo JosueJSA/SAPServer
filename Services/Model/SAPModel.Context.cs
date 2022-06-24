@@ -41,7 +41,6 @@ namespace Services.Model
         public virtual DbSet<PedidoProveedor> PedidoProveedor { get; set; }
         public virtual DbSet<ProductoVenta> ProductoVenta { get; set; }
         public virtual DbSet<Proveedor> Proveedor { get; set; }
-        public virtual DbSet<Proveedor_Direccion> Proveedor_Direccion { get; set; }
         public virtual DbSet<Receta> Receta { get; set; }
         public virtual DbSet<SalidaExtraordinaria> SalidaExtraordinaria { get; set; }
         public virtual DbSet<Ingredientes> Ingredientes { get; set; }
@@ -698,6 +697,330 @@ namespace Services.Model
                 new ObjectParameter("Password", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EUsuario>("SPGUsuarioEmail", emailParameter, passwordParameter);
+        }
+    
+        public virtual int SPChangeStatus_SAP_Cliente(Nullable<int> idCliente, string status, ObjectParameter key, ObjectParameter message)
+        {
+            var idClienteParameter = idCliente.HasValue ?
+                new ObjectParameter("IdCliente", idCliente) :
+                new ObjectParameter("IdCliente", typeof(int));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPChangeStatus_SAP_Cliente", idClienteParameter, statusParameter, key, message);
+        }
+    
+        public virtual int SPChangeStatusCliente(Nullable<int> idCliente, string status, ObjectParameter key, ObjectParameter message)
+        {
+            var idClienteParameter = idCliente.HasValue ?
+                new ObjectParameter("IdCliente", idCliente) :
+                new ObjectParameter("IdCliente", typeof(int));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPChangeStatusCliente", idClienteParameter, statusParameter, key, message);
+        }
+    
+        public virtual ObjectResult<SPG_SAP_Clientes_Result> SPG_SAP_Clientes(string valor, string status)
+        {
+            var valorParameter = valor != null ?
+                new ObjectParameter("Valor", valor) :
+                new ObjectParameter("Valor", typeof(string));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPG_SAP_Clientes_Result>("SPG_SAP_Clientes", valorParameter, statusParameter);
+        }
+    
+        public virtual ObjectResult<ECliente> SPGClientes(string valor, string status)
+        {
+            var valorParameter = valor != null ?
+                new ObjectParameter("Valor", valor) :
+                new ObjectParameter("Valor", typeof(string));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ECliente>("SPGClientes", valorParameter, statusParameter);
+        }
+    
+        public virtual int SPChangeStatus_SAP_Proveedor(Nullable<int> clave, string status, ObjectParameter key, ObjectParameter message)
+        {
+            var claveParameter = clave.HasValue ?
+                new ObjectParameter("Clave", clave) :
+                new ObjectParameter("Clave", typeof(int));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPChangeStatus_SAP_Proveedor", claveParameter, statusParameter, key, message);
+        }
+    
+        public virtual ObjectResult<SPG_SAP_Proveedor_Result> SPG_SAP_Proveedor(string criterio, string valor, string status)
+        {
+            var criterioParameter = criterio != null ?
+                new ObjectParameter("Criterio", criterio) :
+                new ObjectParameter("Criterio", typeof(string));
+    
+            var valorParameter = valor != null ?
+                new ObjectParameter("Valor", valor) :
+                new ObjectParameter("Valor", typeof(string));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPG_SAP_Proveedor_Result>("SPG_SAP_Proveedor", criterioParameter, valorParameter, statusParameter);
+        }
+    
+        public virtual int SPI_SAP_Proveedor(string email, string nombre, string rFC, string categoriaInsumo, string telefono, string direccionEmpresa, ObjectParameter key, ObjectParameter message)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var rFCParameter = rFC != null ?
+                new ObjectParameter("RFC", rFC) :
+                new ObjectParameter("RFC", typeof(string));
+    
+            var categoriaInsumoParameter = categoriaInsumo != null ?
+                new ObjectParameter("CategoriaInsumo", categoriaInsumo) :
+                new ObjectParameter("CategoriaInsumo", typeof(string));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            var direccionEmpresaParameter = direccionEmpresa != null ?
+                new ObjectParameter("DireccionEmpresa", direccionEmpresa) :
+                new ObjectParameter("DireccionEmpresa", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPI_SAP_Proveedor", emailParameter, nombreParameter, rFCParameter, categoriaInsumoParameter, telefonoParameter, direccionEmpresaParameter, key, message);
+        }
+    
+        public virtual int SPU_SAP_Proveedor(Nullable<int> clave, string email, string nombre, string rFC, string categoriaInsumo, string telefono, string direccionEmpresa, ObjectParameter key, ObjectParameter message)
+        {
+            var claveParameter = clave.HasValue ?
+                new ObjectParameter("Clave", clave) :
+                new ObjectParameter("Clave", typeof(int));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var rFCParameter = rFC != null ?
+                new ObjectParameter("RFC", rFC) :
+                new ObjectParameter("RFC", typeof(string));
+    
+            var categoriaInsumoParameter = categoriaInsumo != null ?
+                new ObjectParameter("CategoriaInsumo", categoriaInsumo) :
+                new ObjectParameter("CategoriaInsumo", typeof(string));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            var direccionEmpresaParameter = direccionEmpresa != null ?
+                new ObjectParameter("DireccionEmpresa", direccionEmpresa) :
+                new ObjectParameter("DireccionEmpresa", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPU_SAP_Proveedor", claveParameter, emailParameter, nombreParameter, rFCParameter, categoriaInsumoParameter, telefonoParameter, direccionEmpresaParameter, key, message);
+        }
+    
+        public virtual int SPUProveedor(Nullable<int> clave, string email, string nombre, string rFC, string categoriaInsumo, string telefono, string direccionEmpresa, ObjectParameter key, ObjectParameter message)
+        {
+            var claveParameter = clave.HasValue ?
+                new ObjectParameter("Clave", clave) :
+                new ObjectParameter("Clave", typeof(int));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var rFCParameter = rFC != null ?
+                new ObjectParameter("RFC", rFC) :
+                new ObjectParameter("RFC", typeof(string));
+    
+            var categoriaInsumoParameter = categoriaInsumo != null ?
+                new ObjectParameter("CategoriaInsumo", categoriaInsumo) :
+                new ObjectParameter("CategoriaInsumo", typeof(string));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            var direccionEmpresaParameter = direccionEmpresa != null ?
+                new ObjectParameter("DireccionEmpresa", direccionEmpresa) :
+                new ObjectParameter("DireccionEmpresa", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPUProveedor", claveParameter, emailParameter, nombreParameter, rFCParameter, categoriaInsumoParameter, telefonoParameter, direccionEmpresaParameter, key, message);
+        }
+    
+        public virtual int SPIProveedor(string email, string nombre, string rFC, string categoriaInsumo, string telefono, string direccionEmpresa, ObjectParameter key, ObjectParameter message)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var rFCParameter = rFC != null ?
+                new ObjectParameter("RFC", rFC) :
+                new ObjectParameter("RFC", typeof(string));
+    
+            var categoriaInsumoParameter = categoriaInsumo != null ?
+                new ObjectParameter("CategoriaInsumo", categoriaInsumo) :
+                new ObjectParameter("CategoriaInsumo", typeof(string));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            var direccionEmpresaParameter = direccionEmpresa != null ?
+                new ObjectParameter("DireccionEmpresa", direccionEmpresa) :
+                new ObjectParameter("DireccionEmpresa", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPIProveedor", emailParameter, nombreParameter, rFCParameter, categoriaInsumoParameter, telefonoParameter, direccionEmpresaParameter, key, message);
+        }
+    
+        public virtual int SPChangeStatusProveedor(Nullable<int> clave, string status, ObjectParameter key, ObjectParameter message)
+        {
+            var claveParameter = clave.HasValue ?
+                new ObjectParameter("Clave", clave) :
+                new ObjectParameter("Clave", typeof(int));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPChangeStatusProveedor", claveParameter, statusParameter, key, message);
+        }
+    
+        public virtual ObjectResult<EProveedor> SPGProveedor(string criterio, string valor, string status)
+        {
+            var criterioParameter = criterio != null ?
+                new ObjectParameter("Criterio", criterio) :
+                new ObjectParameter("Criterio", typeof(string));
+    
+            var valorParameter = valor != null ?
+                new ObjectParameter("Valor", valor) :
+                new ObjectParameter("Valor", typeof(string));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EProveedor>("SPGProveedor", criterioParameter, valorParameter, statusParameter);
+        }
+    
+        public virtual int SPChangeStatusPedidoProveedor(Nullable<int> idPedido, string status, ObjectParameter key, ObjectParameter message)
+        {
+            var idPedidoParameter = idPedido.HasValue ?
+                new ObjectParameter("IdPedido", idPedido) :
+                new ObjectParameter("IdPedido", typeof(int));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPChangeStatusPedidoProveedor", idPedidoParameter, statusParameter, key, message);
+        }
+    
+        public virtual ObjectResult<SPG_SAP_InsumosPedidos_Result> SPG_SAP_InsumosPedidos(Nullable<int> iDPedido)
+        {
+            var iDPedidoParameter = iDPedido.HasValue ?
+                new ObjectParameter("IDPedido", iDPedido) :
+                new ObjectParameter("IDPedido", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPG_SAP_InsumosPedidos_Result>("SPG_SAP_InsumosPedidos", iDPedidoParameter);
+        }
+    
+        public virtual ObjectResult<SPG_SAP_PedidoProveedor_Result> SPG_SAP_PedidoProveedor(Nullable<int> codigoPedido)
+        {
+            var codigoPedidoParameter = codigoPedido.HasValue ?
+                new ObjectParameter("CodigoPedido", codigoPedido) :
+                new ObjectParameter("CodigoPedido", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPG_SAP_PedidoProveedor_Result>("SPG_SAP_PedidoProveedor", codigoPedidoParameter);
+        }
+    
+        public virtual ObjectResult<EPedidoProveedor> SPGPedidoProveedor(Nullable<int> codigoPedido)
+        {
+            var codigoPedidoParameter = codigoPedido.HasValue ?
+                new ObjectParameter("CodigoPedido", codigoPedido) :
+                new ObjectParameter("CodigoPedido", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EPedidoProveedor>("SPGPedidoProveedor", codigoPedidoParameter);
+        }
+    
+        public virtual int SPChangePedidoProveedor(Nullable<int> idPedido, string status, ObjectParameter key, ObjectParameter message)
+        {
+            var idPedidoParameter = idPedido.HasValue ?
+                new ObjectParameter("IdPedido", idPedido) :
+                new ObjectParameter("IdPedido", typeof(int));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPChangePedidoProveedor", idPedidoParameter, statusParameter, key, message);
+        }
+    
+        public virtual ObjectResult<EInsumoPedido> SPGInsumosPedidos(Nullable<int> iDPedido)
+        {
+            var iDPedidoParameter = iDPedido.HasValue ?
+                new ObjectParameter("IDPedido", iDPedido) :
+                new ObjectParameter("IDPedido", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EInsumoPedido>("SPGInsumosPedidos", iDPedidoParameter);
+        }
+    
+        public virtual int SPU_SAP_InsumoCantidad(Nullable<int> codigo, Nullable<double> cantidad, ObjectParameter key, ObjectParameter message)
+        {
+            var codigoParameter = codigo.HasValue ?
+                new ObjectParameter("Codigo", codigo) :
+                new ObjectParameter("Codigo", typeof(int));
+    
+            var cantidadParameter = cantidad.HasValue ?
+                new ObjectParameter("Cantidad", cantidad) :
+                new ObjectParameter("Cantidad", typeof(double));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPU_SAP_InsumoCantidad", codigoParameter, cantidadParameter, key, message);
+        }
+    
+        public virtual int SPUInsumoCantidad(Nullable<int> codigo, Nullable<double> cantidad, ObjectParameter key, ObjectParameter message)
+        {
+            var codigoParameter = codigo.HasValue ?
+                new ObjectParameter("Codigo", codigo) :
+                new ObjectParameter("Codigo", typeof(int));
+    
+            var cantidadParameter = cantidad.HasValue ?
+                new ObjectParameter("Cantidad", cantidad) :
+                new ObjectParameter("Cantidad", typeof(double));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPUInsumoCantidad", codigoParameter, cantidadParameter, key, message);
         }
     }
 }

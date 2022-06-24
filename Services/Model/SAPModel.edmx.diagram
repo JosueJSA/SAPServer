@@ -19,7 +19,6 @@
         <EntityTypeShape EntityType="SAPModel.PedidoProveedor" Width="1.5" PointX="6" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SAPModel.ProductoVenta" Width="1.5" PointX="3" PointY="13.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SAPModel.Proveedor" Width="1.5" PointX="3.75" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="SAPModel.Proveedor_Direccion" Width="1.5" PointX="6" PointY="13.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SAPModel.Receta" Width="1.5" PointX="9" PointY="2.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SAPModel.SalidaExtraordinaria" Width="1.5" PointX="13.25" PointY="10.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SAPModel.Ingredientes" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
@@ -38,7 +37,6 @@
         <AssociationConnector Association="SAPModel.PK_dbo_PedidoAProveedor_Pedido" ManuallyRouted="false" />
         <AssociationConnector Association="SAPModel.PK_dbo_PedidoCliente_Pedido" ManuallyRouted="false" />
         <AssociationConnector Association="SAPModel.PK_dbo_PedidoAProveedor_Proveedor" ManuallyRouted="false" />
-        <AssociationConnector Association="SAPModel.PK_dbo_Proveedor_Direccion_Proveedor" ManuallyRouted="false" />
         <EntityTypeShape EntityType="SAPModel.Empleado" Width="1.5" PointX="13.375" PointY="13.75" />
       </Diagram>
     </edmx:Diagrams>

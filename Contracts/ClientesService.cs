@@ -53,6 +53,17 @@ namespace Contracts
             return answer;
         }
 
+        public AnswerMessage ChangeStatusCliente(int idCliente, string status)
+        {
+            using (var context = new SAPContext())
+            {
+                context.SPChangeStatusCliente(idCliente, status, key, message);
+                answer.Key = Convert.ToInt32(key.Value);
+                answer.Message = Convert.ToString(message.Value);
+                return answer;
+            }
+        }
+
         public ECliente GetCliente(int IDCliente)
         {
             ECliente cliente = null;
@@ -75,6 +86,25 @@ namespace Contracts
             return cliente;
         }
 
+        public List<ECliente> GetClientes(string status, string nombre = null)
+        {
+            using (var context = new SAPContext())
+            {
+                List<ECliente> clientes = new List<ECliente>();
+                try
+                {
+                    if (nombre == null)
+                        clientes = context.SPGClientes(null, status).ToList();
+                    else
+                        clientes = context.SPGClientes($"%{nombre}%", status).ToList();
+                    return clientes;   
+                }catch(Exception)
+                {
+                    return new List<ECliente>();
+                }
+            }
+        }
+
         public List<string> GetClientesList()
         {
             List<string> clientes = null;
@@ -88,6 +118,25 @@ namespace Contracts
                 }
             }
             return clientes;
+        }
+
+        public AnswerMessage UpdateBasicClient(ECliente cliente)
+        {
+            using (var context = new SAPContext())
+            {
+                var c = context.Cliente.Find(cliente.Id);
+                c.Email = cliente.Email;
+                c.CodigoPostal = cliente.CodigoPostal;
+                c.Nombre = cliente.Nombre;
+                c.Apellido = cliente.Apellido;
+                c.Status = cliente.Status;
+                c.Ciudad = cliente.Ciudad;
+                c.Telefono = cliente.Telefono;
+                c.Nacimiento = cliente.Nacimiento;
+                context.SaveChanges();
+                answer.Key = 1;
+                return answer;
+            }
         }
 
         public AnswerMessage UpdateCliente(ECliente cliente)

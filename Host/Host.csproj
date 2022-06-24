@@ -72,6 +72,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="PedidosProveedoresService.svc" />
     <Content Include="PedidosClientesService.svc" />
     <Content Include="ClientesService.svc" />
     <Content Include="UsuariosService.svc" />

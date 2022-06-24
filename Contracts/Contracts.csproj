@@ -83,6 +83,7 @@
     <Compile Include="ClientesService.cs" />
     <Compile Include="InsumosService.cs" />
     <Compile Include="PedidosClientesService.cs" />
+    <Compile Include="PedidosProveedoresService.cs" />
     <Compile Include="ProductosService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProveedoresService.cs" />

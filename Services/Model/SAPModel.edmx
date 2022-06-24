@@ -176,6 +176,7 @@
           <Property Name="ClaveProveedor" Type="int" Nullable="false" />
           <Property Name="Cantidad" Type="float" Nullable="false" />
           <Property Name="TipoPedido" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="ProductoVenta">
           <Key>
@@ -204,15 +205,7 @@
           <Property Name="CategoriaInsumo" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="Status" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Telefono" Type="nvarchar" MaxLength="100" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Proveedor_Direccion">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdProveedor" Type="int" Nullable="false" />
-          <Property Name="Calle" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="Numero" Type="int" Nullable="false" />
+          <Property Name="DireccionEmpresa" Type="nvarchar" MaxLength="500" Nullable="false" />
         </EntityType>
         <EntityType Name="Receta">
           <Key>
@@ -437,18 +430,6 @@ warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="PK_dbo_Proveedor_Direccion_Proveedor">
-          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
-          <End Role="Proveedor_Direccion" Type="Self.Proveedor_Direccion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Proveedor">
-              <PropertyRef Name="Clave" />
-            </Principal>
-            <Dependent Role="Proveedor_Direccion">
-              <PropertyRef Name="IdProveedor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="PK_dbo_Salida_Balance">
           <End Role="BalanceDiario" Type="Self.BalanceDiario" Multiplicity="1" />
           <End Role="SalidaExtraordinaria" Type="Self.SalidaExtraordinaria" Multiplicity="*" />
@@ -461,6 +442,12 @@ warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="SPChangeStatus_SAP_Cliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdCliente" Type="int" Mode="In" />
+          <Parameter Name="Status" Type="nvarchar" Mode="In" />
+          <Parameter Name="Key" Type="int" Mode="InOut" />
+          <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
+        </Function>
         <Function Name="SPChangeStatus_SAP_Insumo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Codigo" Type="int" Mode="In" />
           <Parameter Name="Status" Type="nvarchar" Mode="In" />
@@ -469,6 +456,12 @@ warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary k
         </Function>
         <Function Name="SPChangeStatus_SAP_ProductoVenta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Codigo" Type="int" Mode="In" />
+          <Parameter Name="Status" Type="nvarchar" Mode="In" />
+          <Parameter Name="Key" Type="int" Mode="InOut" />
+          <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
+        </Function>
+        <Function Name="SPChangeStatus_SAP_Proveedor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Clave" Type="int" Mode="In" />
           <Parameter Name="Status" Type="nvarchar" Mode="In" />
           <Parameter Name="Key" Type="int" Mode="InOut" />
           <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
@@ -485,8 +478,18 @@ warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary k
           <Parameter Name="Key" Type="int" Mode="InOut" />
           <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
         </Function>
+        <Function Name="SPChangeStatusPedidoProveedor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdPedido" Type="int" Mode="In" />
+          <Parameter Name="Status" Type="nvarchar" Mode="In" />
+          <Parameter Name="Key" Type="int" Mode="InOut" />
+          <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
+        </Function>
         <Function Name="SPG_SAP_Cliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdCliente" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SPG_SAP_Clientes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Valor" Type="nvarchar" Mode="In" />
+          <Parameter Name="Status" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="SPG_SAP_Direcciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdCliente" Type="int" Mode="In" />
@@ -500,7 +503,13 @@ warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary k
           <Parameter Name="Fecha" Type="datetime" Mode="In" />
           <Parameter Name="Status" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="SPG_SAP_InsumosPedidos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDPedido" Type="int" Mode="In" />
+        </Function>
         <Function Name="SPG_SAP_PedidoCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoPedido" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SPG_SAP_PedidoProveedor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CodigoPedido" Type="int" Mode="In" />
         </Function>
         <Function Name="SPG_SAP_PedidosCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -519,6 +528,11 @@ warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary k
         </Function>
         <Function Name="SPG_SAP_ProductoVentaUnico" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SPG_SAP_Proveedor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Criterio" Type="nvarchar" Mode="In" />
+          <Parameter Name="Valor" Type="nvarchar" Mode="In" />
+          <Parameter Name="Status" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="SPG_SAP_Usuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Valor" Type="nvarchar" Mode="In" />
@@ -571,6 +585,16 @@ warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary k
           <Parameter Name="Key" Type="int" Mode="InOut" />
           <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
         </Function>
+        <Function Name="SPI_SAP_Proveedor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="RFC" Type="nvarchar" Mode="In" />
+          <Parameter Name="CategoriaInsumo" Type="nvarchar" Mode="In" />
+          <Parameter Name="Telefono" Type="nvarchar" Mode="In" />
+          <Parameter Name="DireccionEmpresa" Type="nvarchar" Mode="In" />
+          <Parameter Name="Key" Type="int" Mode="InOut" />
+          <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
+        </Function>
         <Function Name="SPI_SAP_Usuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Email" Type="nvarchar" Mode="In" />
           <Parameter Name="Password" Type="nvarchar" Mode="In" />
@@ -616,6 +640,12 @@ warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary k
           <Parameter Name="Key" Type="int" Mode="InOut" />
           <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
         </Function>
+        <Function Name="SPU_SAP_InsumoCantidad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Codigo" Type="int" Mode="In" />
+          <Parameter Name="Cantidad" Type="float" Mode="In" />
+          <Parameter Name="Key" Type="int" Mode="InOut" />
+          <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
+        </Function>
         <Function Name="SPU_SAP_Producto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Codigo" Type="int" Mode="In" />
           <Parameter Name="CodigoReceta" Type="int" Mode="In" />
@@ -626,6 +656,17 @@ warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary k
           <Parameter Name="Foto" Type="nvarchar" Mode="In" />
           <Parameter Name="Descripcion" Type="nvarchar" Mode="In" />
           <Parameter Name="Restricciones" Type="nvarchar" Mode="In" />
+          <Parameter Name="Key" Type="int" Mode="InOut" />
+          <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
+        </Function>
+        <Function Name="SPU_SAP_Proveedor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Clave" Type="int" Mode="In" />
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
+          <Parameter Name="RFC" Type="nvarchar" Mode="In" />
+          <Parameter Name="CategoriaInsumo" Type="nvarchar" Mode="In" />
+          <Parameter Name="Telefono" Type="nvarchar" Mode="In" />
+          <Parameter Name="DireccionEmpresa" Type="nvarchar" Mode="In" />
           <Parameter Name="Key" Type="int" Mode="InOut" />
           <Parameter Name="Message" Type="nvarchar(max)" Mode="InOut" />
         </Function>
@@ -660,7 +701,6 @@ warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary k
           <EntitySet Name="PedidoProveedor" EntityType="Self.PedidoProveedor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductoVenta" EntityType="Self.ProductoVenta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Proveedor_Direccion" EntityType="Self.Proveedor_Direccion" Schema="dbo" Table="Proveedor.Direccion" store:Type="Tables" />
           <EntitySet Name="Receta" EntityType="Self.Receta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SalidaExtraordinaria" EntityType="Self.SalidaExtraordinaria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ingredientes" EntityType="Self.Ingredientes" store:Type="Views" store:Schema="dbo">
@@ -742,10 +782,6 @@ warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary k
           <AssociationSet Name="PK_dbo_PedidoCliente_Pedido" Association="Self.PK_dbo_PedidoCliente_Pedido">
             <End Role="Pedido" EntitySet="Pedido" />
             <End Role="PedidoCliente" EntitySet="PedidoCliente" />
-          </AssociationSet>
-          <AssociationSet Name="PK_dbo_Proveedor_Direccion_Proveedor" Association="Self.PK_dbo_Proveedor_Direccion_Proveedor">
-            <End Role="Proveedor" EntitySet="Proveedor" />
-            <End Role="Proveedor_Direccion" EntitySet="Proveedor_Direccion" />
           </AssociationSet>
           <AssociationSet Name="PK_dbo_Salida_Balance" Association="Self.PK_dbo_Salida_Balance">
             <End Role="BalanceDiario" EntitySet="BalanceDiario" />
@@ -933,6 +969,7 @@ warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary k
           <NavigationProperty Name="OrdenAProveedor" Relationship="Self.PK_dbo_Orden_PedidoAProveedor" FromRole="PedidoProveedor" ToRole="OrdenAProveedor" />
           <NavigationProperty Name="Pedido" Relationship="Self.PK_dbo_PedidoAProveedor_Pedido" FromRole="PedidoProveedor" ToRole="Pedido" />
           <NavigationProperty Name="Proveedor" Relationship="Self.PK_dbo_PedidoAProveedor_Proveedor" FromRole="PedidoProveedor" ToRole="Proveedor" />
+          <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ProductoVenta">
           <Key>
@@ -963,17 +1000,7 @@ warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary k
           <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Telefono" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="PedidoProveedor" Relationship="Self.PK_dbo_PedidoAProveedor_Proveedor" FromRole="Proveedor" ToRole="PedidoProveedor" />
-          <NavigationProperty Name="Proveedor_Direccion" Relationship="Self.PK_dbo_Proveedor_Direccion_Proveedor" FromRole="Proveedor" ToRole="Proveedor_Direccion" />
-        </EntityType>
-        <EntityType Name="Proveedor_Direccion">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdProveedor" Type="Int32" Nullable="false" />
-          <Property Name="Calle" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Numero" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Proveedor" Relationship="Self.PK_dbo_Proveedor_Direccion_Proveedor" FromRole="Proveedor_Direccion" ToRole="Proveedor" />
+          <Property Name="DireccionEmpresa" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Receta">
           <Key>
@@ -1208,18 +1235,6 @@ warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="PK_dbo_Proveedor_Direccion_Proveedor">
-          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="1" />
-          <End Role="Proveedor_Direccion" Type="Self.Proveedor_Direccion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Proveedor">
-              <PropertyRef Name="Clave" />
-            </Principal>
-            <Dependent Role="Proveedor_Direccion">
-              <PropertyRef Name="IdProveedor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="SAPContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BalanceDiario" EntityType="Self.BalanceDiario" />
           <EntitySet Name="CajaEntrada" EntityType="Self.CajaEntrada" />
@@ -1235,7 +1250,6 @@ warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary k
           <EntitySet Name="PedidoProveedor" EntityType="Self.PedidoProveedor" />
           <EntitySet Name="ProductoVenta" EntityType="Self.ProductoVenta" />
           <EntitySet Name="Proveedor" EntityType="Self.Proveedor" />
-          <EntitySet Name="Proveedor_Direccion" EntityType="Self.Proveedor_Direccion" />
           <EntitySet Name="Receta" EntityType="Self.Receta" />
           <EntitySet Name="SalidaExtraordinaria" EntityType="Self.SalidaExtraordinaria" />
           <EntitySet Name="Ingredientes" EntityType="Self.Ingredientes" />
@@ -1295,10 +1309,6 @@ warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary k
           <AssociationSet Name="PK_dbo_PedidoAProveedor_Proveedor" Association="Self.PK_dbo_PedidoAProveedor_Proveedor">
             <End Role="Proveedor" EntitySet="Proveedor" />
             <End Role="PedidoProveedor" EntitySet="PedidoProveedor" />
-          </AssociationSet>
-          <AssociationSet Name="PK_dbo_Proveedor_Direccion_Proveedor" Association="Self.PK_dbo_Proveedor_Direccion_Proveedor">
-            <End Role="Proveedor" EntitySet="Proveedor" />
-            <End Role="Proveedor_Direccion" EntitySet="Proveedor_Direccion" />
           </AssociationSet>
           <FunctionImport Name="SPChangeStatusInsumo">
             <Parameter Name="Codigo" Mode="In" Type="Int32" />
@@ -1521,6 +1531,126 @@ warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary k
             <Parameter Name="Email" Mode="In" Type="String" />
             <Parameter Name="Password" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SPChangeStatus_SAP_Cliente">
+            <Parameter Name="IdCliente" Mode="In" Type="Int32" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+            <Parameter Name="Key" Mode="InOut" Type="Int32" />
+            <Parameter Name="Message" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPChangeStatusCliente">
+            <Parameter Name="IdCliente" Mode="In" Type="Int32" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+            <Parameter Name="Key" Mode="InOut" Type="Int32" />
+            <Parameter Name="Message" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPG_SAP_Clientes" ReturnType="Collection(SAPModel.SPG_SAP_Clientes_Result)">
+            <Parameter Name="Valor" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPGClientes" ReturnType="Collection(SAPModel.ECliente)">
+            <Parameter Name="Valor" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPChangeStatus_SAP_Proveedor">
+            <Parameter Name="Clave" Mode="In" Type="Int32" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+            <Parameter Name="Key" Mode="InOut" Type="Int32" />
+            <Parameter Name="Message" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPG_SAP_Proveedor" ReturnType="Collection(SAPModel.SPG_SAP_Proveedor_Result)">
+            <Parameter Name="Criterio" Mode="In" Type="String" />
+            <Parameter Name="Valor" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPI_SAP_Proveedor">
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="RFC" Mode="In" Type="String" />
+            <Parameter Name="CategoriaInsumo" Mode="In" Type="String" />
+            <Parameter Name="Telefono" Mode="In" Type="String" />
+            <Parameter Name="DireccionEmpresa" Mode="In" Type="String" />
+            <Parameter Name="Key" Mode="InOut" Type="Int32" />
+            <Parameter Name="Message" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPU_SAP_Proveedor">
+            <Parameter Name="Clave" Mode="In" Type="Int32" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="RFC" Mode="In" Type="String" />
+            <Parameter Name="CategoriaInsumo" Mode="In" Type="String" />
+            <Parameter Name="Telefono" Mode="In" Type="String" />
+            <Parameter Name="DireccionEmpresa" Mode="In" Type="String" />
+            <Parameter Name="Key" Mode="InOut" Type="Int32" />
+            <Parameter Name="Message" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPUProveedor">
+            <Parameter Name="Clave" Mode="In" Type="Int32" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="RFC" Mode="In" Type="String" />
+            <Parameter Name="CategoriaInsumo" Mode="In" Type="String" />
+            <Parameter Name="Telefono" Mode="In" Type="String" />
+            <Parameter Name="DireccionEmpresa" Mode="In" Type="String" />
+            <Parameter Name="Key" Mode="InOut" Type="Int32" />
+            <Parameter Name="Message" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPIProveedor">
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="RFC" Mode="In" Type="String" />
+            <Parameter Name="CategoriaInsumo" Mode="In" Type="String" />
+            <Parameter Name="Telefono" Mode="In" Type="String" />
+            <Parameter Name="DireccionEmpresa" Mode="In" Type="String" />
+            <Parameter Name="Key" Mode="InOut" Type="Int32" />
+            <Parameter Name="Message" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPChangeStatusProveedor">
+            <Parameter Name="Clave" Mode="In" Type="Int32" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+            <Parameter Name="Key" Mode="InOut" Type="Int32" />
+            <Parameter Name="Message" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPGProveedor" ReturnType="Collection(SAPModel.EProveedor)">
+            <Parameter Name="Criterio" Mode="In" Type="String" />
+            <Parameter Name="Valor" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPChangeStatusPedidoProveedor">
+            <Parameter Name="IdPedido" Mode="In" Type="Int32" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+            <Parameter Name="Key" Mode="InOut" Type="Int32" />
+            <Parameter Name="Message" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPG_SAP_InsumosPedidos" ReturnType="Collection(SAPModel.SPG_SAP_InsumosPedidos_Result)">
+          <Parameter Name="IDPedido" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SPG_SAP_PedidoProveedor" ReturnType="Collection(SAPModel.SPG_SAP_PedidoProveedor_Result)">
+          <Parameter Name="CodigoPedido" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SPGPedidoProveedor" ReturnType="Collection(SAPModel.EPedidoProveedor)">
+          <Parameter Name="CodigoPedido" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SPChangePedidoProveedor">
+            <Parameter Name="IdPedido" Mode="In" Type="Int32" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+            <Parameter Name="Key" Mode="InOut" Type="Int32" />
+            <Parameter Name="Message" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPGInsumosPedidos" ReturnType="Collection(SAPModel.EInsumoPedido)">
+          <Parameter Name="IDPedido" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SPU_SAP_InsumoCantidad">
+            <Parameter Name="Codigo" Mode="In" Type="Int32" />
+            <Parameter Name="Cantidad" Mode="In" Type="Double" />
+            <Parameter Name="Key" Mode="InOut" Type="Int32" />
+            <Parameter Name="Message" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SPUInsumoCantidad">
+            <Parameter Name="Codigo" Mode="In" Type="Int32" />
+            <Parameter Name="Cantidad" Mode="In" Type="Double" />
+            <Parameter Name="Key" Mode="InOut" Type="Int32" />
+            <Parameter Name="Message" Mode="InOut" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="EDireccion">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1694,6 +1824,70 @@ warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary k
           <Property Type="DateTime" Name="Registro" Nullable="false" Precision="23" />
           <Property Type="DateTime" Name="Baja" Nullable="true" Precision="23" />
         </ComplexType>
+        <ComplexType Name="SPG_SAP_Clientes_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="CodigoPostal" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Apellido" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Telefono" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Ciudad" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="Nacimiento" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="Edad" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SPG_SAP_Proveedor_Result">
+          <Property Type="Int32" Name="Clave" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Rfc" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="CategoriaInsumo" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Telefono" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="DireccionEmpresa" Nullable="false" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="EProveedor">
+          <Property Type="Int32" Name="Clave" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Rfc" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="CategoriaInsumo" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Telefono" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="DireccionEmpresa" Nullable="false" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="SPG_SAP_InsumosPedidos_Result">
+          <Property Type="Int32" Name="CodigoPedidoProveedor" Nullable="false" />
+          <Property Type="Int32" Name="CodigoInsumo" Nullable="false" />
+          <Property Type="Int32" Name="Cantidad" Nullable="false" />
+          <Property Type="Double" Name="Precio" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="Codigo" Nullable="false" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="SPG_SAP_PedidoProveedor_Result">
+          <Property Type="Int32" Name="Codigo" Nullable="false" />
+          <Property Type="Int32" Name="ClaveProveedor" Nullable="false" />
+          <Property Type="Double" Name="Cantidad" Nullable="false" />
+          <Property Type="String" Name="TipoPedido" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="EPedidoProveedor">
+          <Property Type="Int32" Name="Codigo" Nullable="false" />
+          <Property Type="Int32" Name="ClaveProveedor" Nullable="false" />
+          <Property Type="Double" Name="Cantidad" Nullable="false" />
+          <Property Type="String" Name="TipoPedido" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="EInsumoPedido">
+          <Property Type="Int32" Name="CodigoPedidoProveedor" Nullable="false" />
+          <Property Type="Int32" Name="CodigoInsumo" Nullable="false" />
+          <Property Type="Int32" Name="Cantidad" Nullable="false" />
+          <Property Type="Double" Name="Precio" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="Codigo" Nullable="false" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="100" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1856,6 +2050,7 @@ warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary k
           <EntitySetMapping Name="PedidoProveedor">
             <EntityTypeMapping TypeName="SAPModel.PedidoProveedor">
               <MappingFragment StoreEntitySet="PedidoProveedor">
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="ClaveProveedor" ColumnName="ClaveProveedor" />
                 <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
@@ -1883,6 +2078,7 @@ warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary k
           <EntitySetMapping Name="Proveedor">
             <EntityTypeMapping TypeName="SAPModel.Proveedor">
               <MappingFragment StoreEntitySet="Proveedor">
+                <ScalarProperty Name="DireccionEmpresa" ColumnName="DireccionEmpresa" />
                 <ScalarProperty Name="Clave" ColumnName="Clave" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -1890,16 +2086,6 @@ warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary k
                 <ScalarProperty Name="CategoriaInsumo" ColumnName="CategoriaInsumo" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Telefono" ColumnName="Telefono" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Proveedor_Direccion">
-            <EntityTypeMapping TypeName="SAPModel.Proveedor_Direccion">
-              <MappingFragment StoreEntitySet="Proveedor_Direccion">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
-                <ScalarProperty Name="Calle" ColumnName="Calle" />
-                <ScalarProperty Name="Numero" ColumnName="Numero" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2251,6 +2437,126 @@ warning 6002: The table/view 'SAPDataBase.dbo.Pedidos' does not have a primary k
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPChangeStatus_SAP_Cliente" FunctionName="SAPModel.Store.SPChangeStatus_SAP_Cliente" />
+          <FunctionImportMapping FunctionImportName="SPChangeStatusCliente" FunctionName="SAPModel.Store.SPChangeStatus_SAP_Cliente" />
+          <FunctionImportMapping FunctionImportName="SPG_SAP_Clientes" FunctionName="SAPModel.Store.SPG_SAP_Clientes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SAPModel.SPG_SAP_Clientes_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="Nacimiento" ColumnName="Nacimiento" />
+                <ScalarProperty Name="Edad" ColumnName="Edad" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPGClientes" FunctionName="SAPModel.Store.SPG_SAP_Clientes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SAPModel.ECliente">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="Nacimiento" ColumnName="Nacimiento" />
+                <ScalarProperty Name="Edad" ColumnName="Edad" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPChangeStatus_SAP_Proveedor" FunctionName="SAPModel.Store.SPChangeStatus_SAP_Proveedor" />
+          <FunctionImportMapping FunctionImportName="SPG_SAP_Proveedor" FunctionName="SAPModel.Store.SPG_SAP_Proveedor">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SAPModel.SPG_SAP_Proveedor_Result">
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Rfc" ColumnName="Rfc" />
+                <ScalarProperty Name="CategoriaInsumo" ColumnName="CategoriaInsumo" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="DireccionEmpresa" ColumnName="DireccionEmpresa" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPI_SAP_Proveedor" FunctionName="SAPModel.Store.SPI_SAP_Proveedor" />
+          <FunctionImportMapping FunctionImportName="SPU_SAP_Proveedor" FunctionName="SAPModel.Store.SPU_SAP_Proveedor" />
+          <FunctionImportMapping FunctionImportName="SPUProveedor" FunctionName="SAPModel.Store.SPU_SAP_Proveedor" />
+          <FunctionImportMapping FunctionImportName="SPIProveedor" FunctionName="SAPModel.Store.SPI_SAP_Proveedor" />
+          <FunctionImportMapping FunctionImportName="SPChangeStatusProveedor" FunctionName="SAPModel.Store.SPChangeStatus_SAP_Proveedor" />
+          <FunctionImportMapping FunctionImportName="SPGProveedor" FunctionName="SAPModel.Store.SPG_SAP_Proveedor">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SAPModel.EProveedor">
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Rfc" ColumnName="Rfc" />
+                <ScalarProperty Name="CategoriaInsumo" ColumnName="CategoriaInsumo" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="DireccionEmpresa" ColumnName="DireccionEmpresa" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPChangeStatusPedidoProveedor" FunctionName="SAPModel.Store.SPChangeStatusPedidoProveedor" />
+          <FunctionImportMapping FunctionImportName="SPG_SAP_InsumosPedidos" FunctionName="SAPModel.Store.SPG_SAP_InsumosPedidos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SAPModel.SPG_SAP_InsumosPedidos_Result">
+                <ScalarProperty Name="CodigoPedidoProveedor" ColumnName="CodigoPedidoProveedor" />
+                <ScalarProperty Name="CodigoInsumo" ColumnName="CodigoInsumo" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPG_SAP_PedidoProveedor" FunctionName="SAPModel.Store.SPG_SAP_PedidoProveedor">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SAPModel.SPG_SAP_PedidoProveedor_Result">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="ClaveProveedor" ColumnName="ClaveProveedor" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="TipoPedido" ColumnName="TipoPedido" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPGPedidoProveedor" FunctionName="SAPModel.Store.SPG_SAP_PedidoProveedor">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SAPModel.EPedidoProveedor">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="ClaveProveedor" ColumnName="ClaveProveedor" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="TipoPedido" ColumnName="TipoPedido" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPChangePedidoProveedor" FunctionName="SAPModel.Store.SPChangeStatusPedidoProveedor" />
+          <FunctionImportMapping FunctionImportName="SPGInsumosPedidos" FunctionName="SAPModel.Store.SPG_SAP_InsumosPedidos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SAPModel.EInsumoPedido">
+                <ScalarProperty Name="CodigoPedidoProveedor" ColumnName="CodigoPedidoProveedor" />
+                <ScalarProperty Name="CodigoInsumo" ColumnName="CodigoInsumo" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SPU_SAP_InsumoCantidad" FunctionName="SAPModel.Store.SPU_SAP_InsumoCantidad" />
+          <FunctionImportMapping FunctionImportName="SPUInsumoCantidad" FunctionName="SAPModel.Store.SPU_SAP_InsumoCantidad" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

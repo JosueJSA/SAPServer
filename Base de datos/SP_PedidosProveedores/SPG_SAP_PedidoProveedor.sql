@@ -20,14 +20,10 @@ GO
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-ALTER PROCEDURE SPG_SAP_PedidoCliente
-	@CodigoPedido INT
+ALTER PROCEDURE SPG_SAP_PedidoProveedor
+	@CodigoPedido INT = null
 AS
 BEGIN
-	SELECT P.Codigo, P.CostoTotal, P.Status StatusPedido, P.Solicitud, P.Entrega, PC.Cantidad, PC.TipoPedido, PC.IdCliente IdClientePedido, PC.IdDireccion, PC.MotivoCancelacion, 
-	C.Id IdClientePropio, C.Email, C.CodigoPostal, C.Nombre, C.Apellido, C.Status StatusCliente, C.Telefono, C.Ciudad,
-	C.Nacimiento, C.Edad,  CD.* FROM Pedido P INNER JOIN PedidoCliente PC ON P.Codigo = PC.Codigo
-	LEFT JOIN Cliente C ON PC.IdCliente = C.Id LEFT JOIN [Cliente.Direccion] CD
-	ON PC.IdCliente = CD.IdCliente WHERE P.Codigo = ISNULL(@CodigoPedido, P.Codigo);
+	select * from [PedidoProveedor] where Codigo = ISNULL(@CodigoPedido, Codigo);
 END
 GO
